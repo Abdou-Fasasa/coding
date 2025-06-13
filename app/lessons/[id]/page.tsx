@@ -9,9 +9,10 @@ export default function LessonPage() {
   const params = useParams();
   const lessonId = params.id;
 
-  const lessonTitles: { [key: string]: string } = {
-    "1": "مقدمة في علوم الحاسوب والبرمجة ",
-  };
+const lessonTitles: { [key: string]: string } = {
+  "1": "مقدمة في علوم الحاسوب والبرمجة ",
+  "2": "مقدمة في HTML وأساسيات بناء صفحات الويب",
+};
 
   const title = lessonTitles[lessonId as string] || "الدرس";
 
