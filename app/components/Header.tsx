@@ -15,7 +15,7 @@ export default function Header() {
           href="/"
           className="text-3xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 text-transparent bg-clip-text tracking-tight"
         >
-          Codeing
+          Coding
         </Link>
 
         {/* Desktop Nav */}

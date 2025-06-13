@@ -34,7 +34,7 @@ export default function DeveloperPage() {
         >
           👋 أنا <span className="font-bold text-white">عبدالرحمن</span>، مطور ومهتم بتعليم البرمجة للمبتدئين بطريقة
           <span className="text-pink-400 font-semibold"> سهلة وعصرية</span>.
-          أنشأت منصة <span className="text-cyan-400 font-semibold">Codeing</span> علشان أوصل المعلومة لأي حد حابب يبدأ
+          أنشأت منصة <span className="text-cyan-400 font-semibold">Coding</span> علشان أوصل المعلومة لأي حد حابب يبدأ
           مشواره في البرمجة، بأسلوب <span className="text-purple-400 font-semibold">مبسط وعملي</span> 🚀.
         </motion.p>
 

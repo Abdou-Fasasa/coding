@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p>
           © {new Date().getFullYear()} جميع الحقوق محفوظة لـ{" "}
-          <span className="text-pink-400 font-bold">Codeing</span>
+          <span className="text-pink-400 font-bold">Coding</span>
         </p>
       </div>
     </motion.footer>

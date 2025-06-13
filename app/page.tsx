@@ -24,7 +24,7 @@ export default function HomePage() {
           className="flex-1 text-center md:text-start space-y-8"
         >
           <h2 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-            ابدأ رحلتك البرمجية<br /> مع منصة <span className="text-pink-400">Codeing</span>
+            ابدأ رحلتك البرمجية<br /> مع منصة <span className="text-pink-400">Coding</span>
           </h2>
           <p className="text-gray-300 text-xl max-w-md mx-auto md:mx-0">
             تعلم البرمجة بأسلوب عصري، سهل، وعملي. دروس منظمة وممتعة من البداية حتى الاحتراف.

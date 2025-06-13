@@ -15,7 +15,7 @@ export default function LanguagePage() {
           transition={{ duration: 0.7 }}
           className="text-4xl sm:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-500"
         >
-          المنهج الحالي في Codeing
+          المنهج الحالي في Coding
         </motion.h1>
 
         <motion.p
