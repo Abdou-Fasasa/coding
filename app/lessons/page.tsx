@@ -6,29 +6,33 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
 import Image from "next/image";
-import { FaPlay, FaShareAlt, FaCheckCircle, FaCheck, FaFilePdf } from "react-icons/fa";
+import {
+  FaPlay,
+  FaShareAlt,
+  FaCheckCircle,
+  FaCheck,
+  FaFilePdf,
+} from "react-icons/fa";
 
 const lessons = [
   {
-    id: 1,
-    title: "1. مقدمة في علوم الحاسوب والبرمجة",
-    videoPath: "/videos/lesson1.mp4",
-    pdfPath: "/pdfs/lesson1.pdf",
-    imagePath: "/images/lesson1.jpg",
+    id: "Computer-science",
+    title: "مقدمة في علوم الحاسوب والبرمجة",
+    pdfPath: "/pdfs/Computer-science.pdf",
+    imagePath: "/images/Computer-science.jpg",
   },
   {
-    id: 2,
-    title: "2. مقدمة في HTML وأساسيات بناء صفحات الويب",
-    videoPath: "/videos/lesson2.mp4",
-    pdfPath: "/pdfs/lesson2.pdf",
-    imagePath: "/images/lesson2.jpg",
+    id: "Work-environment",
+    title: "تجهيز بيئة العمل",
+    pdfPath: "/pdfs/Work-environment.pdf",
+    imagePath: "/images/Work-environment.jpg",
   },
 ];
 
 export default function LessonsPage() {
-  const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const handleShare = (lessonId: number) => {
+  const handleShare = (lessonId: string) => {
     const url = `${window.location.origin}/lessons/${lessonId}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedId(lessonId);
@@ -56,7 +60,7 @@ export default function LessonsPage() {
               key={lesson.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: lesson.id * 0.1 }}
+              transition={{ duration: 0.5 }}
               className="bg-[#1e293b] border border-cyan-500/40 rounded-2xl p-5 shadow-lg hover:shadow-2xl transition-all"
             >
               <h2 className="text-xl font-bold text-cyan-400 mb-3 text-center">
