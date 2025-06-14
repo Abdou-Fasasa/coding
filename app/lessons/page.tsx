@@ -5,24 +5,23 @@ import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
+import Image from "next/image";
 import { FaPlay, FaShareAlt, FaCheckCircle, FaCheck, FaFilePdf } from "react-icons/fa";
 
 const lessons = [
   {
     id: 1,
     title: "1. مقدمة في علوم الحاسوب والبرمجة",
-    description:
-      "دي رحلتك الأولى لاكتشاف عالم التكنولوجيا المثير! هنتعلم فيها أساسيات التفكير الحاسوبي، إزاي الكمبيوتر بيفكر، وإيه هي لغات البرمجة المختلفة، وإزاي ممكن نستخدمها عشان نعمل حاجات مفيدة زي بناء مواقع الويب التفاعلية.",
     videoPath: "/videos/lesson1.mp4",
     pdfPath: "/pdfs/lesson1.pdf",
+    imagePath: "/images/lesson1.jpg",
   },
   {
     id: 2,
     title: "2. مقدمة في HTML وأساسيات بناء صفحات الويب",
-    description:
-      "في الدرس ده، هنتعرف على HTML، اللي هي اللغة الأساسية لبناء أي صفحة ويب. هنتعلم إزاي نستخدم الوسوم (Tags) المختلفة عشان نضيف النصوص، الصور، والروابط، ونرتب المحتوى بتاعنا بشكل صح.",
     videoPath: "/videos/lesson2.mp4",
     pdfPath: "/pdfs/lesson2.pdf",
+    imagePath: "/images/lesson2.jpg",
   },
 ];
 
@@ -41,7 +40,7 @@ export default function LessonsPage() {
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
       <Header />
 
-      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto space-y-10">
+      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto space-y-12">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,19 +50,30 @@ export default function LessonsPage() {
           الدروس التعليمية
         </motion.h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {lessons.map((lesson) => (
             <motion.div
               key={lesson.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: lesson.id * 0.1 }}
-              className="bg-[#1e293b] border border-cyan-500/40 rounded-2xl p-6 shadow-lg flex flex-col justify-between"
+              className="bg-[#1e293b] border border-cyan-500/40 rounded-2xl p-5 shadow-lg hover:shadow-2xl transition-all"
             >
-              <h2 className="text-2xl font-bold text-cyan-400 mb-2">{lesson.title}</h2>
-              <p className="text-gray-300 flex-grow">{lesson.description}</p>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 text-center">
+                {lesson.title}
+              </h2>
 
-              <div className="mt-4 flex flex-col gap-3">
+              <div className="w-full h-48 mb-4 overflow-hidden rounded-xl">
+                <Image
+                  src={lesson.imagePath}
+                  alt={`صورة الدرس ${lesson.id}`}
+                  width={400}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="flex flex-col gap-3">
                 <Link
                   href={`/lessons/${lesson.id}`}
                   className="bg-cyan-600 hover:bg-cyan-700 transition rounded-xl py-2 px-4 flex items-center gap-2 justify-center"

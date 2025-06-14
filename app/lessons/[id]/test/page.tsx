@@ -6,6 +6,7 @@ import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
 import { lessonQuestions } from "../../../data/questions";
 import { useState } from "react";
+import { FaCheck } from "react-icons/fa";
 
 export default function LessonTestPage() {
   const { id } = useParams();
@@ -15,7 +16,9 @@ export default function LessonTestPage() {
   const [showResult, setShowResult] = useState(false);
 
   const handleAnswer = (questionIndex: number, answer: string) => {
-    setAnswers((prev) => ({ ...prev, [questionIndex]: answer }));
+    if (!showResult) {
+      setAnswers((prev) => ({ ...prev, [questionIndex]: answer }));
+    }
   };
 
   const calculateScore = () => {
@@ -26,6 +29,19 @@ export default function LessonTestPage() {
       }
     });
     return score;
+  };
+
+  const getEvaluationMessage = (score: number) => {
+    const total = questions.length;
+    const ratio = score / total;
+    if (ratio === 1) return "✅ ممتاز! أنت فهمت الدرس كويس جدًا.";
+    if (ratio >= 0.5) return "🙂 كويس! بس راجع شوية حاجات.";
+    return "⚠️ محتاج تذاكر الدرس تاني وتحاول تاني.";
+  };
+
+  const handleRetry = () => {
+    setAnswers({});
+    setShowResult(false);
   };
 
   return (
@@ -45,35 +61,65 @@ export default function LessonTestPage() {
         {questions.map((q, i) => (
           <div key={i} className="bg-[#1e293b] p-6 rounded-xl shadow-lg space-y-4">
             <h2 className="text-xl font-semibold">{i + 1}. {q.question}</h2>
-            <div className="grid gap-2">
-              {q.options.map((option, j) => (
-                <label key={j} className="flex items-center gap-3">
-                  <input
-                    type="radio"
-                    name={`question-${i}`}
-                    value={option}
-                    checked={answers[i] === option}
-                    onChange={() => handleAnswer(i, option)}
-                  />
-                  {option}
-                </label>
-              ))}
+            <div className="grid gap-3">
+              {q.options.map((option, j) => {
+                const isCorrect = showResult && option === q.correctAnswer;
+                const isWrong = showResult && answers[i] === option && option !== q.correctAnswer;
+
+                return (
+                  <div
+                    key={j}
+                    className={`
+                      flex items-center justify-between px-4 py-2 rounded-lg border
+                      ${isCorrect ? "bg-green-100/10 border-green-500 text-green-300" : ""}
+                      ${isWrong ? "bg-red-100/10 border-red-500 text-red-400" : ""}
+                      ${!isCorrect && !isWrong ? "border-gray-500/30" : ""}
+                    `}
+                  >
+                    <label className="flex items-center gap-3 w-full cursor-pointer">
+                      {!showResult && (
+                        <input
+                          type="radio"
+                          name={`question-${i}`}
+                          value={option}
+                          checked={answers[i] === option}
+                          onChange={() => handleAnswer(i, option)}
+                        />
+                      )}
+                      <span className="flex-1">{option}</span>
+                      {isCorrect && <FaCheck className="text-green-400" />}
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
 
-        <div className="text-center">
-          <button
-            onClick={() => setShowResult(true)}
-            className="mt-6 bg-green-600 hover:bg-green-700 px-6 py-3 rounded-xl text-white font-semibold"
-          >
-            تصحيح الاختبار
-          </button>
+        <div className="text-center space-y-4">
+          {!showResult && (
+            <button
+              onClick={() => setShowResult(true)}
+              className="mt-6 bg-green-600 hover:bg-green-700 px-6 py-3 rounded-xl text-white font-semibold"
+            >
+              تصحيح الاختبار
+            </button>
+          )}
 
           {showResult && (
-            <p className="mt-6 text-xl font-bold text-yellow-300">
-              نتيجتك: {calculateScore()} من {questions.length}
-            </p>
+            <>
+              <p className="mt-6 text-xl font-bold text-yellow-300">
+                نتيجتك: {calculateScore()} من {questions.length}
+              </p>
+              <p className="text-lg text-white">{getEvaluationMessage(calculateScore())}</p>
+
+              <button
+                onClick={handleRetry}
+                className="mt-4 bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-xl text-white font-medium"
+              >
+                إعادة الاختبار 🔁
+              </button>
+            </>
           )}
         </div>
       </main>
