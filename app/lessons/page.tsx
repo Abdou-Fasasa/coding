@@ -5,21 +5,25 @@ import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
-import { FaPlay, FaShareAlt, FaCheckCircle, FaCheck } from "react-icons/fa";
+import { FaPlay, FaShareAlt, FaCheckCircle, FaCheck, FaFilePdf } from "react-icons/fa";
 
 const lessons = [
   {
-    "id": 1,
-    "title": "1. مقدمة في علوم الحاسوب والبرمجة",
-    "description": "دي رحلتك الأولى لاكتشاف عالم التكنولوجيا المثير! هنتعلم فيها أساسيات التفكير الحاسوبي، إزاي الكمبيوتر بيفكر، وإيه هي لغات البرمجة المختلفة، وإزاي ممكن نستخدمها عشان نعمل حاجات مفيدة زي بناء مواقع الويب التفاعلية.",
-    "videoPath": "/videos/lesson1.mp4"
+    id: 1,
+    title: "1. مقدمة في علوم الحاسوب والبرمجة",
+    description:
+      "دي رحلتك الأولى لاكتشاف عالم التكنولوجيا المثير! هنتعلم فيها أساسيات التفكير الحاسوبي، إزاي الكمبيوتر بيفكر، وإيه هي لغات البرمجة المختلفة، وإزاي ممكن نستخدمها عشان نعمل حاجات مفيدة زي بناء مواقع الويب التفاعلية.",
+    videoPath: "/videos/lesson1.mp4",
+    pdfPath: "/pdfs/lesson1.pdf",
   },
   {
-    "id": 2,
-    "title": "2. مقدمة في HTML وأساسيات بناء صفحات الويب",
-    "description": "في الدرس ده، هنتعرف على HTML، اللي هي اللغة الأساسية لبناء أي صفحة ويب. هنتعلم إزاي نستخدم الوسوم (Tags) المختلفة عشان نضيف النصوص، الصور، والروابط، ونرتب المحتوى بتاعنا بشكل صح.",
-    "videoPath": "/videos/lesson2.mp4"
-  }
+    id: 2,
+    title: "2. مقدمة في HTML وأساسيات بناء صفحات الويب",
+    description:
+      "في الدرس ده، هنتعرف على HTML، اللي هي اللغة الأساسية لبناء أي صفحة ويب. هنتعلم إزاي نستخدم الوسوم (Tags) المختلفة عشان نضيف النصوص، الصور، والروابط، ونرتب المحتوى بتاعنا بشكل صح.",
+    videoPath: "/videos/lesson2.mp4",
+    pdfPath: "/pdfs/lesson2.pdf",
+  },
 ];
 
 export default function LessonsPage() {
@@ -73,6 +77,14 @@ export default function LessonsPage() {
                 >
                   <FaCheckCircle /> اختبار الدرس
                 </Link>
+
+                <a
+                  href={lesson.pdfPath}
+                  download
+                  className="bg-green-600 hover:bg-green-700 transition rounded-xl py-2 px-4 flex items-center gap-2 justify-center"
+                >
+                  <FaFilePdf /> تحميل ملف الدرس PDF
+                </a>
 
                 <button
                   onClick={() => handleShare(lesson.id)}
