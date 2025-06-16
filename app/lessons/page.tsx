@@ -33,6 +33,12 @@ const lessons = [
     pdfPath: "/pdfs/html-lesson1.pdf",
     imagePath: "/images/html-lesson1.jpg",
   },
+    {
+    id: "Html-lesson2",
+    title: "يعني ايه عنصر في HTML?",
+    pdfPath: "/pdfs/html-lesson2.pdf",
+    imagePath: "/images/html-lesson1.jpg",
+  },
 ];
 
 export default function LessonsPage() {

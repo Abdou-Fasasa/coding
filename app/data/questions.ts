@@ -511,6 +511,158 @@ export const lessonQuestions: {
       "```<head>```"
     ],
     "correctAnswer": "```<head>```"
+  },
+],
+  "Html-lesson2": [
+  {
+    "question": "يعني إيه عنصر (Element) في HTML؟",
+    "options": [
+      "تاج بس",
+      "محتوى بس",
+      "تاج فتح + محتوى + تاج قفل",
+      "Attribute بس"
+    ],
+    "correctAnswer": "تاج فتح + محتوى + تاج قفل"
+  },
+  {
+    "question": "إيه هو التاج (Tag) في HTML؟",
+    "options": [
+      "كود CSS",
+      "تعليمات JavaScript",
+      "وسم محطوط بين <>",
+      "أمر بيتنفذ في الباك اند"
+    ],
+    "correctAnswer": "وسم محطوط بين <>"
+  },
+  {
+    "question": "أنهي واحد من دول يعتبر تاج مزدوج (Paired Tag)؟",
+    "options": [
+      "<br>",
+      "<img>",
+      "<hr>",
+      "<p>"
+    ],
+    "correctAnswer": "<p>"
+  },
+  {
+    "question": "أنهي عنصر من دول Self-Closing؟",
+    "options": [
+      "<h1>",
+      "<p>",
+      "<img>",
+      "<div>"
+    ],
+    "correctAnswer": "<img>"
+  },
+  {
+    "question": "فين بيتكتب الـ Attribute؟",
+    "options": [
+      "في تاج القفل",
+      "جوا التاج المفتوح",
+      "بعد الـ DOCTYPE",
+      "برا الوسوم خالص"
+    ],
+    "correctAnswer": "جوا التاج المفتوح"
+  },
+  {
+    "question": "شكل الـ Attribute الصحيح؟",
+    "options": [
+      "name-value",
+      "key=value",
+      "اسم=قيمة",
+      'attribute="value"'
+    ],
+    "correctAnswer": 'attribute="value"'
+  },
+  {
+    "question": "ليه بنستخدم الـ alt في عنصر الصورة؟",
+    "options": [
+      "عشان نغير لون الصورة",
+      "عشان نضيف رابط",
+      "عشان نكتب وصف بديل للصورة",
+      "عشان نتحكم في حجمها"
+    ],
+    "correctAnswer": "عشان نكتب وصف بديل للصورة"
+  },
+  {
+    "question": "أنهي عنصر بيستخدم عشان نعمل خط أفقي؟",
+    "options": [
+      "<br>",
+      "<line>",
+      "<hr>",
+      "<border>"
+    ],
+    "correctAnswer": "<hr>"
+  },
+  {
+    "question": "عنصر <br> بيستخدم في إيه؟",
+    "options": [
+      "إضافة صورة",
+      "كتابة عنوان",
+      "إضافة سطر جديد",
+      "تلوين الخلفية"
+    ],
+    "correctAnswer": "إضافة سطر جديد"
+  },
+  {
+    "question": "أنهي واحدة من دول تعتبر عنصر Heading؟",
+    "options": [
+      "<div>",
+      "<p>",
+      "<h3>",
+      "<img>"
+    ],
+    "correctAnswer": "<h3>"
+  },
+  {
+    "question": "كام مستوى لعناصر العنوان (Heading)؟",
+    "options": [
+      "3 مستويات",
+      "5 مستويات",
+      "6 مستويات",
+      "10 مستويات"
+    ],
+    "correctAnswer": "6 مستويات"
+  },
+  {
+    "question": "إيه هو الغرض من عنصر <p>؟",
+    "options": [
+      "كتابة أكواد",
+      "عرض صور",
+      "إضافة روابط",
+      "كتابة فقرة نصية"
+    ],
+    "correctAnswer": "كتابة فقرة نصية"
+  },
+  {
+    "question": "هل لازم نقفل العناصر المزدوجة؟",
+    "options": [
+      "آه طبعًا",
+      "مش شرط",
+      "حسب العنصر",
+      "لأ ممنوع نقفلها"
+    ],
+    "correctAnswer": "آه طبعًا"
+  },
+  {
+    "question": "أنهي واحدة من دول مش Attribute؟",
+    "options": [
+      "class",
+      "id",
+      "src",
+      "print"
+    ],
+    "correctAnswer": "print"
+  },
+  {
+    "question": "عنصر <img> بيحتاج على الأقل إيه؟",
+    "options": [
+      "alt بس",
+      "src بس",
+      "src و alt",
+      "id و class"
+    ],
+    "correctAnswer": "src و alt"
   }
 ]
 };

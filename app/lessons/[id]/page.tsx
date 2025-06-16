@@ -23,6 +23,10 @@ const lessonData: {
     title: "بناء هيكل صفحه الويب(HTML)- الجزء الأول",
     video: "/videos/html-lesson1.mp4",
   },
+      "Html-lesson2": {
+    title: "يعني ايه عنصر في HTML?",
+    video: "/videos/html-lesson2.mp4",
+  },
 };
 
 export default function LessonPage() {
