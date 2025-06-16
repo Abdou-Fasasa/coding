@@ -19,6 +19,10 @@ const lessonData: {
     title: "تجهيز بيئة العمل",
     video: "/videos/Work-environment.mp4",
   },
+    "Html-lesson1": {
+    title: "بناء هيكل صفحه الويب(HTML)- الجزء الأول",
+    video: "/videos/html-lesson1.mp4",
+  },
 };
 
 export default function LessonPage() {

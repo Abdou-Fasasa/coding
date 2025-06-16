@@ -27,6 +27,12 @@ const lessons = [
     pdfPath: "/pdfs/Work-environment.pdf",
     imagePath: "/images/Work-environment.jpg",
   },
+  {
+    id: "Html-lesson1",
+    title: "بناء هيكل صفحه الويب(HTML)- الجزء الأول",
+    pdfPath: "/pdfs/html-lesson1.pdf",
+    imagePath: "/images/html-lesson1.jpg",
+  },
 ];
 
 export default function LessonsPage() {
