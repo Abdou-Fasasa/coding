@@ -12,20 +12,24 @@ const lessonData: {
   };
 } = {
   "Computer-science": {
-    title: "مقدمة في علوم الحاسوب والبرمجة",
+    title: "الدرس الأول: مقدمة في علوم الحاسوب والبرمجة",
     video: "/videos/Computer-science.mp4",
   },
   "Work-environment": {
-    title: "تجهيز بيئة العمل",
+    title: "الدرس الثاني: تجهيز بيئة العمل",
     video: "/videos/Work-environment.mp4",
   },
-    "Html-lesson1": {
-    title: "بناء هيكل صفحه الويب(HTML)- الجزء الأول",
-    video: "/videos/html-lesson1.mp4",
+    "Html-lesson3": {
+    title: "الدرس الثالث: بناء هيكل صفحة الويب (HTML)",
+    video: "/videos/html-lesson3.mp4",
   },
-      "Html-lesson2": {
-    title: "يعني ايه عنصر في HTML?",
-    video: "/videos/html-lesson2.mp4",
+      "Html-lesson4": {
+    title: "الدرس الرابع: يعني إيه عنصر في HTML؟",
+    video: "/videos/html-lesson4.mp4",
+  },
+        "Html-lesson5": {
+    title: "الدرس الخامس: التعامل مع النصوص في HTML",
+    video: "/videos/html-lesson5.mp4",
   },
 };
 

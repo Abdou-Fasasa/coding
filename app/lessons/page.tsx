@@ -17,27 +17,33 @@ import {
 const lessons = [
   {
     id: "Computer-science",
-    title: "مقدمة في علوم الحاسوب والبرمجة",
+    title: "الدرس الأول: مقدمة في علوم الحاسوب والبرمجة",
     pdfPath: "/pdfs/Computer-science.pdf",
     imagePath: "/images/Computer-science.jpg",
   },
   {
     id: "Work-environment",
-    title: "تجهيز بيئة العمل",
+    title: "الدرس الثاني: تجهيز بيئة العمل",
     pdfPath: "/pdfs/Work-environment.pdf",
     imagePath: "/images/Work-environment.jpg",
   },
   {
-    id: "Html-lesson1",
-    title: "بناء هيكل صفحه الويب(HTML)- الجزء الأول",
-    pdfPath: "/pdfs/html-lesson1.pdf",
-    imagePath: "/images/html-lesson1.jpg",
+    id: "Html-lesson3",
+    title: "الدرس الثالث: بناء هيكل صفحة الويب (HTML)",
+    pdfPath: "/pdfs/html-lesson3.pdf",
+    imagePath: "/images/html-lessons.jpg",
   },
     {
-    id: "Html-lesson2",
-    title: "يعني ايه عنصر في HTML?",
-    pdfPath: "/pdfs/html-lesson2.pdf",
-    imagePath: "/images/html-lesson1.jpg",
+    id: "Html-lesson4",
+    title: "الدرس الرابع: يعني إيه عنصر في HTML؟",
+    pdfPath: "/pdfs/html-lesson4.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+      {
+    id: "Html-lesson5",
+    title: "الدرس الخامس: التعامل مع النصوص في HTML",
+    pdfPath: "/pdfs/html-lesson5.pdf",
+    imagePath: "/images/html-lessons.jpg",
   },
 ];
 
