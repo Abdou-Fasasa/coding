@@ -27,9 +27,13 @@ const lessonData: {
     title: "الدرس الرابع: يعني إيه عنصر في HTML؟",
     video: "/videos/html-lesson4.mp4",
   },
-        "Html-lesson5": {
+      "Html-lesson5": {
     title: "الدرس الخامس: التعامل مع النصوص في HTML",
     video: "/videos/html-lesson5.mp4",
+  },
+      "Html-lesson6": {
+    title: "الدرس السادس: التعامـل مع الروابــط في HTML",
+    video: "/videos/html-lesson6.mp4",
   },
 };
 

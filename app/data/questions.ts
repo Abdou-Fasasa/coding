@@ -762,4 +762,152 @@ export const lessonQuestions: {
     "correctAnswer": "عشان تنظيم الصفحة وسهولة القراءة"
   }
 ],
+"Html-lesson6": [
+  {
+    "question": "إيه التاج اللي بنستخدمه علشان نعمل رابط؟",
+    "options": ["<a>", "<link>", "<href>", "<url>"],
+    "correctAnswer": "<a>"
+  },
+  {
+    "question": "خاصية href في تاج <a> بنستخدمها علشان؟",
+    "options": [
+      "نكتب عنوان الرابط",
+      "نغير لون النص",
+      "نضيف صورة",
+      "نكتب عنوان الصفحة"
+    ],
+    "correctAnswer": "نكتب عنوان الرابط"
+  },
+  {
+    "question": "إيه اللي بيحصل لما نستخدم target=\"_blank\"؟",
+    "options": [
+      "الرابط يفتح في تاب جديد",
+      "الرابط مايفتحش",
+      "يظهر تنبيه للمستخدم",
+      "يغير لون الخلفية"
+    ],
+    "correctAnswer": "الرابط يفتح في تاب جديد"
+  },
+  {
+    "question": "أنهي واحد يعتبر رابط لموقع خارجي؟",
+    "options": [
+      "<a href=\"https://www.google.com\">جوجل</a>",
+      "<a href=\"about.html\">عنّا</a>",
+      "<a href=\"tel:0123456789\">اتصل بينا</a>",
+      "<a href=\"cv.pdf\" download>حمّل CV</a>"
+    ],
+    "correctAnswer": "<a href=\"https://www.google.com\">جوجل</a>"
+  },
+  {
+    "question": "إزاي تعمل رابط لملف PDF؟",
+    "options": [
+      "<a href=\"file.pdf\">افتح الملف</a>",
+      "<a pdf=\"file.pdf\">افتح الملف</a>",
+      "<file link=\"file.pdf\">افتح الملف</file>",
+      "<a src=\"file.pdf\">افتح الملف</a>"
+    ],
+    "correctAnswer": "<a href=\"file.pdf\">افتح الملف</a>"
+  },
+  {
+    "question": "إزاي تخلي الرابط يحمل الملف مش يفتحه؟",
+    "options": [
+      "تزود attribute اسمه download",
+      "تستخدم <download>",
+      "تكتب type=\"download\"",
+      "تغير الامتداد"
+    ],
+    "correctAnswer": "تزود attribute اسمه download"
+  },
+  {
+    "question": "إيه الاختيار الصح لعمل رابط لمكالمة هاتف؟",
+    "options": [
+      "<a href=\"tel:0123456789\">كلمنا</a>",
+      "<a phone=\"0123456789\">كلمنا</a>",
+      "<phone href=\"0123456789\">كلمنا</phone>",
+      "<a href=\"call:0123456789\">كلمنا</a>"
+    ],
+    "correctAnswer": "<a href=\"tel:0123456789\">كلمنا</a>"
+  },
+  {
+    "question": "لو عايز تعمل رابط لواتساب، تكتب إيه؟",
+    "options": [
+      "<a href=\"https://wa.me/201234567890\">واتساب</a>",
+      "<a href=\"wa:201234567890\">واتساب</a>",
+      "<a href=\"whatsapp.com/user/201234567890\">واتساب</a>",
+      "<a href=\"tel:+201234567890\">واتساب</a>"
+    ],
+    "correctAnswer": "<a href=\"https://wa.me/201234567890\">واتساب</a>"
+  },
+  {
+    "question": "هل لازم أستخدم / أقفل تاج <a>؟",
+    "options": [
+      "آه لازم أقفله",
+      "لا التاج ده Self-Closing",
+      "ينفع تسيبه مفتوح",
+      "لازم تقفله بس بـ <link>"
+    ],
+    "correctAnswer": "آه لازم أقفله"
+  },
+  {
+    "question": "لو الرابط داخلي يعني؟",
+    "options": [
+      "صفحة تانية في نفس الموقع",
+      "رابط على فيسبوك",
+      "ملف PDF",
+      "رابط لرقم تليفون"
+    ],
+    "correctAnswer": "صفحة تانية في نفس الموقع"
+  },
+  {
+    "question": "رابط داخلي صح يكون شكله؟",
+    "options": [
+      "<a href=\"about.html\">عنّا</a>",
+      "<a href=\"https://about.html\">عنّا</a>",
+      "<a page=\"about.html\">عنّا</a>",
+      "<a src=\"about.html\">عنّا</a>"
+    ],
+    "correctAnswer": "<a href=\"about.html\">عنّا</a>"
+  },
+  {
+    "question": "target=\"_blank\" معناه؟",
+    "options": [
+      "يفتح الرابط في تاب جديد",
+      "يقفل التاب اللي المستخدم فيها",
+      "يحفظ الرابط",
+      "يرجع المستخدم لأول الصفحة"
+    ],
+    "correctAnswer": "يفتح الرابط في تاب جديد"
+  },
+  {
+    "question": "هل ينفع تستخدم <a> بدون href؟",
+    "options": [
+      "آه، بس مش هيشتغل كرابط",
+      "لأ، هيحصل خطأ",
+      "آه وهيشتغل عادي",
+      "لازم تكتب src مش href"
+    ],
+    "correctAnswer": "آه، بس مش هيشتغل كرابط"
+  },
+  {
+    "question": "إيه الصح في التالي؟",
+    "options": [
+      "<a href=\"mailto:email@example.com\">ابعتلنا إيميل</a>",
+      "<a href=\"mail:email@example.com\">ابعتلنا إيميل</a>",
+      "<a src=\"email@example.com\">ابعتلنا إيميل</a>",
+      "<mail href=\"email@example.com\">ابعتلنا إيميل</mail>"
+    ],
+    "correctAnswer": "<a href=\"mailto:email@example.com\">ابعتلنا إيميل</a>"
+  },
+  {
+    "question": "لو عايز تستخدم <a> علشان الرابط يظهر كزرار، تعمل إيه؟",
+    "options": [
+      "تستخدم CSS مع التاج",
+      "تغير التاج لـ <button>",
+      "تستخدم href في <div>",
+      "تضيف download تلقائيًا"
+    ],
+    "correctAnswer": "تستخدم CSS مع التاج"
+  }
+],
+// "Html-lesson7": [
 };
