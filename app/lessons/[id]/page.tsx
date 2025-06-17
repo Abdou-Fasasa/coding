@@ -35,6 +35,10 @@ const lessonData: {
     title: "الدرس السادس: التعامـل مع الروابــط في HTML",
     video: "/videos/html-lesson6.mp4",
   },
+        "Html-lesson7": {
+    title: "الدرس السابع: التعامـل مع الصـور في HTML",
+    video: "/videos/html-lesson7.mp4",
+  },
 };
 
 export default function LessonPage() {

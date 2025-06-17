@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { FaHome, FaBookOpen, FaCode, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaHome,
+  FaBookOpen,
+  FaCode,
+  FaUser,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import { useState } from "react";
 
 export default function Header() {
@@ -9,8 +16,9 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 bg-[#0f172a]/80 backdrop-blur-md shadow-md">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
+      {/* العرض بقى 100% عشان يحل المشكلة في الموبايل */}
+      <div className="w-full px-4 sm:px-6 py-4 flex items-center justify-between">
+        {/* اللوجو */}
         <Link
           href="/"
           className="text-3xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 text-transparent bg-clip-text tracking-tight"
@@ -18,7 +26,7 @@ export default function Header() {
           Coding
         </Link>
 
-        {/* Desktop Nav */}
+        {/* نافيجيتور الديسكتوب */}
         <nav className="hidden md:flex space-x-8 text-xl font-semibold">
           <Link
             href="/"
@@ -46,7 +54,7 @@ export default function Header() {
           </Link>
         </nav>
 
-        {/* Mobile Toggle */}
+        {/* زر القائمة للموبايل */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-white text-2xl focus:outline-none"
@@ -55,7 +63,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* قائمة الموبايل المنسدلة */}
       {menuOpen && (
         <div className="md:hidden bg-[#0f172a] text-white px-6 py-4 space-y-4 text-lg font-medium transition-all animate-fade-in">
           <Link

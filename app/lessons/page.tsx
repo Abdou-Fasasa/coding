@@ -35,7 +35,7 @@ const lessons = [
   },
   {
     id: "Html-lesson4",
-    title: "الدرس الرابع: يعني إيه عنصر في HTML؟",
+    title: "الدرس الرابع: يعني إيه عنصر في HTML",
     pdfPath: "/pdfs/html-lesson4.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
@@ -45,10 +45,16 @@ const lessons = [
     pdfPath: "/pdfs/html-lesson5.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
-  {
+    {
     id: "Html-lesson6",
     title: "الدرس السادس: التعامـل مع الروابــط في HTML",
     pdfPath: "/pdfs/html-lesson6.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+    {
+    id: "Html-lesson7",
+    title: "الدرس السابع: التعامـل مع الصـور في HTML",
+    pdfPath: "/pdfs/html-lesson7.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
 ];

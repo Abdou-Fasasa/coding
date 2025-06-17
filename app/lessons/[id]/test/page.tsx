@@ -48,14 +48,15 @@ export default function LessonTestPage() {
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
       <Header />
 
-      <main className="pt-32 pb-20 px-4 sm:px-8 max-w-4xl mx-auto space-y-10">
+      <main className="pt-40 pb-20 px-4 sm:px-8 max-w-4xl mx-auto space-y-10">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-500"
+          className="text-3xl sm:text-4xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-500 leading-snug"
         >
-          اختبار الدرس رقم {id}
+          اختبار الدرس
+          <span className="block break-words">{id}</span>
         </motion.h1>
 
         {questions.map((q, i) => (
@@ -69,8 +70,7 @@ export default function LessonTestPage() {
                 return (
                   <div
                     key={j}
-                    className={`
-                      flex items-center justify-between px-4 py-2 rounded-lg border
+                    className={`flex items-center justify-between px-4 py-2 rounded-lg border
                       ${isCorrect ? "bg-green-100/10 border-green-500 text-green-300" : ""}
                       ${isWrong ? "bg-red-100/10 border-red-500 text-red-400" : ""}
                       ${!isCorrect && !isWrong ? "border-gray-500/30" : ""}
