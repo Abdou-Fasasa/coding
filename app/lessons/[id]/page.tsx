@@ -39,12 +39,12 @@ const lessonData: {
     title: "الدرس السابع: التعامـل مع الصـور في HTML",
     video: "/videos/html-lesson7.mp4",
   },
-      "Html-lesson8": {
+  "Html-lesson8": {
     title: "الدرس الثامن: التعامل مع القوائم في HTML – Lists",
     video: "/videos/html-lesson8.mp4",
   },
-      "Html-lesson9": {
-    title: " الدرس التاسع: الجداول في HTML – Tables",
+  "Html-lesson9": {
+    title: "الدرس التاسع: الجداول في HTML – Tables",
     video: "/videos/html-lesson9.mp4",
   },
       "Html-lesson10": {
