@@ -57,6 +57,54 @@ const lessons = [
     pdfPath: "/pdfs/html-lesson7.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
+      {
+    id: "Html-lesson8",
+    title: "الدرس الثامن: التعامل مع القوائم في HTML – Lists",
+    pdfPath: "/pdfs/html-lesson8.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+        {
+    id: "Html-lesson9",
+    title: " الدرس التاسع: الجداول في HTML – Tables",
+    pdfPath: "/pdfs/html-lesson9.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+          {
+    id: "Html-lesson10",
+    title: "الدرس العاشر: النماذج في HTML – Forms",
+    pdfPath: "/pdfs/html-lesson10.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+            {
+    id: "Html-lesson11",
+    title: "الدرس الحادي عشر: تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
+    pdfPath: "/pdfs/html-lesson11.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+              {
+    id: "Html-lesson12",
+    title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
+    pdfPath: "/pdfs/html-lesson12.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+                {
+    id: "Html-lesson13",
+    title: "الدرس الثالث عشر: مفاهيم الوصول في HTML – خليك لطيف مع كل المستخدمين",
+    pdfPath: "/pdfs/html-lesson13.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+                  {
+    id: "Html-lesson14",
+    title: "الدرس الرابع عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
+    pdfPath: "/pdfs/html-lesson14.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
+                  {
+    id: "Html-lesson15",
+    title: "الدرس الخامس عشر: مشروع نهائي باستخدام HTML فقط – ختامها مسك",
+    pdfPath: "/pdfs/html-lesson15.pdf",
+    imagePath: "/images/html-lessons.jpg",
+  },
 ];
 
 export default function LessonsPage() {

@@ -35,9 +35,41 @@ const lessonData: {
     title: "الدرس السادس: التعامـل مع الروابــط في HTML",
     video: "/videos/html-lesson6.mp4",
   },
-        "Html-lesson7": {
+      "Html-lesson7": {
     title: "الدرس السابع: التعامـل مع الصـور في HTML",
     video: "/videos/html-lesson7.mp4",
+  },
+      "Html-lesson8": {
+    title: "الدرس الثامن: التعامل مع القوائم في HTML – Lists",
+    video: "",
+  },
+      "Html-lesson9": {
+    title: " الدرس التاسع: الجداول في HTML – Tables",
+    video: "",
+  },
+      "Html-lesson10": {
+    title: "الدرس العاشر: النماذج في HTML – Forms",
+    video: "",
+  },
+        "Html-lesson11": {
+    title: "الدرس الحادي عشر: تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
+    video: "",
+  },
+          "Html-lesson12": {
+    title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
+    video: "",
+  },
+          "Html-lesson13": {
+    title: "الدرس الثالث عشر: مفاهيم الوصول في HTML – خليك لطيف مع كل المستخدمين",
+    video: "",
+  },
+          "Html-lesson14": {
+    title: "الدرس الرابع عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
+    video: "",
+  },
+          "Html-lesson15": {
+    title: "الدرس الخامس عشر: مشروع نهائي باستخدام HTML فقط – ختامها مسك",
+    video: "",
   },
 };
 
