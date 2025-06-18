@@ -41,11 +41,11 @@ const lessonData: {
   },
       "Html-lesson8": {
     title: "الدرس الثامن: التعامل مع القوائم في HTML – Lists",
-    video: "",
+    video: "/videos/html-lesson8.mp4",
   },
       "Html-lesson9": {
     title: " الدرس التاسع: الجداول في HTML – Tables",
-    video: "",
+    video: "/videos/html-lesson9.mp4",
   },
       "Html-lesson10": {
     title: "الدرس العاشر: النماذج في HTML – Forms",
