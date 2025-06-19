@@ -54,35 +54,9 @@ export default function LoginPage() {
             <button type="submit" style={styles.button}>دخول</button>
             {error && <p style={styles.error}>{error}</p>}
           </form>
-
-<section style={styles.infoBox}>
-  <h3 style={styles.infoTitle}>📘 عن منصة Coding</h3>
-
-  <table style={styles.infoTable}>
-    <tbody>
-      <tr style={styles.infoRow}>
-        <td style={styles.infoCellKey}>🎯 الهدف</td>
-        <td style={styles.infoCellValue}>تبسيط البرمجة للمبتدئين باللهجة المصرية 💬 بأسلوب ممتع وسهل</td>
-      </tr>
-      <tr style={{ ...styles.infoRow, backgroundColor: 'rgba(255,255,255,0.03)' }}>
-        <td style={styles.infoCellKey}>📚 المحتوى</td>
-        <td style={styles.infoCellValue}>دروس فيديو + ملفات PDF + اختبارات تفاعلية لكل درس</td>
-      </tr>
-      <tr style={styles.infoRow}>
-        <td style={styles.infoCellKey}>✨ المميزات</td>
-        <td style={styles.infoCellValue}>تقدر ترجع للدروس وتكمل من آخر مكان وقفت فيه ⏱️</td>
-      </tr>
-      <tr style={{ ...styles.infoRow, backgroundColor: 'rgba(255,255,255,0.03)' }}>
-        <td style={styles.infoCellKey}>🔄 الدعم</td>
-        <td style={styles.infoCellValue}> تحديثات أسبوعية مستمرة🔄</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-
         </div>
       </main>
+      
 
       {/* زر واتساب */}
       <a
@@ -202,49 +176,4 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 100,
     transition: 'transform 0.3s ease',
   },
-infoBox: {
-  marginTop: '2rem',
-  padding: '1.5rem',
-  background: 'rgba(255,255,255,0.05)',
-  border: '1px solid rgba(255,255,255,0.1)',
-  borderRadius: '16px',
-  color: '#ddd',
-  maxWidth: '500px',
-  fontSize: '15px',
-  lineHeight: '1.7',
-  animation: 'fadeIn 1.2s ease forwards',
-  direction: 'rtl',
-  boxShadow: '0 12px 30px rgba(0,0,0,0.3)',
-},
-infoTitle: {
-  marginBottom: '1.2rem',
-  fontSize: '1.5rem',
-  color: '#fff',
-  fontWeight: 'bold',
-  textAlign: 'right',
-  borderBottom: '1px solid rgba(255,255,255,0.1)',
-  paddingBottom: '0.5rem',
-},
-infoTable: {
-  width: '100%',
-  borderCollapse: 'collapse',
-},
-infoRow: {
-  borderBottom: '1px solid rgba(255,255,255,0.07)',
-},
-infoCellKey: {
-  fontWeight: 'bold',
-  color: '#fff',
-  padding: '0.8rem 0.4rem',
-  textAlign: 'right',
-  verticalAlign: 'top',
-  width: '35%',
-},
-infoCellValue: {
-  color: '#ccc',
-  padding: '0.8rem 0.4rem',
-  textAlign: 'right',
-  verticalAlign: 'top',
-},
-
 };

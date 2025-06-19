@@ -49,11 +49,11 @@ const lessonData: {
   },
       "Html-lesson10": {
     title: "الدرس العاشر: النماذج في HTML – Forms",
-    video: "",
+    video: "/videos/html-lesson10.mp4",
   },
         "Html-lesson11": {
     title: "الدرس الحادي عشر: تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
-    video: "",
+    video: "/videos/html-lesson11.mp4",
   },
           "Html-lesson12": {
     title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
