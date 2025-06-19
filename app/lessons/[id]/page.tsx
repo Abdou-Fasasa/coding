@@ -57,10 +57,11 @@ const lessonData: {
   },
           "Html-lesson12": {
     title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
-    video: "/videos/html-lesson12.mp4",  },
+    video: "/videos/html-lesson12.mp4",
+    },
           "Html-lesson13": {
     title: "الدرس الثالث عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
-    video: "",
+    video: "/videos/html-lesson13.mp4",
   },
           "Html-lesson14": {
     title: "الدرس الرابع عشر: مشروع نهائي باستخدام HTML فقط – ختامها مسك",
