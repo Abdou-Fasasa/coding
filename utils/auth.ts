@@ -8,4 +8,5 @@ export const users = [
   { username: "mahmoud", password: "mahmoud" },
   { username: "alhamly", password: "alhamly" },
   { username: "ziad", password: "ziad" },
+  { username: "farooh", password: "farooh" },
 ];

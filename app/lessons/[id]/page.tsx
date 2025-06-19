@@ -57,8 +57,7 @@ const lessonData: {
   },
           "Html-lesson12": {
     title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
-    video: "",
-  },
+    video: "/videos/html-lesson12.mp4",  },
           "Html-lesson13": {
     title: "الدرس الثالث عشر: مفاهيم الوصول في HTML – خليك لطيف مع كل المستخدمين",
     video: "",
