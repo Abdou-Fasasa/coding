@@ -5,11 +5,9 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
 
-const lessonData: {
-  [key: string]: {
-    title: string;
-    video: string;
-  };
+// دروس HTML
+const htmlLessons: {
+  [key: string]: { title: string; video: string };
 } = {
   "Computer-science": {
     title: "الدرس الأول: مقدمة في علوم الحاسوب والبرمجة",
@@ -19,23 +17,23 @@ const lessonData: {
     title: "الدرس الثاني: تجهيز بيئة العمل",
     video: "/videos/Work-environment.mp4",
   },
-    "Html-lesson3": {
+  "Html-lesson3": {
     title: "الدرس الثالث: بناء هيكل صفحة الويب (HTML)",
     video: "/videos/html-lesson3.mp4",
   },
-      "Html-lesson4": {
+  "Html-lesson4": {
     title: "الدرس الرابع: يعني إيه عنصر في HTML؟",
     video: "/videos/html-lesson4.mp4",
   },
-      "Html-lesson5": {
+  "Html-lesson5": {
     title: "الدرس الخامس: التعامل مع النصوص في HTML",
     video: "/videos/html-lesson5.mp4",
   },
-      "Html-lesson6": {
+  "Html-lesson6": {
     title: "الدرس السادس: التعامـل مع الروابــط في HTML",
     video: "/videos/html-lesson6.mp4",
   },
-      "Html-lesson7": {
+  "Html-lesson7": {
     title: "الدرس السابع: التعامـل مع الصـور في HTML",
     video: "/videos/html-lesson7.mp4",
   },
@@ -47,27 +45,43 @@ const lessonData: {
     title: "الدرس التاسع: الجداول في HTML – Tables",
     video: "/videos/html-lesson9.mp4",
   },
-      "Html-lesson10": {
+  "Html-lesson10": {
     title: "الدرس العاشر: النماذج في HTML – Forms",
     video: "/videos/html-lesson10.mp4",
   },
-        "Html-lesson11": {
-    title: "الدرس الحادي عشر: تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
+  "Html-lesson11": {
+    title:
+      "الدرس الحادي عشر: تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
     video: "/videos/html-lesson11.mp4",
   },
-          "Html-lesson12": {
-    title: "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
+  "Html-lesson12": {
+    title:
+      "الدرس الثاني عشر: إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
     video: "/videos/html-lesson12.mp4",
-    },
-          "Html-lesson13": {
-    title: "الدرس الثالث عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
+  },
+  "Html-lesson13": {
+    title:
+      "الدرس الثالث عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
     video: "/videos/html-lesson13.mp4",
   },
-          "Html-lesson14": {
+  "Html-lesson14": {
     title: "الدرس الرابع عشر: مشروع نهائي باستخدام HTML فقط – ختامها مسك",
+    video: "/videos/html-lesson14.mp4",
+  },
+};
+
+// دروس CSS
+const cssLessons: {
+  [key: string]: { title: string; video: string };
+} = {
+  "Css-lesson1": {
+    title: "الدرس الأول: مقدمة في CSS",
     video: "",
   },
 };
+
+// دمج الدروس
+const lessonData = { ...htmlLessons, ...cssLessons };
 
 export default function LessonPage() {
   const { id } = useParams();
@@ -101,7 +115,9 @@ export default function LessonPage() {
               className="w-full max-w-4xl rounded-2xl shadow-2xl"
             />
           ) : (
-            <p className="text-red-400 font-bold">الفيديو غير متوفر لهذا الدرس</p>
+            <p className="text-red-400 font-bold">
+              الفيديو غير متوفر لهذا الدرس
+            </p>
           )}
         </motion.div>
       </main>
