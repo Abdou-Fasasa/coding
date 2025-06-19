@@ -87,22 +87,16 @@ const lessons = [
     pdfPath: "/pdfs/html-lesson12.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
-                {
+                  {
     id: "Html-lesson13",
-    title: "الدرس الثالث عشر: مفاهيم الوصول في HTML – خليك لطيف مع كل المستخدمين",
+    title: "الدرس الرابع عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
     pdfPath: "/pdfs/html-lesson13.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
                   {
     id: "Html-lesson14",
-    title: "الدرس الرابع عشر: أفضل الممارسات في HTML – خليك محترف من أول سطر",
-    pdfPath: "/pdfs/html-lesson14.pdf",
-    imagePath: "/images/html-lessons.jpg",
-  },
-                  {
-    id: "Html-lesson15",
     title: "الدرس الخامس عشر: مشروع نهائي باستخدام HTML فقط – ختامها مسك",
-    pdfPath: "/pdfs/html-lesson15.pdf",
+    pdfPath: "/pdfs/html-lesson14.pdf",
     imagePath: "/images/html-lessons.jpg",
   },
 ];
