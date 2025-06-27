@@ -2,14 +2,14 @@
 
 export const users = [
   { username: "Abdou", password: "Abdou" },
-  { username: "salah", password: "salah" },
-  { username: "abdelaziz", password: "abdelaziz" },
-  { username: "abdullah", password: "abdullah" },
-  { username: "mahmoud", password: "mahmoud" },
-  { username: "alhamly", password: "alhamly" },
-  { username: "ziad", password: "ziad" },
+  { username: "sala", password: "salah" },
+  { username: "abdelazi", password: "abdelaziz" },
+  { username: "abdulla", password: "abdullah" },
+  { username: "mahmou", password: "mahmoud" },
+  { username: "alhaml", password: "alhamly" },
+  { username: "zia", password: "ziad" },
   { username: "farooh", password: "farooh" },
-  { username: "Khalid", password: "Khalid" },
-  { username: "Asmaa", password: "Asmaa12" },
-  { username: "Ahmedmagdy", password: "Ahmedmagdy12" },
+  { username: "Khali", password: "Khalid" },
+  { username: "Asma", password: "Asmaa12" },
+  { username: "Ahmedmagd", password: "Ahmedmagdy12" },
 ];
