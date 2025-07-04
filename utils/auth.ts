@@ -1,12 +1,15 @@
 // utils/auth.ts
 
 export const users = [
-  { username: "Abdou", password: "Abdou" },
-  { username: "salah", password: "salah" },
-  { username: "abdelaziz", password: "abdelaziz" },
-  { username: "abdullah", password: "abdullah" },
-  { username: "mahmoud", password: "mahmoud" },
-  { username: "alhamly", password: "alhamly" },
-  { username: "ziad", password: "ziad" },
-  { username: "farooh", password: "farooh" },
+  { username: "Abdou",     password: "Abdou"     },
+  { username: "Salah",     password: "Salah"     },
+  { username: "Abdelaziz", password: "Abdelaziz" },
+  { username: "Abdullah",  password: "Abdullah"  },
+  { username: "Mahmoud",   password: "Mahmoud"   },
+  { username: "Alhamly",   password: "Alhamly"   },
+  { username: "Ziad",      password: "Ziad"      },
+  { username: "Farooh",    password: "Farooh"    },
 ];
+export const isValidUser = (username: string, password: string) => {
+  return users.some(user => user.username === username && user.password === password);
+};

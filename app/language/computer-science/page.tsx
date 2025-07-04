@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { FaBrain, FaLaptopCode, FaCodeBranch, FaRobot } from "react-icons/fa";
+import { FaBrain, FaLaptopCode, FaCodeBranch, FaRobot, FaCheckCircle } from "react-icons/fa";
 
 export default function ComputerSciencePage() {
   return (
@@ -19,6 +19,16 @@ export default function ComputerSciencePage() {
         >
           فهرس مقدمة علوم الحاسوب 💡
         </motion.h1>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  className="bg-blue-900 text-white text-center py-4 px-6 mt-6 rounded-xl border border-blue-400 shadow-lg"
+>
+  <p className="text-lg sm:text-xl font-semibold flex items-center justify-center gap-3">
+    <FaCheckCircle className="text-blue-300" /> تم الانتهاء من شرح : مقدمة في علوم الحاسوب والبرمجة ✅
+  </p>
+</motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

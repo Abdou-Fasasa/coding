@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { users } from '@/utils/auth';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
@@ -25,155 +27,73 @@ export default function LoginPage() {
   };
 
   return (
-    <div style={styles.wrapper}>
-      <div style={styles.background}></div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-6 relative overflow-hidden">
+      {/* خلفية متحركة */}
+      <div className="absolute inset-0 -z-10 opacity-30 animate-pulse">
+        <div className="w-[500px] h-[500px] bg-gradient-to-tr from-purple-600 via-indigo-500 to-pink-500 rounded-full blur-3xl mx-auto mt-[-150px]" />
+      </div>
 
-      <header style={styles.header}>
-        <h1 style={styles.logo}>Codeing</h1>
-      </header>
+      {/* كارت تسجيل الدخول */}
+      <div className="w-full max-w-md bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl shadow-2xl p-8 space-y-6 text-white">
+        <h1 className="text-4xl font-extrabold text-center tracking-wide">Coding</h1>
+        <p className="text-center text-gray-300">أدخل بياناتك لتسجيل الدخول</p>
 
-      <main style={styles.main}>
-        <div>
-          <form onSubmit={handleLogin} style={styles.card}>
-            <h2 style={styles.title}>تسجيل الدخول</h2>
+        <form onSubmit={handleLogin} className="space-y-5">
+          {/* اسم المستخدم */}
+          <input
+            type="text"
+            placeholder="اسم المستخدم"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-5 py-3 rounded-lg bg-white/20 border border-white/20 placeholder-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+          />
 
+          {/* كلمة السر مع زر الرؤية */}
+          <div className="relative">
             <input
-              type="text"
-              placeholder="اسم المستخدم"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={styles.input}
-            />
-            <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               placeholder="كلمة السر"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={styles.input}
+              className="w-full px-5 py-3 rounded-lg bg-white/20 border border-white/20 placeholder-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 transition pr-12"
             />
-            <button type="submit" style={styles.button}>دخول</button>
-            {error && <p style={styles.error}>{error}</p>}
-          </form>
-        </div>
-      </main>
-      
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-300 hover:text-white"
+            >
+              {showPassword ? (
+                <EyeSlashIcon className="w-5 h-5" />
+              ) : (
+                <EyeIcon className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+
+          {/* زر الدخول */}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold shadow-md hover:shadow-lg hover:scale-105 transition-all"
+          >
+            دخول
+          </button>
+        </form>
+
+        {/* رسالة الخطأ */}
+        {error && (
+          <p className="text-red-400 text-center font-semibold mt-2">{error}</p>
+        )}
+      </div>
 
       {/* زر واتساب */}
       <a
         href="https://wa.me/201128606959"
         target="_blank"
-        style={styles.whatsapp}
-        title="التواصل مع المطور لو نسيت كلمة السر"
+        className="fixed bottom-5 left-5 w-14 h-14 rounded-full bg-green-500 flex items-center justify-center text-white text-2xl shadow-lg hover:scale-110 transition-transform"
+        title="التواصل مع المطور"
       >
         💬
       </a>
     </div>
   );
 }
-
-
-const styles: { [key: string]: React.CSSProperties } = {
-  wrapper: {
-    minHeight: '100vh',
-    backgroundColor: '#000', // نفس لون الصفحة الرئيسية
-    color: '#fff',
-    overflow: 'hidden',
-    position: 'relative',
-    fontFamily: 'sans-serif',
-  },
-  background: {
-    position: 'absolute',
-    inset: 0,
-    background: 'linear-gradient(135deg, #0f0f0f 0%, #121212 100%)',
-    backgroundSize: '200% 200%',
-    animation: 'gradientFlow 15s ease infinite',
-    zIndex: 0,
-  },
-  header: {
-    zIndex: 2,
-    textAlign: 'center',
-    padding: '2rem 1rem 1rem',
-  },
-  logo: {
-    fontSize: '3rem',
-    fontWeight: 'bold',
-    letterSpacing: '2px',
-    margin: 0,
-    color: '#fff',
-    textShadow: '0 0 10px rgba(255,255,255,0.1)',
-  },
-  main: {
-    zIndex: 2,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '2rem',
-  },
-  card: {
-    background: 'rgba(255, 255, 255, 0.06)',
-    border: '1px solid rgba(255, 255, 255, 0.12)',
-    backdropFilter: 'blur(20px)',
-    borderRadius: '16px',
-    padding: '2.5rem 2rem',
-    width: '100%',
-    maxWidth: '400px',
-    boxShadow: '0 16px 32px rgba(0,0,0,0.4)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.2rem',
-    animation: 'fadeIn 0s ease forwards',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '1rem',
-    fontSize: '1.8rem',
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  input: {
-    padding: '14px 18px',
-    fontSize: '15px',
-    borderRadius: '8px',
-    border: '1px solid rgba(200,200,200,0.3)',
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    color: '#fff',
-    outline: 'none',
-    transition: 'border 0.3s',
-  },
-  button: {
-    padding: '14px',
-    background: 'linear-gradient(to right, #6a11cb, #2575fc)',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    boxShadow: '0 6px 16px rgba(106, 17, 203, 0.2)',
-  },
-  error: {
-    color: '#ff4b4b',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginTop: '0.5rem',
-  },
-  whatsapp: {
-    position: 'fixed',
-    bottom: '20px',
-    left: '20px',
-    backgroundColor: '#25D366',
-    color: '#fff',
-    width: '48px',
-    height: '48px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '20px',
-    borderRadius: '50%',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
-    textDecoration: 'none',
-    zIndex: 100,
-    transition: 'transform 0.3s ease',
-  },
-};

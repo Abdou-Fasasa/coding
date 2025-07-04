@@ -54,7 +54,7 @@ export default function HomePage() {
           <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(ellipse_at_center,_rgba(236,72,153,0.05)_0%,_transparent_70%)] pointer-events-none z-0" />
 
           <Image
-            src="/images/hero.jpg"
+            src="/images/hero.png"
             alt="Coding Students"
             width={700}
             height={500}
@@ -70,7 +70,7 @@ export default function HomePage() {
             <div className="w-full h-3 bg-gray-700 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: "0%" }}
-                animate={{ width: "1%" }}
+                animate={{ width: "90%" }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
                 className="h-full bg-pink-500 rounded-full"
               ></motion.div>
@@ -103,7 +103,7 @@ export default function HomePage() {
           </div>
           <div className="flex items-center justify-center gap-2 text-base">
             <FaUsers className="text-purple-400 text-xl" />
-            <span>طلابنا: <strong className="text-white">عبدالعزيز، عبدالله، محمود، الحملي، صلاح</strong></span>
+            <span>طلابنا المتميزون: <strong className="text-white">عبدالعزيز، عبدالله، محمود، الحملي، صلاح</strong></span>
           </div>
         </div>
       </section>

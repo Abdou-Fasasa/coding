@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
+import { FaCheckCircle } from "react-icons/fa";
 
 export default function LanguagePage() {
   return (
@@ -45,6 +46,7 @@ export default function LanguagePage() {
           <Card
             title="مقدمة علوم الحاسوب"
             color="yellow"
+            completed
             description="نفهم يعني إيه برمجة، كمبيوتر، بيانات، أوامر، كومبايلر، إنترپريتر... بلُغة بسيطة وسهلة."
             href="/language/computer-science"
           />
@@ -53,6 +55,7 @@ export default function LanguagePage() {
           <Card
             title="HTML"
             color="pink"
+            completed
             description="نتعلم الهيكل الأساسي لأي موقع: العناوين، الفقرات، الصور، الروابط، والجداول."
             href="/language/html"
           />
@@ -94,9 +97,10 @@ type CardProps = {
   description: string;
   href: string;
   color: "yellow" | "pink" | "blue" | "amber";
+  completed?: boolean;
 };
 
-function Card({ title, description, href, color }: CardProps) {
+function Card({ title, description, href, color, completed = false }: CardProps) {
   const colors = {
     yellow: {
       border: "border-yellow-400/40",
@@ -127,7 +131,9 @@ function Card({ title, description, href, color }: CardProps) {
       className={`bg-[#1e293b] rounded-2xl p-6 shadow-xl border ${border} flex flex-col justify-between hover:scale-[1.03] transition-all duration-300`}
     >
       <div>
-        <h2 className={`text-xl font-bold ${text} mb-2`}>{title}</h2>
+        <h2 className={`text-xl font-bold ${text} mb-2 flex items-center justify-center gap-2`}>
+          {title} {completed && <FaCheckCircle className="text-green-400" title="تم الانتهاء" />}
+        </h2>
         <p className="text-gray-300 text-sm mb-6">{description}</p>
       </div>
       <Link

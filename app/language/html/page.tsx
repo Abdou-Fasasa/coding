@@ -28,6 +28,16 @@ export default function HTMLIndexPage() {
         >
           هنا هتلاقي كل الدروس اللي أخدناها لحد دلوقتي في جزء HTML، بالترتيب ومع توضيح المحتوى.
         </motion.p>
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  className="bg-green-800 text-white text-center py-4 px-6 mt-10 rounded-xl border border-green-400 shadow-lg"
+>
+  <p className="text-lg sm:text-xl font-semibold flex items-center justify-center gap-3">
+    <FaCheckCircle className="text-green-300" /> تم الانتهاء من شرح جميع دروس HTML بنجاح 🎉
+  </p>
+</motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -45,27 +55,31 @@ export default function HTMLIndexPage() {
               </tr>
             </thead>
             <tbody>
-              <tr className="hover:bg-[#273244]">
-                <td className="py-3 px-4 border-b border-gray-700">1</td>
-                <td className="py-3 px-4 border-b border-gray-700">ما هو HTML؟</td>
-                <td className="py-3 px-4 border-b border-gray-700">تعريف لغة HTML وفكرتها واستخدامها في بناء صفحات الويب</td>
-                <td className="py-3 px-4 border-b border-gray-700 text-green-400 flex items-center gap-2">
-                  <FaCheckCircle /> تم</td>
-              </tr>
-              <tr className="hover:bg-[#273244]">
-                <td className="py-3 px-4 border-b border-gray-700">2</td>
-                <td className="py-3 px-4 border-b border-gray-700">هيكل صفحة HTML</td>
-                <td className="py-3 px-4 border-b border-gray-700">شرح عناصر head و body والعناصر الأساسية داخل الصفحة</td>
-                <td className="py-3 px-4 border-b border-gray-700 text-green-400 flex items-center gap-2">
-                  <FaCheckCircle /> تم</td>
-              </tr>
-              <tr className="hover:bg-[#273244]">
-                <td className="py-3 px-4 border-b border-gray-700">3</td>
-                <td className="py-3 px-4 border-b border-gray-700">العناوين والفقرات</td>
-                <td className="py-3 px-4 border-b border-gray-700">نتعلم استخدام &lt;h1&gt; لـ &lt;h6&gt; لكتابة العناوين، و&lt;p&gt; للفقرات</td>
-                <td className="py-3 px-4 border-b border-gray-700 text-green-400 flex items-center gap-2">
-                  <FaCheckCircle /> تم</td>
-              </tr>
+              {[
+                [1, "مقدمة في علوم الحاسوب والبرمجة", "تعريف البرمجة وإزاي الكمبيوتر بيفهم الأوامر وبيشغلها"],
+                [2, "تجهيز بيئة العمل", "تحميل البرامج اللازمة وفتح أول ملف HTML"],
+                [3, "بناء هيكل صفحة الويب (HTML)", "شرح <html>, <head>, <body> وبدء الصفحة"],
+                [4, "يعني إيه عنصر في HTML", "شرح العناصر والتاجات Attributes & Tags"],
+                [5, "التعامل مع النصوص في HTML", "استخدام <h1> لـ <h6> و <p> والنصوص"],
+                [6, "التعامل مع الروابط", "إضافة روابط باستخدام <a> وفتحها في نافذة جديدة"],
+                [7, "التعامل مع الصور", "إدراج الصور باستخدام <img> وتعديل الأبعاد والنص البديل"],
+                [8, "القوائم – Lists", "شرح القوائم المرتبة <ol> وغير المرتبة <ul>"],
+                [9, "الجداول – Tables", "إدراج جدول باستخدام <table>, <tr>, <td>, <th>"],
+                [10, "النماذج – Forms", "إضافة فورم وإدخال الاسم، الإيميل، زر الإرسال"],
+                [11, "تنظيم الصفحة باستخدام الأقسام", "شرح <div>, <section>, <article>, <header>"],
+                [12, "إدراج عناصر خارجية", "إضافة فيديوهات، خرائط، مواقع تانية داخل الصفحة"],
+                [13, "أفضل الممارسات في HTML", "كتابة كود نظيف ومنظم واحترافي"],
+                [14, "مشروع نهائي باستخدام HTML", "صفحة ويب كاملة بتجمع كل اللي اتعلمناه"]
+              ].map(([num, title, desc]) => (
+                <tr key={num} className="hover:bg-[#273244]">
+                  <td className="py-3 px-4 border-b border-gray-700">{num}</td>
+                  <td className="py-3 px-4 border-b border-gray-700">{title}</td>
+                  <td className="py-3 px-4 border-b border-gray-700">{desc}</td>
+                  <td className="py-3 px-4 border-b border-gray-700 text-green-400 flex items-center gap-2">
+                    <FaCheckCircle /> تم
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </motion.div>

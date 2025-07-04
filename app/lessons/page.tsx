@@ -134,6 +134,14 @@ export default function LessonsPage() {
         >
           الدروس التعليمية
         </motion.h1>
+                <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl font-bold text-center text-cyan-300 border-t border-cyan-700 pt-10 mt-10"
+        >
+          كورس HTML
+        </motion.h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {htmlLessons.map((lesson) => (
