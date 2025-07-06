@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { FaBookOpen, FaStar, FaUserTie, FaUsers, FaPlayCircle } from "react-icons/fa"; // إضافة FaPlayCircle لأيقونة الفيديوهات
-import Header from "./components/Header"; // تأكد من وجود هذا الملف ومحتواه
-import Footer from "./components/Footer"; // تأكد من وجود هذا الملف ومحتواه
+import { FaBookOpen, FaStar, FaUserTie, FaUsers, FaPlayCircle } from "react-icons/fa";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -21,13 +21,13 @@ export default function HomePage() {
       {/* --- */}
 
       {/* ✅ البودي - قسم البطل (Hero Section) */}
-      <main className="pt-36 pb-28 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+      <main className="pt-36 pb-28 px-6 md:px-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20" dir="rtl"> {/* Added dir="rtl" */}
         {/* النص */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex-1 text-center md:text-start space-y-8"
+          className="flex-1 text-center md:text-right space-y-8" // Changed md:text-start to md:text-right
         >
           <h2 className="text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
             ابدأ رحلتك البرمجية
@@ -45,7 +45,7 @@ export default function HomePage() {
             initial={{ y: 0 }}
             animate={{ y: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 2 }}
-            className="flex justify-center md:justify-start"
+            className="flex justify-center md:justify-end" // Changed md:justify-start to md:justify-end
           >
             <Link
               href="/lessons"
@@ -100,7 +100,7 @@ export default function HomePage() {
       {/* --- */}
 
       {/* ✅ قسم "لماذا تختار Coding؟" - ميزات المنصة */}
-      <section className="py-20 px-6 bg-[#0f172a] text-center">
+      <section className="py-20 px-6 bg-[#0f172a] text-center" dir="rtl"> {/* Added dir="rtl" */}
         <motion.h3
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -172,7 +172,7 @@ export default function HomePage() {
       {/* --- */}
 
       {/* ✅ قسم إحصائيات المنصة (بالأرقام الفعلية الافتراضية) */}
-      <section className="py-20 px-6 bg-[#1e293b] text-center">
+      <section className="py-20 px-6 bg-[#1e293b] text-center" dir="rtl"> {/* Added dir="rtl" */}
         <motion.h3
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -218,7 +218,7 @@ export default function HomePage() {
             viewport={{ once: true, amount: 0.5 }}
             className="bg-[#0f172a] p-8 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center justify-center"
           >
-            <FaPlayCircle className="text-6xl text-purple-400 mb-4" /> {/* تم تغيير الأيقونة هنا لتناسب الفيديوهات */}
+            <FaPlayCircle className="text-6xl text-purple-400 mb-4" />
             <span className="text-5xl font-extrabold text-white">{totalVideos}</span>
             <p className="text-gray-300 text-xl mt-2">درس وفيديو تعليمي</p>
           </motion.div>
@@ -228,7 +228,7 @@ export default function HomePage() {
       {/* --- */}
 
       {/* ✅ إضافة Call to Action النهائية */}
-      <section className="text-center py-16 px-6 bg-gradient-to-r from-[#1e293b] via-[#0f172a] to-[#1e293b]">
+      <section className="text-center py-16 px-6 bg-gradient-to-r from-[#1e293b] via-[#0f172a] to-[#1e293b]" dir="rtl"> {/* Added dir="rtl" */}
         <h3 className="text-3xl font-bold text-pink-400 mb-4">مستعد تبدأ؟</h3>
         <p className="text-gray-300 max-w-xl mx-auto mb-6">
           ابنِ مستقبلك في عالم البرمجة اليوم! انضم لآلاف الطلاب الذين بدأوا

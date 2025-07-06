@@ -33,7 +33,7 @@ export default function LanguagePage() {
 
       <Header />
 
-      <main className="flex-grow pt-24 pb-20 px-4 sm:px-6 md:px-10 max-w-6xl mx-auto space-y-14 relative z-10">
+      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden" dir="rtl">
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

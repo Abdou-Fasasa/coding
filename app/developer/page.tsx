@@ -26,7 +26,7 @@ export default function DeveloperPage() {
     <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white flex flex-col justify-between">
       <Header />
 
-      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden">
+      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden" dir="rtl">
         {/* Decorative background elements (subtle animations) */}
         <motion.div
           initial={{ scale: 0, opacity: 0 }}

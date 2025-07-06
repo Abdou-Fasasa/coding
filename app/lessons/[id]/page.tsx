@@ -262,7 +262,7 @@ export default function LessonPage() {
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
       <Header />
 
-      <main className="flex-1 pt-32 pb-20 px-4 sm:px-8 max-w-6xl mx-auto w-full flex flex-col items-center">
+      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden" dir="rtl">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

@@ -100,7 +100,7 @@ export default function HTMLIndexPage() {
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
       <Header />
 
-      <main className="pt-24 pb-16 px-4 sm:px-6 md:px-10 max-w-6xl mx-auto space-y-12" dir="rtl">
+      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden" dir="rtl">
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

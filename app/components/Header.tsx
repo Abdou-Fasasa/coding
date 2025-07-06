@@ -8,6 +8,8 @@ import {
   FaUserTie,
   FaBars,
   FaTimes,
+  FaQuestionCircle,
+  FaMoneyBillWave, // Added for Subscribe/Pricing icon
 } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,18 +21,16 @@ export default function Header() {
   const pathname = usePathname();
 
   // Animation states for the mobile menu (slide down/up)
-  // We define the full state objects here, which will be directly used
-
   const mobileMenuStates = {
-    hidden: { 
-      opacity: 0, 
-      y: -50, 
-      transition: { duration: 0.2, ease: easeIn } 
+    hidden: {
+      opacity: 0,
+      y: -50,
+      transition: { duration: 0.2, ease: easeIn }
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.3, ease: easeOut } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: easeOut }
     },
   };
 
@@ -74,7 +74,7 @@ export default function Header() {
               ${isActiveLink("/") ? "bg-white/10 text-pink-400 shadow-inner" : "hover:text-pink-400"}
             `}
           >
-            <FaHome /> الرئيسية
+            <FaHome /> Home
             {/* Active indicator without layoutId */}
             <AnimatePresence>
               {isActiveLink("/") && (
@@ -100,7 +100,7 @@ export default function Header() {
               ${isActiveLink("/lessons") ? "bg-white/10 text-purple-400 shadow-inner" : "hover:text-purple-400"}
             `}
           >
-            <FaGraduationCap /> الدروس
+            <FaGraduationCap /> Lessons
             <AnimatePresence>
               {isActiveLink("/lessons") && (
                 <motion.span
@@ -117,14 +117,14 @@ export default function Header() {
             )}
           </Link>
 
-          {/* Current Language/Course Link */}
+          {/* Current Curriculum Link */}
           <Link
             href="/language"
             className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
               ${isActiveLink("/language") ? "bg-white/10 text-yellow-400 shadow-inner" : "hover:text-yellow-400"}
             `}
           >
-            <FaLaptopCode /> المنهج الحالي
+            <FaLaptopCode /> Current Curriculum
             <AnimatePresence>
               {isActiveLink("/language") && (
                 <motion.span
@@ -148,7 +148,7 @@ export default function Header() {
               ${isActiveLink("/developer") ? "bg-white/10 text-cyan-400 shadow-inner" : "hover:text-cyan-400"}
             `}
           >
-            <FaUserTie /> المطور
+            <FaUserTie /> Developer
             <AnimatePresence>
               {isActiveLink("/developer") && (
                 <motion.span
@@ -164,13 +164,61 @@ export default function Header() {
               <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></span>
             )}
           </Link>
+
+          {/* FAQ Link */}
+          <Link
+            href="/faq"
+            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+              ${isActiveLink("/faq") ? "bg-white/10 text-orange-400 shadow-inner" : "hover:text-orange-400"}
+            `}
+          >
+            <FaQuestionCircle /> FAQ
+            <AnimatePresence>
+              {isActiveLink("/faq") && (
+                <motion.span
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-orange-400 rounded-full"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </AnimatePresence>
+            {!isActiveLink("/faq") && (
+              <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></span>
+            )}
+          </Link>
+
+          {/* Subscribe/Pricing Link - NEW */}
+          <Link
+            href="/subscribe"
+            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+              ${isActiveLink("/subscribe") ? "bg-white/10 text-green-400 shadow-inner" : "hover:text-green-400"}
+            `}
+          >
+            <FaMoneyBillWave /> Pricing
+            <AnimatePresence>
+              {isActiveLink("/subscribe") && (
+                <motion.span
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-green-400 rounded-full"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 5 }}
+                  transition={{ duration: 0.3 }}
+                />
+              )}
+            </AnimatePresence>
+            {!isActiveLink("/subscribe") && (
+              <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></span>
+            )}
+          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-white text-3xl focus:outline-none p-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
-          aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+          aria-label={menuOpen ? "Close Menu" : "Open Menu"}
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
@@ -182,7 +230,7 @@ export default function Header() {
           <motion.div
             initial={mobileMenuStates.hidden} // Direct initial state
             animate={mobileMenuStates.visible} // Direct animate state
-            exit={mobileMenuStates.hidden}   // Direct exit state
+            exit={mobileMenuStates.hidden}    // Direct exit state
             className="md:hidden bg-[#0f172a] text-white px-6 py-4 space-y-4 text-lg font-medium border-t border-gray-700/50"
           >
             <Link
@@ -190,28 +238,44 @@ export default function Header() {
               className="flex items-center gap-2 hover:text-pink-400 transition-colors duration-200 py-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaHome /> الرئيسية
+              <FaHome /> Home
             </Link>
             <Link
               href="/lessons"
               className="flex items-center gap-2 hover:text-purple-400 transition-colors duration-200 py-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaGraduationCap /> الدروس
+              <FaGraduationCap /> Lessons
             </Link>
             <Link
               href="/language"
               className="flex items-center gap-2 hover:text-yellow-400 transition-colors duration-200 py-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaLaptopCode /> المنهج الحالي
+              <FaLaptopCode /> Current Curriculum
             </Link>
             <Link
               href="/developer"
               className="flex items-center gap-2 hover:text-cyan-400 transition-colors duration-200 py-2"
               onClick={() => setMenuOpen(false)}
             >
-              <FaUserTie /> المطور
+              <FaUserTie /> Developer
+            </Link>
+            {/* FAQ Link in Mobile Menu */}
+            <Link
+              href="/faq"
+              className="flex items-center gap-2 hover:text-orange-400 transition-colors duration-200 py-2"
+              onClick={() => setMenuOpen(false)}
+            >
+              <FaQuestionCircle /> FAQ
+            </Link>
+            {/* Subscribe/Pricing Link in Mobile Menu - NEW */}
+            <Link
+              href="/subscribe"
+              className="flex items-center gap-2 hover:text-green-400 transition-colors duration-200 py-2"
+              onClick={() => setMenuOpen(false)}
+            >
+              <FaMoneyBillWave /> Pricing
             </Link>
           </motion.div>
         )}
