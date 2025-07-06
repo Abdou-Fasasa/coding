@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaInfoCircle, FaArrowLeft, FaArrowRight, FaLock, FaUnlockAlt } from "react-icons/fa"; // Added FaLock, FaUnlockAlt
+import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt } from "react-icons/fa"; // Added FaLock, FaUnlockAlt
 import Link from "next/link";
 
 // بيانات الدروس (يجب أن تتطابق مع تلك الموجودة في LessonsPage لتسجيل الإكمال)

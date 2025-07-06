@@ -8,15 +8,13 @@ import {
   FaGraduationCap,
   FaLaptopCode,
   FaUserTie,
-  FaFacebookF, // Changed to FaFacebookF for a cleaner look
+  FaFacebookF,
   FaWhatsapp,
-  FaTelegramPlane, // Changed to FaTelegramPlane for a cleaner look
+  FaTelegramPlane,
   FaInstagram,
   FaEnvelope,
   FaArrowUp,
-  FaMapMarkerAlt, // New icon for address/location if applicable
-  FaPhone, // New icon for phone if applicable
-} from "react-icons/fa";
+} from "react-icons/fa"; // Removed unused FaMapMarkerAlt and FaPhone
 
 export default function Footer() {
   const [showBackToTop, setShowBackToTop] = useState(false);

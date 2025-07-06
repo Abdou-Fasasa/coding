@@ -5,22 +5,21 @@ import Footer from "../components/Footer";
 import { motion } from "framer-motion";
 import {
   FaEnvelope,
-  FaFacebookF, // Changed to FaFacebookF for cleaner look
+  FaFacebookF,
   FaWhatsapp,
-  FaTelegramPlane, // Changed to FaTelegramPlane for cleaner look
+  FaTelegramPlane,
   FaInstagram,
   FaCode,
   FaHeart,
   FaLaptopCode, // General development icon
   FaShieldAlt, // Cybersecurity / Ethical Hacking
   FaDatabase, // Backend / Databases
-  FaChartBar, // Data Analysis
   FaMobileAlt, // Mobile Development
   FaCloud,     // Cloud / DevOps
   FaBrain,     // AI / Machine Learning
   FaGamepad,   // Game Development
   FaTools,     // Other tools/concepts
-} from "react-icons/fa"; // Updated icon imports
+} from "react-icons/fa"; // Removed FaChartBar import
 
 export default function DeveloperPage() {
   return (
@@ -292,24 +291,30 @@ function SkillCard({ title, icon: Icon, color, skills }: SkillCardProps) {
 
   const { text, bg, border } = colorClasses[color] || colorClasses.gray; // Fallback to gray
 
-  return (
-    <div style={{ ['--tw-shadow-color-rgb' as any]: `var(--${color}-500-rgb)` }}>
-      <motion.div
-        whileHover={{ scale: 1.03, boxShadow: `0 0 20px -5px rgba(var(--${color}-500-rgb), 0.5)` }}
-        transition={{ type: "spring", stiffness: 300, damping: 15 }}
-        className={`bg-gray-800/50 p-6 rounded-2xl shadow-lg space-y-4 border ${border} transform transition-all duration-300`}
-      >
-        <h3 className={`text-xl md:text-2xl font-bold ${text} flex items-center justify-center gap-3`}>
-          <Icon className={`text-3xl ${text}`} /> {title}
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 text-sm font-medium">
-          {skills.map((skill, index) => (
-            <span key={index} className={`px-3 py-1 ${bg} rounded-full ${text} shadow-sm`}>
-              {skill}
-            </span>
-          ))}
-        </div>
-      </motion.div>
-    </div>
-  );
+  const customStyle: React.CSSProperties & { [key: string]: string } = {
+  [`--tw-shadow-color-rgb`]: `var(--${color}-500-rgb)`
+};
+return (
+  <div style={customStyle}>
+    <motion.div
+      whileHover={{
+        scale: 1.03,
+        boxShadow: `0 0 20px -5px rgba(var(--${color}-500-rgb), 0.5)`
+      }}
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      className={`bg-gray-800/50 p-6 rounded-2xl shadow-lg space-y-4 border ${border} transform transition-all duration-300`}
+    >
+      <h3 className={`text-xl md:text-2xl font-bold ${text} flex items-center justify-center gap-3`}>
+        <Icon className={`text-3xl ${text}`} /> {title}
+      </h3>
+      <div className="flex flex-wrap justify-center gap-2 text-sm font-medium">
+        {skills.map((skill, index) => (
+          <span key={index} className={`px-3 py-1 ${bg} rounded-full ${text} shadow-sm`}>
+            {skill}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  </div>
+);
 }

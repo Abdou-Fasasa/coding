@@ -4,7 +4,15 @@ import { motion } from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import { FaCheckCircle, FaCode, FaHtml5, FaCss3Alt, FaJs, FaLaptopCode, FaStar } from "react-icons/fa"; // Added more specific icons
+import {
+  FaCode,
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaLaptopCode,
+  // FaCheckCircle, // Removed: Not used in this component
+  // FaStar,        // Removed: Not used in this component
+} from "react-icons/fa"; // Removed FaChartBar as it was unused
 
 export default function LanguagePage() {
   return (
@@ -114,7 +122,7 @@ export default function LanguagePage() {
             description="قريباً: انغمس في عالم البايثون، من الأساسيات إلى تطبيقات الذكاء الاصطناعي."
             href="#" // No active link yet
           />
-           <Card
+          <Card
             title="React"
             icon={FaCode} // Generic code icon
             color="purple"
@@ -123,7 +131,7 @@ export default function LanguagePage() {
             description="قريباً: تعلم بناء واجهات مستخدم تفاعلية وقوية باستخدام React.js."
             href="#" // No active link yet
           />
-           <Card
+          <Card
             title="Node.js"
             icon={FaCode} // Generic code icon
             color="red"
@@ -132,7 +140,7 @@ export default function LanguagePage() {
             description="قريباً: تعلم بناء تطبيقات الويب الخلفية سريعة وقابلة للتطوير باستخدام Node.js."
             href="#" // No active link yet
           />
-           <Card
+          <Card
             title="SQL"
             icon={FaCode} // Generic code icon
             color="sky"
@@ -171,7 +179,16 @@ type CardProps = {
   icon: React.ElementType; // Icon component type
 };
 
-function Card({ title, description, href, color, completed = false, comingSoon = false, inProgress = false, icon: Icon }: CardProps) {
+function Card({
+  title,
+  description,
+  href,
+  color,
+  completed = false,
+  comingSoon = false,
+  inProgress = false,
+  icon: Icon
+}: CardProps) {
   const colors = {
     yellow: {
       border: "border-yellow-400/40",
@@ -223,25 +240,30 @@ function Card({ title, description, href, color, completed = false, comingSoon =
     },
   };
 
-  const { border, text, bg, glow } = colors[color];
+  const { border, text, bg } = colors[color];
 
-  // Determine card opacity and interactivity based on status
   const cardOpacity = comingSoon ? 'opacity-70' : '';
   const cardPointerEvents = comingSoon ? 'pointer-events-none' : '';
   const cardCursor = comingSoon ? 'cursor-not-allowed' : '';
   const linkOpacity = comingSoon ? 'opacity-60' : '';
   const linkPointerEvents = comingSoon ? 'pointer-events-none' : '';
 
+  const glowStyle: React.CSSProperties & { [key: string]: string } = {
+    '--tw-shadow-color-rgb': `var(--${color}-500-rgb)`
+  };
+
   return (
     <motion.div
-      whileHover={{ scale: (comingSoon || inProgress) ? 1.01 : 1.05, boxShadow: `0 0 25px -5px var(--tw-shadow-color-rgb, rgba(var(--${color}-500-rgb), 0.5))` }} // Dynamic glow on hover, reduced scale for inProgress/comingSoon
+      whileHover={{
+        scale: (comingSoon || inProgress) ? 1.01 : 1.05,
+        boxShadow: `0 0 25px -5px rgba(var(--${color}-500-rgb), 0.5)`
+      }}
       transition={{ type: "spring", stiffness: 300, damping: 15 }}
       className={`relative bg-[#1e293b] rounded-2xl p-6 shadow-xl border ${border} flex flex-col justify-between
-                  ${completed ? 'hover:border-green-500/60' : inProgress ? 'border-orange-500/60 animate-pulse-slow' : comingSoon ? '' : 'hover:border-blue-500/60'}
-                  transform transition-all duration-300 ease-in-out ${cardOpacity} ${cardPointerEvents} ${cardCursor}`}
-      style={{ ['--tw-shadow-color-rgb' as any]: `var(--${color}-500-rgb)` } as React.CSSProperties} // Custom property for dynamic glow
+        ${completed ? 'hover:border-green-500/60' : inProgress ? 'border-orange-500/60 animate-pulse-slow' : comingSoon ? '' : 'hover:border-blue-500/60'}
+        transform transition-all duration-300 ease-in-out ${cardOpacity} ${cardPointerEvents} ${cardCursor}`}
+      style={glowStyle}
     >
-      {/* Status Ribbon/Tag */}
       {completed && (
         <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold py-1 px-3 rounded-tr-2xl rounded-bl-lg">
           مُنجز ✅
@@ -260,7 +282,7 @@ function Card({ title, description, href, color, completed = false, comingSoon =
 
       <div className="space-y-4">
         <h2 className={`text-2xl font-bold ${text} mb-2 flex items-center justify-center gap-3`}>
-          <Icon className={`text-3xl ${text}`} /> {/* Render dynamic icon */}
+          <Icon className={`text-3xl ${text}`} />
           {title}
         </h2>
         <p className="text-gray-300 text-sm md:text-base mb-6 leading-relaxed">{description}</p>
@@ -269,8 +291,8 @@ function Card({ title, description, href, color, completed = false, comingSoon =
       <Link
         href={href}
         className={`mt-4 text-sm ${bg} text-white font-bold py-2.5 px-6 rounded-xl transition w-fit mx-auto shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 ${linkOpacity} ${linkPointerEvents}`}
-        aria-disabled={comingSoon} // Accessibility for disabled links
-        tabIndex={comingSoon ? -1 : 0} // Make link not tabbable if coming soon
+        aria-disabled={comingSoon}
+        tabIndex={comingSoon ? -1 : 0}
       >
         📚 فهرس
       </Link>
