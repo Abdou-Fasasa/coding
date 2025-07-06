@@ -105,12 +105,16 @@ export default function LoginPage() {
         u.password === trimmedPassword
     );
 
-    if (user) {
-      document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7;
-      playSuccessSound();
-      // توجيه مباشر بدون startTransition
-      router.push('/subscribe');
-    } else {
+if (user) {
+  document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7;
+  playSuccessSound();
+
+  setTimeout(() => {
+    router.push('/subscribe');
+  }, 300); // نأخر التوجيه 300ms عشان الـ cookie تتسجل
+}
+
+    else {
       setError('❌ اسم المستخدم أو كلمة السر غير صحيحة.');
       playErrorSound();
     }
