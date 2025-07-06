@@ -6,7 +6,6 @@ import { users } from '@/utils/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { startTransition } from 'react';
 
 import {
   FaEye,
@@ -109,9 +108,8 @@ export default function LoginPage() {
     if (user) {
       document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7;
       playSuccessSound();
-      startTransition(() => {
-        router.push('/subscribe');
-      });
+      // توجيه مباشر بدون startTransition
+      router.push('/subscribe');
     } else {
       setError('❌ اسم المستخدم أو كلمة السر غير صحيحة.');
       playErrorSound();
