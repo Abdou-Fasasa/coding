@@ -6,6 +6,8 @@ import { users } from '@/utils/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { startTransition } from 'react';
+
 import {
   FaEye,
   FaEyeSlash,
@@ -54,22 +56,10 @@ export default function LoginPage() {
         const Tone = await loadToneJs();
         await Tone.start();
 
-        successSynthRef.current = new Tone.PolySynth(Tone.Synth, {
-          oscillator: { type: 'sine' },
-          envelope: { attack: 0.02, decay: 0.1, sustain: 0.1, release: 0.2 },
-        }).toDestination();
-
-        errorSynthRef.current = new Tone.PolySynth(Tone.Synth, {
-          oscillator: { type: 'sawtooth' },
-          envelope: { attack: 0.01, decay: 0.2, sustain: 0.05, release: 0.3 },
-        }).toDestination();
-
+        successSynthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
+        errorSynthRef.current = new Tone.PolySynth(Tone.Synth).toDestination();
         clickSynthRef.current = new Tone.MembraneSynth().toDestination();
-
-        messageSynthRef.current = new Tone.Synth({
-          oscillator: { type: 'triangle' },
-          envelope: { attack: 0.01, decay: 0.1, sustain: 0.05, release: 0.15 },
-        }).toDestination();
+        messageSynthRef.current = new Tone.Synth().toDestination();
       } catch (e) {
         console.error('Tone.js failed to load:', e);
       }
@@ -117,11 +107,11 @@ export default function LoginPage() {
     );
 
     if (user) {
-      document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7; // 7 أيام
+      document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7;
       playSuccessSound();
-      setTimeout(() => {
+      startTransition(() => {
         router.push('/subscribe');
-      }, 500); // تحويل بعد نص ثانية
+      });
     } else {
       setError('❌ اسم المستخدم أو كلمة السر غير صحيحة.');
       playErrorSound();
@@ -130,7 +120,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center px-4 py-10 relative overflow-hidden">
-      {/* Blobs + Banner */}
+      {/* Blobs */}
       <motion.div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.1, scale: 1 }}
         transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
@@ -170,12 +160,9 @@ export default function LoginPage() {
         className="w-full max-w-md bg-white/10 border border-white/20 backdrop-blur-lg rounded-b-2xl shadow-2xl p-6 sm:p-8 space-y-6 text-white relative z-10"
         dir="rtl"
       >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex justify-center relative"
-        >
+        {/* Logo */}
+        <motion.div className="flex justify-center relative"
+          initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.2 }}>
           <Image
             src="/images/Logo.jpg"
             alt="شعار المنصة"
@@ -183,7 +170,6 @@ export default function LoginPage() {
             height={100}
             className="rounded-full shadow-lg border-2 border-indigo-400"
           />
-          {/* ✅ شارة VIP مضافة هنا */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -252,6 +238,7 @@ export default function LoginPage() {
         </motion.p>
       </motion.div>
 
+      {/* WhatsApp Shortcut */}
       <motion.a
         href="https://wa.me/201128606959" target="_blank" rel="noopener noreferrer"
         className="fixed bottom-5 left-5 w-16 h-16 rounded-full bg-green-500 flex items-center justify-center text-white text-3xl shadow-xl z-20"
