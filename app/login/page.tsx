@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { users } from '@/utils/auth'; // Assuming this path is correct
+import { users } from '@/utils/auth'; // ✅ تم إعادة استيراد هذا الملف
+
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link'; // Import Link for internal navigation
-import { FaEye, FaEyeSlash, FaWhatsapp, FaSignInAlt, FaUserPlus, FaCrown, FaGift } from 'react-icons/fa'; // FaTimes, FaCheckCircle, FaCalendarAlt are no longer needed here
+import { FaEye, FaEyeSlash, FaWhatsapp, FaSignInAlt, FaUserPlus, FaCrown, FaGift } from 'react-icons/fa';
 
 declare global {
   interface Window {
@@ -34,7 +35,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  // Removed showDiscountModal state as modal is no longer used
+
+  // ✅ تم إزالة تعريف قائمة المستخدمين هنا، وسيتم استيرادها من '@/utils/auth'
 
   const successSynthRef = useRef<import('tone').PolySynth | null>(null);
   const errorSynthRef = useRef<import('tone').PolySynth | null>(null);
@@ -154,7 +156,7 @@ export default function LoginPage() {
           className="block mt-2 text-sm text-blue-800 hover:text-blue-900 underline font-semibold transition-colors"
           onClick={playClickSound}
         >
-          اغتنم الفرصة الآن! وسجل الدخول
+          اغتنم الفرصة الآن! اضغط هنا للتفاصيل
         </Link>
       </motion.div>
 

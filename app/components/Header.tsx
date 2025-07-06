@@ -9,16 +9,18 @@ import {
   FaBars,
   FaTimes,
   FaQuestionCircle,
-  FaMoneyBillWave, // Added for Subscribe/Pricing icon
+  FaMoneyBillWave,
+  FaSignOutAlt, // Added for Logout icon
 } from "react-icons/fa";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { easeIn, easeOut } from "framer-motion";
+import { motion, AnimatePresence, easeIn, easeOut } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
+// تم إزالة 'easeIn' و 'easeOut' من هنا، لأنهما يستخدمان كسلاسل نصية مباشرة في خصائص الانتقال
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Animation states for the mobile menu (slide down/up)
   const mobileMenuStates = {
@@ -36,10 +38,16 @@ export default function Header() {
 
   // Function to determine if a link is active
   const isActiveLink = (href: string) => {
-    // Check if the current path starts with the link's href for nested routes
-    if (href === "/" && pathname === "/") return true; // Exact match for home
-    if (href !== "/" && pathname.startsWith(href)) return true; // Starts with href for others
+    if (href === "/" && pathname === "/") return true;
+    if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
+  };
+
+  // Handle Logout function
+  const handleLogout = () => {
+    document.cookie = 'loggedIn=; path=/; max-age=0'; // Clear the loggedIn cookie
+    router.push('/login'); // Redirect to the login page
+    setMenuOpen(false); // Close mobile menu if open
   };
 
   return (
@@ -59,23 +67,22 @@ export default function Header() {
           <Link
             href="/"
             className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 text-transparent bg-clip-text tracking-tight"
-            onClick={() => setMenuOpen(false)} // Close menu if logo is clicked
+            onClick={() => setMenuOpen(false)}
           >
             Coding
           </Link>
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8 text-xl font-semibold">
+        <nav className="hidden md:flex items-center space-x-4 text-lg font-semibold"> {/* Changed space-x-6 to space-x-4, text-xl to text-lg */}
           {/* Home Link */}
           <Link
             href="/"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg {/* Changed gap-2 to gap-1, py-2 px-3 to py-1 px-2 */}
               ${isActiveLink("/") ? "bg-white/10 text-pink-400 shadow-inner" : "hover:text-pink-400"}
             `}
           >
-            <FaHome /> Home
-            {/* Active indicator without layoutId */}
+            <FaHome className="text-xl" /> Home {/* Ensured icon size is consistent */}
             <AnimatePresence>
               {isActiveLink("/") && (
                 <motion.span
@@ -87,7 +94,6 @@ export default function Header() {
                 />
               )}
             </AnimatePresence>
-            {/* Hover effect for non-active links */}
             {!isActiveLink("/") && (
               <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></span>
             )}
@@ -96,11 +102,11 @@ export default function Header() {
           {/* Lessons Link */}
           <Link
             href="/lessons"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg
               ${isActiveLink("/lessons") ? "bg-white/10 text-purple-400 shadow-inner" : "hover:text-purple-400"}
             `}
           >
-            <FaGraduationCap /> Lessons
+            <FaGraduationCap className="text-xl" /> Lessons
             <AnimatePresence>
               {isActiveLink("/lessons") && (
                 <motion.span
@@ -120,11 +126,11 @@ export default function Header() {
           {/* Current Curriculum Link */}
           <Link
             href="/language"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg
               ${isActiveLink("/language") ? "bg-white/10 text-yellow-400 shadow-inner" : "hover:text-yellow-400"}
             `}
           >
-            <FaLaptopCode /> Current Curriculum
+            <FaLaptopCode className="text-xl" /> language
             <AnimatePresence>
               {isActiveLink("/language") && (
                 <motion.span
@@ -144,11 +150,11 @@ export default function Header() {
           {/* Developer Link */}
           <Link
             href="/developer"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg
               ${isActiveLink("/developer") ? "bg-white/10 text-cyan-400 shadow-inner" : "hover:text-cyan-400"}
             `}
           >
-            <FaUserTie /> Developer
+            <FaUserTie className="text-xl" /> Developer
             <AnimatePresence>
               {isActiveLink("/developer") && (
                 <motion.span
@@ -168,11 +174,11 @@ export default function Header() {
           {/* FAQ Link */}
           <Link
             href="/faq"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg
               ${isActiveLink("/faq") ? "bg-white/10 text-orange-400 shadow-inner" : "hover:text-orange-400"}
             `}
           >
-            <FaQuestionCircle /> FAQ
+            <FaQuestionCircle className="text-xl" /> FAQ
             <AnimatePresence>
               {isActiveLink("/faq") && (
                 <motion.span
@@ -189,14 +195,14 @@ export default function Header() {
             )}
           </Link>
 
-          {/* Subscribe/Pricing Link - NEW */}
+          {/* Subscribe/Pricing Link */}
           <Link
             href="/subscribe"
-            className={`group relative flex items-center gap-2 text-white transition-colors duration-200 py-2 px-3 rounded-lg
+            className={`group relative flex items-center gap-1 text-white transition-colors duration-200 py-1 px-2 rounded-lg
               ${isActiveLink("/subscribe") ? "bg-white/10 text-green-400 shadow-inner" : "hover:text-green-400"}
             `}
           >
-            <FaMoneyBillWave /> Pricing
+            <FaMoneyBillWave className="text-xl" /> Pricing
             <AnimatePresence>
               {isActiveLink("/subscribe") && (
                 <motion.span
@@ -212,6 +218,15 @@ export default function Header() {
               <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></span>
             )}
           </Link>
+
+          {/* Logout Button - Desktop (Icon Only) */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center w-8 h-8 rounded-full bg-red-600 hover:bg-red-700 text-white text-lg shadow-md transition-all duration-200 hover:scale-110"
+            title="تسجيل خروج"
+          >
+            <FaSignOutAlt />
+          </button>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -228,9 +243,10 @@ export default function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={mobileMenuStates.hidden} // Direct initial state
-            animate={mobileMenuStates.visible} // Direct animate state
-            exit={mobileMenuStates.hidden}    // Direct exit state
+            initial="hidden" // Changed to string literal
+            animate="visible" // Changed to string literal
+            exit="hidden"    // Changed to string literal
+            variants={mobileMenuStates} // Added variants prop
             className="md:hidden bg-[#0f172a] text-white px-6 py-4 space-y-4 text-lg font-medium border-t border-gray-700/50"
           >
             <Link
@@ -269,7 +285,7 @@ export default function Header() {
             >
               <FaQuestionCircle /> FAQ
             </Link>
-            {/* Subscribe/Pricing Link in Mobile Menu - NEW */}
+            {/* Subscribe/Pricing Link in Mobile Menu */}
             <Link
               href="/subscribe"
               className="flex items-center gap-2 hover:text-green-400 transition-colors duration-200 py-2"
@@ -277,6 +293,13 @@ export default function Header() {
             >
               <FaMoneyBillWave /> Pricing
             </Link>
+            {/* Logout Button in Mobile Menu (Icon Only) */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-end gap-2 text-red-400 hover:text-red-300 transition-colors duration-200 py-2 w-full"
+            >
+              <FaSignOutAlt className="text-xl" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
