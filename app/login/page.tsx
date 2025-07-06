@@ -2,12 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { users } from '@/utils/auth'; // ✅ تم إعادة استيراد هذا الملف
-
+import { users } from '@/utils/auth';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link'; // Import Link for internal navigation
-import { FaEye, FaEyeSlash, FaWhatsapp, FaSignInAlt, FaUserPlus, FaCrown, FaGift } from 'react-icons/fa';
+import Link from 'next/link';
+import {
+  FaEye,
+  FaEyeSlash,
+  FaWhatsapp,
+  FaSignInAlt,
+  FaUserPlus,
+  FaCrown,
+  FaGift
+} from 'react-icons/fa';
 
 declare global {
   interface Window {
@@ -35,8 +42,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-
-  // ✅ تم إزالة تعريف قائمة المستخدمين هنا، وسيتم استيرادها من '@/utils/auth'
 
   const successSynthRef = useRef<import('tone').PolySynth | null>(null);
   const errorSynthRef = useRef<import('tone').PolySynth | null>(null);
@@ -112,10 +117,11 @@ export default function LoginPage() {
     );
 
     if (user) {
-      // Set the cookie with a max-age for persistence
-      document.cookie = 'loggedIn=true; path=/; max-age=' + (60 * 60 * 24 * 7); // 7 days
+      document.cookie = 'loggedIn=true; path=/; max-age=' + 60 * 60 * 24 * 7; // 7 أيام
       playSuccessSound();
-      router.push('/subscribe'); // Redirect to subscribe page
+      setTimeout(() => {
+        router.push('/subscribe');
+      }, 500); // تحويل بعد نص ثانية
     } else {
       setError('❌ اسم المستخدم أو كلمة السر غير صحيحة.');
       playErrorSound();
@@ -124,25 +130,22 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center px-4 py-10 relative overflow-hidden">
-      {/* Animated Background Blobs */}
+      {/* Blobs + Banner */}
       <motion.div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.1, scale: 1 }}
-        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-      />
+        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
       <motion.div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.15, scale: 1 }}
-        transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-      />
+        transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.08, scale: 1 }}
-        transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-      />
+        transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
 
-      {/* Discount Banner */}
+      {/* Banner */}
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.1 }}
+        transition={{ duration: 0.7 }}
         className="w-full max-w-md bg-gradient-to-r from-yellow-500 to-orange-500 text-gray-900 font-bold text-center py-4 px-6 rounded-t-2xl shadow-xl mb-0 relative z-10"
         dir="rtl"
       >
@@ -150,7 +153,6 @@ export default function LoginPage() {
           <FaGift className="text-2xl" />
           <span>عروض حصرية! خصومات كبرى على جميع الكورسات.</span>
         </p>
-        {/* Changed button back to Link for direct navigation */}
         <Link
           href="/subscribe"
           className="block mt-2 text-sm text-blue-800 hover:text-blue-900 underline font-semibold transition-colors"
@@ -160,6 +162,7 @@ export default function LoginPage() {
         </Link>
       </motion.div>
 
+      {/* Login Box */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -173,25 +176,30 @@ export default function LoginPage() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex justify-center relative"
         >
-          <Image src="/images/Logo.jpg" alt="شعار المنصة" width={100} height={100} className="rounded-full shadow-lg border-2 border-indigo-400" />
+          <Image
+            src="/images/Logo.jpg"
+            alt="شعار المنصة"
+            width={100}
+            height={100}
+            className="rounded-full shadow-lg border-2 border-indigo-400"
+          />
+          {/* ✅ شارة VIP مضافة هنا */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
             className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full shadow-lg transform rotate-6"
           >
-            <FaCrown className="inline-block text-sm mr-1" /> VIP Premium
+            <FaCrown className="inline-block text-sm mr-1" /> VIP PREMIUM
           </motion.div>
         </motion.div>
 
         <motion.h1 className="text-4xl sm:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400"
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
-        >
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           Coding
         </motion.h1>
         <motion.p className="text-center text-gray-300 text-lg"
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5 }}
-        >
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           أدخل بياناتك لتسجيل الدخول
         </motion.p>
 
@@ -199,23 +207,19 @@ export default function LoginPage() {
           <motion.input
             type="text" placeholder="اسم المستخدم" value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-5 py-3 rounded-lg bg-white/15 border border-white/20 placeholder-gray-300 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.6 }}
+            className="w-full px-5 py-3 rounded-lg bg-white/15 border border-white/20 placeholder-gray-300 text-white"
+            initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
           />
 
-          <motion.div
-            className="relative"
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.7 }}
-          >
+          <motion.div className="relative"
+            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <input
               type={showPassword ? 'text' : 'password'} placeholder="كلمة السر" value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-5 py-3 rounded-lg bg-white/15 border border-white/20 placeholder-gray-300 text-white focus:outline-none pr-12"
+              className="w-full px-5 py-3 rounded-lg bg-white/15 border border-white/20 placeholder-gray-300 text-white pr-12"
             />
-            <button
-              type="button" onClick={() => { playClickSound(); setShowPassword(!showPassword); }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 hover:text-indigo-300"
-            >
+            <button type="button" onClick={() => { playClickSound(); setShowPassword(!showPassword); }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 hover:text-indigo-300">
               {showPassword ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
             </button>
           </motion.div>
@@ -223,8 +227,7 @@ export default function LoginPage() {
           <motion.button
             type="submit"
             className="w-full py-3 rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold text-lg flex items-center justify-center gap-2"
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.8 }}
-          >
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <FaSignInAlt className="text-xl" /> دخول
           </motion.button>
         </form>
@@ -232,22 +235,18 @@ export default function LoginPage() {
         <AnimatePresence>
           {error && (
             <motion.p className="text-red-400 text-center font-semibold mt-4"
-              initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}
-            >
+              initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}>
               {error}
             </motion.p>
           )}
         </AnimatePresence>
 
-        <motion.p
-          className="text-center text-gray-400 text-sm"
-          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.9 }}
-        >
+        <motion.p className="text-center text-gray-400 text-sm"
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           ليس لديك حساب؟{" "}
           <a href="https://wa.me/201128606959" target="_blank" rel="noopener noreferrer"
             className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center justify-center gap-1 mt-2"
-            onClick={playClickSound}
-          >
+            onClick={playClickSound}>
             <FaUserPlus /> تواصل مع المطور للتسجيل
           </a>
         </motion.p>
