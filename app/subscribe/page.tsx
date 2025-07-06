@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
-import { FaCrown, FaCheckCircle, FaMoneyBillWave, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt } from 'react-icons/fa'; // Added FaCalendarAlt
+import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt } from 'react-icons/fa'; // Added FaCalendarAlt
 
 // Component for individual course cards
 type CourseCardProps = {
