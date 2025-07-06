@@ -156,7 +156,7 @@ export default function LoginPage() {
           className="block mt-2 text-sm text-blue-800 hover:text-blue-900 underline font-semibold transition-colors"
           onClick={playClickSound}
         >
-          اغتنم الفرصة الآن! اضغط هنا للتفاصيل
+          اغتنم الفرصة الآن! وسجل دخول
         </Link>
       </motion.div>
 
