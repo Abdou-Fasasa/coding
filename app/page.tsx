@@ -254,7 +254,7 @@ export default function HomePage() {
             <span>
               طلابنا المتميزون:{" "}
               <strong className="text-white">
-                عبدالعزيز، عبدالله، محمود، الحملي، صلاح
+                وليد، عبدالعزيز، عبدالله، محمود، الحملي، صلاح 
               </strong>
             </span>
           </div>

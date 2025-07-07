@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useCallback, useRef, useState } from "react"; // Added useState
+import { useEffect, useCallback, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt } from "react-icons/fa"; // Added FaLock, FaUnlockAlt
+import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign } from "react-icons/fa"; // Added FaDollarSign for subscribe button
 import Link from "next/link";
 
 // بيانات الدروس (يجب أن تتطابق مع تلك الموجودة في LessonsPage لتسجيل الإكمال)
@@ -102,7 +102,7 @@ const allLessonsData: {
   // دروس CSS
   "Css-lesson1": {
     title: "مقدمة في CSS",
-    video: "",
+    video: "", // لا يوجد فيديو لهذا الدرس في البيانات الأصلية، لذا سيبقى فارغًا
     description: "ابدأ رحلتك في عالم تصميم الويب وتعلم كيفية إضفاء الجمال والجاذبية على صفحاتك باستخدام CSS.",
     poster: "/images/css-lessons.jpg", // صورة مصغرة لدروس CSS
   },
@@ -115,7 +115,8 @@ const orderedLessons = Object.keys(allLessonsData).map(id => ({
 }));
 
 // ✅ الكود السري لفتح الفيديوهات
-const VIDEO_UNLOCK_CODE = "VIP200";
+const VIDEO_UNLOCK_CODE = "VIPCODE2025"; // الكود السري لفتح الفيديوهات
+// ✅ مفتاح Local Storage لتخزين حالة الفتح لكل درس
 const LOCAL_STORAGE_UNLOCKED_PREFIX = "unlocked_lesson_"; // Prefix for local storage keys
 
 export default function LessonPage() {
@@ -182,7 +183,7 @@ export default function LessonPage() {
 
     const disableRightClick = (e: MouseEvent) => {
       e.preventDefault();
-      alert('التحميل أو النسخ غير مسموح به لحماية المحتوى.');
+      // alert('التحميل أو النسخ غير مسموح به لحماية المحتوى.'); // Removed alert
     };
 
     const disableContextMenu = (e: Event) => {
@@ -191,13 +192,13 @@ export default function LessonPage() {
 
     const disableCopy = (e: ClipboardEvent) => {
       e.preventDefault();
-      alert('النسخ غير مسموح به لحماية المحتوى.');
+      // alert('النسخ غير مسموح به لحماية المحتوى.'); // Removed alert
     };
 
     const disableSave = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
-        alert('حفظ الصفحة غير مسموح به لحماية المحتوى.');
+        // alert('حفظ الصفحة غير مسموح به لحماية المحتوى.'); // Removed alert
       }
     };
 
@@ -413,6 +414,30 @@ export default function LessonPage() {
             هذا الفيديو محمي بحقوق الطبع والنشر. يرجى العلم بأن أي محاولة للتحميل أو النسخ غير مصرح بها قد تعرضك للمساءلة القانونية. نقدر تفهمكم والتزامكم.
           </p>
         </motion.div>
+
+        {/* ✅ New Section: Subscribe for Code */}
+        {!isUnlocked && lesson.video && ( // Only show if video exists and is locked
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="mt-12 p-6 bg-gradient-to-r from-purple-700 to-pink-600 rounded-2xl shadow-lg border border-purple-500 max-w-3xl text-center mx-auto"
+          >
+            <h2 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-2">
+              <FaDollarSign className="text-yellow-300" /> احصل على كود الوصول!
+            </h2>
+            <p className="text-gray-100 mb-4">
+              لفتح هذا الدرس والوصول إلى محتواه الكامل، يرجى الاشتراك في الكورس.
+              الاشتراك يمنحك وصولاً غير محدود لجميع الدروس والميزات!
+            </p>
+            <Link
+              href="/subscribe"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-purple-700 rounded-lg text-xl font-bold transition-all shadow-md hover:bg-gray-200 active:scale-95"
+            >
+              <FaUnlockAlt /> اشترك الآن
+            </Link>
+          </motion.div>
+        )}
       </main>
 
       <Footer />

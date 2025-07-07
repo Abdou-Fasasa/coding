@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -14,10 +14,11 @@ import {
   FaFilePdf,
   FaCode, // Icon for HTML/Coding in general
   FaCss3Alt, // Icon for CSS
+  FaChevronDown, // Icon for dropdown/expand
+  FaChevronUp, // Icon for collapse
 } from "react-icons/fa";
 
 // بيانات الدروس لكورس HTML
-// ✅ تم إضافة حقل description لكل درس
 const initialHtmlLessons = [
   {
     id: "Computer-science",
@@ -120,7 +121,6 @@ const initialHtmlLessons = [
 ];
 
 // بيانات الدروس لكورس CSS
-// ✅ تم إضافة حقل description لكل درس
 const initialCssLessons = [
   {
     id: "Css-lesson1",
@@ -133,10 +133,10 @@ const initialCssLessons = [
 
 export default function LessonsPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  // ✅ إدارة حالة إكمال الدروس من Local Storage
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
+  const [activeCourse, setActiveCourse] = useState<string | null>(null); // ✅ Initially null to keep all sections closed
 
-  // تحميل حالة الإكمال من Local Storage عند تحميل المكون
+  // Load completion status from Local Storage on component mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const storedCompleted = localStorage.getItem('completedLessons');
@@ -151,7 +151,7 @@ export default function LessonsPage() {
     }
   }, []);
 
-  // حفظ حالة الإكمال في Local Storage عند كل تغيير
+  // Save completion status to Local Storage on every change
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('completedLessons', JSON.stringify(Array.from(completedLessons)));
@@ -162,11 +162,10 @@ export default function LessonsPage() {
     const url = `${window.location.origin}/lessons/${lessonId}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedId(lessonId);
-      setTimeout(() => setCopiedId(null), 2000); // إخفاء رسالة "تم النسخ!" بعد ثانيتين
+      setTimeout(() => setCopiedId(null), 2000); // Hide "Copied!" message after 2 seconds
     });
   }, []);
 
-  // ✅ دالة لوضع علامة "مكتمل" على الدرس عند تشغيله
   const markLessonAsCompleted = useCallback((lessonId: string) => {
     setCompletedLessons(prev => {
       const newSet = new Set(prev);
@@ -175,73 +174,165 @@ export default function LessonsPage() {
     });
   }, []);
 
+  const toggleCourseSection = useCallback((courseKey: string) => {
+    setActiveCourse(prev => (prev === courseKey ? null : courseKey));
+  }, []);
+
+  // Framer Motion variants for expand/collapse animation
+  const lessonGridVariants = {
+    open: {
+      opacity: 1,
+      height: "auto",
+      marginTop: "2rem", // ✅ Added margin-top for spacing when open
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
+    },
+    collapsed: {
+      opacity: 0,
+      height: 0,
+      marginTop: "0rem", // ✅ Reset margin-top when collapsed
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+        when: "afterChildren",
+      },
+    },
+  };
+
+  const lessonCardItemVariants = {
+    open: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+    collapsed: { opacity: 0, y: 20, transition: { duration: 0.3 } },
+  };
+
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
       <Header />
 
-      <main className="pt-32 pb-20 px-6 max-w-6xl mx-auto text-center space-y-12 relative overflow-hidden" dir="rtl">
+      <main className="pt-32 pb-20 text-center space-y-12 relative overflow-hidden" dir="rtl">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-400"
+          className="text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-400 mb-12"
         >
           اكتشف مساراتنا التعليمية
         </motion.h1>
 
         {/* HTML Course Section */}
-        <section className="space-y-8">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl md:text-4xl font-bold text-center text-cyan-300 pb-4 border-b border-cyan-700/50 flex items-center justify-center gap-3"
-          >
-            <FaCode className="text-4xl text-pink-400" /> كورس HTML: بناء الويب من الصفر
-          </motion.h2>
-          <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto">
-            تعلم أساسيات لغة HTML، لغة بناء صفحات الويب. ابدأ رحلتك في عالم تطوير الويب بخطوات سهلة وممتعة.
-          </p>
+        <section className="w-full py-12 bg-gradient-to-br from-[#1e293b] to-[#0f172a] shadow-2xl border-t border-b border-gray-700/50">
+          <div className="max-w-6xl mx-auto px-6"> {/* Inner container for content */}
+            <motion.div
+              className="flex items-center justify-between cursor-pointer py-4 px-6 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 shadow-lg border border-gray-700/60"
+              onClick={() => toggleCourseSection('html')}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-cyan-300 flex items-center gap-3">
+                <FaCode className="text-4xl text-pink-400" /> كورس HTML: بناء الويب من الصفر
+              </h2>
+              <motion.div
+                animate={{ rotate: activeCourse === 'html' ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {activeCourse === 'html' ? (
+                  <FaChevronUp className="text-3xl text-gray-400" />
+                ) : (
+                  <FaChevronDown className="text-3xl text-gray-400" />
+                )}
+              </motion.div>
+            </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            {initialHtmlLessons.map((lesson) => (
-              <LessonCard
-                key={lesson.id}
-                lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }} // ✅ تمرير حالة الإكمال
-                copiedId={copiedId}
-                onShare={handleShare}
-                onPlay={() => markLessonAsCompleted(lesson.id)} // ✅ وضع علامة "مكتمل" عند التشغيل
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {/* ✅ This motion.div now gets the background, padding, border, and shadow */}
+              {activeCourse === 'html' && (
+                <motion.div
+                  key="html-lessons-collapsible-content"
+                  initial="collapsed"
+                  animate="open"
+                  exit="collapsed"
+                  variants={lessonGridVariants}
+                  className="overflow-hidden bg-[#1e293b] p-6 rounded-2xl shadow-xl border border-gray-700/50"
+                >
+                  <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto mb-8 mt-4">
+                    تعلم أساسيات لغة HTML، لغة بناء صفحات الويب. ابدأ رحلتك في عالم تطوير الويب بخطوات سهلة وممتعة.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    {initialHtmlLessons.map((lesson) => (
+                      <LessonCard
+                        key={lesson.id}
+                        lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
+                        copiedId={copiedId}
+                        onShare={handleShare}
+                        onPlay={() => markLessonAsCompleted(lesson.id)}
+                        variants={lessonCardItemVariants}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 
-        {/* --- */}
-
         {/* CSS Course Section */}
-        <section className="space-y-8">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl md:text-4xl font-bold text-center text-cyan-300 pb-4 border-b border-cyan-700/50 flex items-center justify-center gap-3"
-          >
-            <FaCss3Alt className="text-4xl text-purple-400" /> كورس CSS: لمسة الجمال والتصميم
-          </motion.h2>
-          <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto">
-            انتقل بتصاميمك إلى المستوى التالي! تعلم CSS لتحويل صفحاتك من مجرد هياكل إلى أعمال فنية تفاعلية.
-          </p>
+        <section className="w-full py-12 bg-gradient-to-br from-[#1e293b] to-[#0f172a] shadow-2xl border-t border-b border-gray-700/50">
+          <div className="max-w-6xl mx-auto px-6"> {/* Inner container for content */}
+            <motion.div
+              className="flex items-center justify-between cursor-pointer py-4 px-6 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 shadow-lg border border-gray-700/60"
+              onClick={() => toggleCourseSection('css')}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-cyan-300 flex items-center gap-3">
+                <FaCss3Alt className="text-4xl text-purple-400" /> كورس CSS: لمسة الجمال والتصميم
+              </h2>
+              <motion.div
+                animate={{ rotate: activeCourse === 'css' ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {activeCourse === 'css' ? (
+                  <FaChevronUp className="text-3xl text-gray-400" />
+                ) : (
+                  <FaChevronDown className="text-3xl text-gray-400" />
+                )}
+              </motion.div>
+            </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
-            {initialCssLessons.map((lesson) => (
-              <LessonCard
-                key={lesson.id}
-                lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }} // ✅ تمرير حالة الإكمال
-                copiedId={copiedId}
-                onShare={handleShare}
-                onPlay={() => markLessonAsCompleted(lesson.id)} // ✅ وضع علامة "مكتمل" عند التشغيل
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {/* ✅ This motion.div now gets the background, padding, border, and shadow */}
+              {activeCourse === 'css' && (
+                <motion.div
+                  key="css-lessons-collapsible-content"
+                  initial="collapsed"
+                  animate="open"
+                  exit="collapsed"
+                  variants={lessonGridVariants}
+                  className="overflow-hidden bg-[#1e293b] p-6 rounded-2xl shadow-xl border border-gray-700/50"
+                >
+                  <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto mb-8 mt-8">
+                    انتقل بتصاميمك إلى المستوى التالي! تعلم CSS لتحويل صفحاتك من مجرد هياكل إلى أعمال فنية تفاعلية.
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-6">
+                    {initialCssLessons.map((lesson) => (
+                      <LessonCard
+                        key={lesson.id}
+                        lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
+                        copiedId={copiedId}
+                        onShare={handleShare}
+                        onPlay={() => markLessonAsCompleted(lesson.id)}
+                        variants={lessonCardItemVariants}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
       </main>
@@ -258,26 +349,23 @@ type Lesson = {
   description: string;
   pdfPath: string;
   imagePath: string;
-  isCompleted?: boolean; // ✅ isCompleted الآن اختياري لأننا نضيفه لاحقًا
+  isCompleted?: boolean;
 };
 
 // تعريف خصائص بطاقة الدرس (TypeScript)
 interface LessonCardProps {
-  lesson: Lesson & { isCompleted: boolean }; // ✅ نضمن أن isCompleted موجود هنا
+  lesson: Lesson & { isCompleted: boolean };
   copiedId: string | null;
   onShare: (lessonId: string) => void;
-  onPlay: (lessonId: string) => void; // ✅ إضافة دالة عند تشغيل الدرس
+  onPlay: (lessonId: string) => void;
+  variants: any; // Accept variants prop for Framer Motion
 }
 
 // مكون بطاقة الدرس
-function LessonCard({ lesson, copiedId, onShare, onPlay }: LessonCardProps) {
+function LessonCard({ lesson, copiedId, onShare, onPlay, variants }: LessonCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true, amount: 0.3 }}
-      // ✅ إزالة hover:scale-[1.02] للحفاظ على الحجم الطبيعي
+      variants={variants} // Apply item variants
       className={`relative bg-[#1e293b] border ${
         lesson.isCompleted ? 'border-green-500 shadow-green-500/30' : 'border-cyan-500/40'
       } rounded-2xl p-6 shadow-xl transition-all duration-300 flex flex-col`}
@@ -300,7 +388,7 @@ function LessonCard({ lesson, copiedId, onShare, onPlay }: LessonCardProps) {
           alt={`صورة الدرس ${lesson.id}`}
           layout="fill"
           objectFit="cover"
-          className="rounded-xl" // ✅ إزالة تأثير التحويم من هنا
+          className="rounded-xl"
         />
       </div>
 
@@ -314,7 +402,6 @@ function LessonCard({ lesson, copiedId, onShare, onPlay }: LessonCardProps) {
       <div className="flex flex-col gap-3 mt-auto">
         <Link
           href={`/lessons/${lesson.id}`}
-          // ✅ إضافة onClick لاستدعاء markLessonAsCompleted
           onClick={() => onPlay(lesson.id)}
           className="bg-cyan-600 hover:bg-cyan-700 transition rounded-xl py-3 px-4 flex items-center gap-2 justify-center font-semibold text-lg hover:shadow-md active:scale-95"
         >
