@@ -1,24 +1,33 @@
 // middleware.ts
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const isLoggedIn = request.cookies.get("loggedIn")?.value === "true";
+  // تحقق من وجود كوكي 'loggedIn' وقيمته
+  const isLoggedIn = request.cookies.get('loggedIn')?.value === 'true';
 
-  const isLoginPage = request.nextUrl.pathname === "/login";
+  // المسار لصفحة تسجيل الدخول
+  const loginPath = '/login';
 
-  if (!isLoggedIn && !isLoginPage) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  // إذا كان المستخدم غير مسجل دخول (بناءً على كوكي الجلسة)
+  // و يحاول الوصول إلى أي مسار آخر غير صفحة تسجيل الدخول نفسها
+  if (!isLoggedIn && request.nextUrl.pathname !== loginPath) {
+    // أعد التوجيه إلى صفحة تسجيل الدخول
+    return NextResponse.redirect(new URL(loginPath, request.url));
   }
 
-  if (isLoggedIn && isLoginPage) {
-    // لو المستخدم مسجل دخول وفتح /login يرجّعه للرئيسية
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
+  // إذا كان مسجل دخول أو يحاول الوصول لصفحة تسجيل الدخول، اسمح له بالمرور
   return NextResponse.next();
 }
 
+// تحديد المسارات التي سيتم تطبيق الـ Middleware عليها
 export const config = {
-  matcher: ["/((?!_next|favicon.ico|images|api).*)"],
+  matcher: [
+    // هذا سيطبق الـ middleware على كل المسارات باستثناء:
+    // - ملفات Next.js الداخلية (مثل API routes, static assets, images optimization)
+    // - أي مسار يبدأ بـ '_' مثل _next/
+    // - favicon.ico
+    // - مجلد 'images' (حتى لا يتعارض مع تحميل الصور)
+    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
+  ],
 };
