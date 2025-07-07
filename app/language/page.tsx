@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import Link from "next/link";
+import {easeInOut} from "framer-motion";
+
 import {
   FaCode,
   FaHtml5,
@@ -21,13 +23,13 @@ export default function LanguagePage() {
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.1 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: easeInOut }}
         className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10"
       ></motion.div>
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.15 }}
-        transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: easeInOut }}
         className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10"
       ></motion.div>
 

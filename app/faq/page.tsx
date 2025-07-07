@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {easeInOut} from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { FaChevronDown, FaChevronUp, FaWhatsapp, FaEnvelope, FaInfoCircle } from 'react-icons/fa';
@@ -13,13 +14,13 @@ export default function FAQPage() {
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.1 }}
-        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        transition={{ duration: 2, repeat: Infinity, repeatType: "reverse", ease: easeInOut }}
         className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-10"
       ></motion.div>
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 0.15 }}
-        transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+        transition={{ duration: 2.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: easeInOut }}
         className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-10"
       ></motion.div>
 
@@ -198,7 +199,7 @@ function Question({ q, a }: { q: string; a: React.ReactNode }) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: easeInOut }}
             className="p-4 bg-[#1e293b]/70 text-gray-200 text-base sm:text-lg leading-relaxed border-t border-gray-700/50"
           >
             {a}

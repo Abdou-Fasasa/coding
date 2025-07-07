@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { easeOut } from "framer-motion";
 import { FaBookOpen, FaStar, FaUserTie, FaUsers, FaPlayCircle } from "react-icons/fa";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -84,7 +85,7 @@ export default function HomePage() {
               <motion.div
                 initial={{ width: "0%" }}
                 animate={{ width: "90%" }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
+                transition={{ duration: 1.5, ease: easeOut }}
                 className="h-full bg-pink-500 rounded-full"
               ></motion.div>
             </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Variants } from "framer-motion";
+import { easeInOut } from "framer-motion"; // ✅ لازم تستورده كـ دالة
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -179,30 +180,29 @@ export default function LessonsPage() {
     setActiveCourse(prev => (prev === courseKey ? null : courseKey));
   }, []);
 
-  // Framer Motion variants for expand/collapse animation
-  const lessonGridVariants = {
-    open: {
-      opacity: 1,
-      height: "auto",
-      marginTop: "2rem", // ✅ Added margin-top for spacing when open
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-      },
+const lessonGridVariants = {
+  open: {
+    opacity: 1,
+    height: "auto",
+    marginTop: "2rem",
+    transition: {
+      duration: 0.5,
+      ease: easeInOut, // ✅ صح
+      when: "beforeChildren",
+      staggerChildren: 0.1,
     },
-    collapsed: {
-      opacity: 0,
-      height: 0,
-      marginTop: "0rem", // ✅ Reset margin-top when collapsed
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        when: "afterChildren",
-      },
+  },
+  collapsed: {
+    opacity: 0,
+    height: 0,
+    marginTop: "0rem",
+    transition: {
+      duration: 0.5,
+      ease: easeInOut, // ✅ صح
+      when: "afterChildren",
     },
-  };
+  },
+};
 
   const lessonCardItemVariants = {
     open: { opacity: 1, y: 0, transition: { duration: 0.3 } },

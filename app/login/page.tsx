@@ -125,13 +125,13 @@ if (user) {
       {/* Blobs */}
       <motion.div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.1, scale: 1 }}
-        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+        transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: easeInOut }} />
       <motion.div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.15, scale: 1 }}
-        transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+        transition={{ duration: 3.5, delay: 0.5, repeat: Infinity, repeatType: "reverse", ease: easeInOut }} />
       <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10"
         initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 0.08, scale: 1 }}
-        transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }} />
+        transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: easeInOut }} />
 
       {/* Banner */}
       <motion.div
