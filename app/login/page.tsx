@@ -19,8 +19,9 @@ import {
 
 // بيانات المستخدمين (يمكنك الاحتفاظ بها في '@/utils/auth' إذا أردت)
 const users = [
-  { username: 'admin', password: 'admin' },
-  { username: 'user', password: 'user123' },
+  { username: 'Abdou', password: 'Abdou' },
+  { username: 'Admin', password: 'Admin' },
+  { username: 'Salah', password: 'Salah' },
 ];
 
 export default function LoginPage() {
