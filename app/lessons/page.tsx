@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Variants } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -352,13 +353,12 @@ type Lesson = {
   isCompleted?: boolean;
 };
 
-// تعريف خصائص بطاقة الدرس (TypeScript)
 interface LessonCardProps {
   lesson: Lesson & { isCompleted: boolean };
   copiedId: string | null;
   onShare: (lessonId: string) => void;
   onPlay: (lessonId: string) => void;
-  variants: any; // Accept variants prop for Framer Motion
+  variants: Variants; // ✅ استخدام النوع الصحيح من Framer Motion
 }
 
 // مكون بطاقة الدرس
