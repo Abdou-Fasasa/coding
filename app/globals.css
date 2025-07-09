@@ -60,3 +60,93 @@ body {
     background-position: 0% 50%;
   }
 }
+
+/* globals.css */
+
+/* ... (بقية الـ CSS الخاص بك) ... */
+
+/* Keyframes for star-fade (if not already present) */
+@keyframes star-fade {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Glow on Hover effect for buttons (if not already present) */
+.glow-on-hover {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 12px; /* Adjust as needed for the button's border-radius */
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #101828; /* لون خلفية الزر الأساسي عند عدم التحويم (اجعله أغمق قليلاً من لون الخلفية العام) */
+    left: 0;
+    top: 0;
+    border-radius: 12px; /* Adjust as needed to match button's border-radius */
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+/* Custom styles for the select dropdown */
+.custom-select {
+  /* Hide default arrow in some browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add padding for custom arrow */
+  padding-left: 1.5rem; /* For RTL */
+  padding-right: 1.5rem; /* For LTR */
+}
+.custom-select::-ms-expand {
+  display: none; /* Hide default arrow in IE/Edge */
+}
+/* Set custom arrow color */
+.custom-select + div { /* This targets the div with the FaChevronDown icon */
+    right: auto; /* Reset for LTR */
+    left: 1rem; /* Adjust as needed for spacing */
+}
+
+/* For RTL specific adjustment (if you need it more precise than just general appearance:none) */
+html[dir="rtl"] .custom-select {
+    padding-right: 1.5rem; /* Adjust for RTL padding */
+    padding-left: 1.5rem; /* This moves the text a bit to the right to clear the icon */
+}
+
+html[dir="rtl"] .custom-select + div { /* This targets the div with the FaChevronDown icon */
+    left: auto; /* Reset for LTR */
+    right: 1rem; /* Position for RTL */
+}

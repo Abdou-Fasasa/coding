@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {easeInOut} from "framer-motion";
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header"; // تأكد أن المسار ده صحيح
+import Footer from "@/app/components/Footer"; // تأكد أن المسار ده صحيح
 import { FaChevronDown, FaChevronUp, FaWhatsapp, FaEnvelope, FaInfoCircle } from 'react-icons/fa';
 
 export default function FAQPage() {
@@ -78,7 +78,7 @@ export default function FAQPage() {
                     <p className="text-sm leading-relaxed">
                       <strong>السعر:</strong> <span className="text-green-400 font-bold">500 جنيه مصري</span><br />
                       <strong>المحتوى:</strong> هذا التراك مصمم للمبتدئين تماماً ويشمل:
-                      <ul className="list-disc list-inside pr-4 mt-1"> {/* Changed ml-4 to pr-4 for RTL indentation */}
+                      <ul className="list-disc list-inside pr-4 mt-1">
                         <li>مقدمة في علوم الحاسب والبرمجة (أساسيات الكمبيوتر واللوغاريتمات).</li>
                         <li>HTML (بناء هيكل صفحات الويب).</li>
                         <li>CSS (تنسيق وتصميم صفحات الويب).</li>
@@ -94,7 +94,7 @@ export default function FAQPage() {
                     <p className="text-sm leading-relaxed">
                       <strong>السعر:</strong> <span className="text-green-400 font-bold">600 جنيه مصري</span><br />
                       <strong>الخيارات:</strong> يمكنك اختيار أحد المسارين التاليين بشكل منفصل:
-                      <ul className="list-disc list-inside pr-4 mt-1"> {/* Changed ml-4 to pr-4 for RTL indentation */}
+                      <ul className="list-disc list-inside pr-4 mt-1">
                         <li>
                           <strong>Front-End Development:</strong> يشمل HTML, CSS, JavaScript، بالإضافة إلى إطار عمل React.js لبناء واجهات مستخدم حديثة ومعقدة.
                         </li>
@@ -111,7 +111,7 @@ export default function FAQPage() {
                     <p className="text-sm leading-relaxed">
                       <strong>السعر:</strong> <span className="text-green-400 font-bold">1200 جنيه مصري</span><br />
                       <strong>المحتوى:</strong> هذا الكورس الشامل يغطي جوانب متعددة من الأمن السيبراني:
-                      <ul className="list-disc list-inside pr-4 mt-1"> {/* Changed ml-4 to pr-4 for RTL indentation */}
+                      <ul className="list-disc list-inside pr-4 mt-1">
                         <li>مقدمة في الشبكات وأساسياتها.</li>
                         <li>أنواع الاختراقات الشائعة وطرق عملها.</li>
                         <li>أساليب الحماية المتقدمة للمنظمات والأفراد.</li>
@@ -137,9 +137,20 @@ export default function FAQPage() {
               a="نعم، جميع الكورسات لدينا متاحة أونلاين بالكامل. نقدم فيديوهات تعليمية بجودة عالية، شروحات تفصيلية باللهجة المصرية المبسطة، واختبارات عملية بعد كل درس لضمان فهمك وتطبيقك للمفاهيم بشكل صحيح. يمكنك التعلم من أي مكان وفي أي وقت يناسبك."
             />
 
+            {/* **التعديل هنا: تحديث السؤال وتفاصيله** */}
             <Question
-              q="هل في شهادات بعد الكورس؟"
-              a="حالياً، الشهادة الأساسية التي نقدمها هي تأهيلك للحصول على مشروع عملي من ProCodeHub والعمل عليه مباشرةً. نحن نؤمن بأن الخبرة العملية هي أفضل شهادة. قريباً جداً، سنضيف نظام شهادات إلكترونية بصيغة PDF معتمدة من المنصة، يمكنك طباعتها أو إضافتها لملفك الشخصي."
+              q="كيف يتم اختبار الطلاب بعد الكورس وماذا عن العمل والشهادات؟"
+              a={
+                <div className="space-y-4 text-sm leading-relaxed">
+                  <p>بعد انتهاء الطالب من دراسة التراك الخاص به (سواء Front-End، Back-End، أو Cyber Security)، يخضع لاختبار عملي شامل مصمم خصيصاً ليناسب مستوى الكورس الذي أتم دراسته. هذا الاختبار لا يعتمد على الحفظ، بل يركز على قدرته على تطبيق المفاهيم والمهارات التي تعلمها بشكل عملي.</p>
+                  <p>للتأهل للعمل مع شركة <strong className="text-teal-300">ProCodeHub</strong> واستلام أول مشروع، يجب على الطالب تحقيق نسبة نجاح تتراوح بين <strong className="text-green-400">70% إلى 100%</strong> في هذا الاختبار. هذا يضمن أن الطالب يمتلك المهارات المطلوبة للتعامل مع تحديات سوق العمل الحقيقي.</p>
+                  <p>في حال نجاح الطالب، يتم تكليفه بأول مشروع عملي بقيمة <strong className="text-orange-400">1300 درهم مغربي</strong> (ما يعادل تقريباً 130 دولار أمريكي، قيمة تقريبية متغيرة حسب سعر الصرف). إذا تم تسليم المشروع بجودة جيدة وفي الوقت المحدد، يستمر الطالب في العمل مع ProCodeHub بنظام العمل الحر (Freelancer) لمدة تصل إلى ثلاثة أشهر.</p>
+                  <p>خلال هذه الفترة (الثلاثة أشهر)، يكتسب الطالب خبرة عملية قيمة جداً بالعمل على مشاريع حقيقية. بعد إتمام هذه الفترة بنجاح، يصبح الطالب مؤهلاً للحصول على <strong className="text-purple-400">شهادة خبرة مميزة ومعتمدة من شركة ProCodeHub</strong>، تؤكد خبرته في العمل مع شركات حقيقية في المجال.</p>
+                  <p className="text-gray-300 mt-2 flex items-center gap-2">
+                    <FaInfoCircle className="text-lg text-blue-400" /> هذه الشهادة تضيف قيمة كبيرة لملفك الشخصي وتزيد من فرصك في سوق العمل.
+                  </p>
+                </div>
+              }
             />
           </div>
 
@@ -155,14 +166,14 @@ export default function FAQPage() {
                 <FaWhatsapp className="text-xl" /> واتساب: 01128606959
               </a>
               <a
-                href="mailto:support@myplatform.com"
+                href="mailto:abdelrahmanabdelsalam0@gmail.com"
                 className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors duration-200 text-base sm:text-lg font-medium bg-blue-900/30 px-4 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105"
               >
                 <FaEnvelope className="text-xl" /> الإيميل: info@coding.com
               </a>
             </div>
             <p className="mt-4 text-red-400 font-bold text-base flex items-center justify-center gap-2">
-              <FaInfoCircle className="text-xl" /> الدعم الفني متاح للمصريين من خلال ايميل واتساب فيسبوك انستجران تلجرام
+              <FaInfoCircle className="text-xl" /> الدعم الفني متاح للمصريين من خلال ايميل واتساب فيسبوك انستجرام تلجرام
             </p>
           </div>
         </motion.div>

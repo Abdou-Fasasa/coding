@@ -247,23 +247,11 @@ export default function HomePage() {
           <div className="flex items-center justify-center gap-2 text-base">
             <FaUserTie className="text-pink-400 text-xl" />
             <span>
-              المطور: المهندس <strong className="text-white">عبدالرحمن</strong>
-            </span>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-base">
-            <FaUsers className="text-purple-400 text-xl" />
-            <span>
-              طلابنا المتميزون:{" "}
-              <strong className="text-white">
-                وليد، عبدالعزيز، عبدالله، محمود، الحملي، صلاح 
-              </strong>
+              المطور: المهندس <strong className="text-white">Abd El-Rahman</strong>
             </span>
           </div>
         </div>
       </section>
-
-      {/* --- */}
-
       {/* ✅ الفوتر */}
       <Footer />
     </div>

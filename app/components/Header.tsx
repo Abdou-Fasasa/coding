@@ -11,6 +11,13 @@ import {
   FaQuestionCircle,
   FaMoneyBillWave,
   FaSignOutAlt,
+  FaFileAlt,
+  // New icons for dropdown items for a more "official" look
+  FaInfoCircle, // For "الأسئلة الشائعة" or "معلومات" itself
+  FaCode, // For HTML, CSS, JS lessons
+  FaChalkboardTeacher, // Another option for lessons
+  FaLaptopMedical, // For Developer (if FaUserTie doesn't fit the 'official' feel)
+  FaEnvelopeOpenText, // For feedback or specific contact
 } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence, easeIn, easeOut } from "framer-motion";
@@ -74,7 +81,7 @@ export default function Header() {
             <FaHome className="text-xl" /> الصفحة الرئيسية
           </Link>
 
-          {/* دروس Dropdown */}
+          {/* دروس Dropdown - Updated for formal look and icons */}
           <div className="relative group">
             <button
               className={`flex items-center gap-1 text-white py-1 px-2 rounded-lg transition-colors duration-200 ${
@@ -84,27 +91,27 @@ export default function Header() {
               <FaGraduationCap className="text-xl" />
               الدروس
             </button>
-            <div className="absolute top-full mt-2 right-0 w-44 bg-[#1e293b] rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
+            <div className="absolute top-full mt-2 right-0 w-52 bg-[#1e293b] border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50 overflow-hidden">
               <Link
                 href="/lessons"
-                className="block px-4 py-2 text-sm text-white hover:bg-gray-700 rounded-t-lg"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50 last:border-b-0"
                 onClick={() => setMenuOpen(false)}
               >
-                HTML
+                <FaCode className="text-lg text-blue-400" /> HTML
               </Link>
               <Link
                 href="/lessons"
-                className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50 last:border-b-0"
                 onClick={() => setMenuOpen(false)}
               >
-                CSS
+                <FaCode className="text-lg text-green-400" /> CSS
               </Link>
               <Link
                 href="/lessons"
-                className="block px-4 py-2 text-sm text-white hover:bg-gray-700 rounded-b-lg"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200"
                 onClick={() => setMenuOpen(false)}
               >
-                JavaScript
+                <FaCode className="text-lg text-yellow-400" /> JavaScript
               </Link>
             </div>
           </div>
@@ -117,7 +124,7 @@ export default function Header() {
             <FaLaptopCode className="text-xl" /> اللغة
           </Link>
 
-          {/* Dropdown: معلومات */}
+          {/* Dropdown: معلومات - Updated for formal look and icons */}
           <div className="relative group">
             <button
               className="flex items-center gap-1 text-white py-1 px-2 rounded-lg hover:text-blue-400 transition-colors duration-200"
@@ -125,20 +132,27 @@ export default function Header() {
               <FaQuestionCircle className="text-xl" />
               معلومات
             </button>
-            <div className="absolute top-full mt-2 right-0 w-40 bg-[#1e293b] rounded-lg shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50">
+            <div className="absolute top-full mt-2 right-0 w-56 bg-[#1e293b] border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50 overflow-hidden">
               <Link
                 href="/faq"
-                className="block px-4 py-2 text-sm text-white hover:bg-gray-700 rounded-t-lg"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
-                الأسئلة
+                <FaInfoCircle className="text-lg text-cyan-400" /> الأسئلة الشائعة
               </Link>
               <Link
                 href="/developer"
-                className="block px-4 py-2 text-sm text-white hover:bg-gray-700 rounded-b-lg"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
-                المطور
+                <FaUserTie className="text-lg text-orange-400" /> المطور
+              </Link>
+              <Link
+                href="/apply-test"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FaFileAlt className="text-lg text-blue-400" /> تقديم لاختبار
               </Link>
             </div>
           </div>
@@ -183,6 +197,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2 hover:text-pink-400 py-2" onClick={() => setMenuOpen(false)}>
               <FaHome /> الصفحة الرئيسية
             </Link>
+            {/* Mobile Lessons Links (could be improved with mobile dropdown if needed) */}
             <Link href="/lessons" className="flex items-center gap-2 hover:text-purple-400 py-2" onClick={() => setMenuOpen(false)}>
               <FaGraduationCap /> الدروس
             </Link>
@@ -193,7 +208,10 @@ export default function Header() {
               <FaUserTie /> المطور
             </Link>
             <Link href="/faq" className="flex items-center gap-2 hover:text-orange-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaQuestionCircle /> الأسئلة
+              <FaQuestionCircle /> الأسئلة الشائعة
+            </Link>
+            <Link href="/apply-test" className="flex items-center gap-2 hover:text-blue-400 py-2" onClick={() => setMenuOpen(false)}>
+              <FaFileAlt /> تقديم لاختبار
             </Link>
             <Link href="/subscribe" className="flex items-center gap-2 hover:text-green-400 py-2" onClick={() => setMenuOpen(false)}>
               <FaMoneyBillWave /> الأسعار
