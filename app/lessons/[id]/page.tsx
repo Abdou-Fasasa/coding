@@ -115,7 +115,7 @@ const orderedLessons = Object.keys(allLessonsData).map(id => ({
 }));
 
 // ✅ الكود السري لفتح الفيديوهات
-const VIDEO_UNLOCK_CODE = "VIPCODE2025"; // الكود السري لفتح الفيديوهات
+const VIDEO_UNLOCK_CODE = "VIPCODE333"; // الكود السري لفتح الفيديوهات
 // ✅ مفتاح Local Storage لتخزين حالة الفتح لكل درس
 const LOCAL_STORAGE_UNLOCKED_PREFIX = "unlocked_lesson_"; // Prefix for local storage keys
 

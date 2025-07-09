@@ -12,12 +12,8 @@ import {
   FaMoneyBillWave,
   FaSignOutAlt,
   FaFileAlt,
-  // New icons for dropdown items for a more "official" look
   FaInfoCircle, // For "الأسئلة الشائعة" or "معلومات" itself
   FaCode, // For HTML, CSS, JS lessons
-  FaChalkboardTeacher, // Another option for lessons
-  FaLaptopMedical, // For Developer (if FaUserTie doesn't fit the 'official' feel)
-  FaEnvelopeOpenText, // For feedback or specific contact
 } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence, easeIn, easeOut } from "framer-motion";

@@ -3,10 +3,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { easeInOut } from "framer-motion";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { FaUser, FaIdCard, FaBook, FaEdit, FaCheckCircle, FaRocket, FaPaperPlane, FaSpinner, FaInfoCircle, FaEnvelope, FaChevronDown } from 'react-icons/fa';
+import { FaUser, FaIdCard, FaBook, FaEdit, FaCheckCircle, FaRocket, FaPaperPlane, FaSpinner, FaEnvelope, FaChevronDown } from 'react-icons/fa';
 
 export default function ApplyTestPage() {
   const [fullName, setFullName] = useState('');
