@@ -1,11 +1,10 @@
-// app/apply-test/page.tsx
 "use client";
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
-import { FaUser, FaIdCard, FaBook, FaEdit, FaCheckCircle, FaRocket, FaPaperPlane, FaSpinner, FaEnvelope, FaChevronDown } from 'react-icons/fa';
+import { FaUser, FaIdCard, FaBook, FaEdit, FaCheckCircle, FaRocket, FaPaperPlane, FaSpinner, FaEnvelope, FaChevronDown, FaAward } from 'react-icons/fa'; // Added FaAward icon
 
 export default function ApplyTestPage() {
   const [fullName, setFullName] = useState('');
@@ -359,6 +358,17 @@ export default function ApplyTestPage() {
               )}
             </motion.button>
           </form>
+
+          {/* Certificate Request Button - Moved outside the form */}
+          <motion.a
+            href="/certificate-request" // Path to the certificate request page
+            className="w-full py-4 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-bold text-xl flex items-center justify-center gap-3 hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl glow-on-hover mt-6" // Added mt-6 for spacing
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <FaAward className="text-2xl" /> تقديم على طلب شهادة
+          </motion.a>
+
         </motion.div>
       </main>
 

@@ -14,6 +14,8 @@ import {
   FaInstagram,
   FaEnvelope,
   FaArrowUp,
+  FaAward, // Added FaAward icon for certificate
+  FaClipboardCheck, // Added FaClipboardCheck icon for apply test
 } from "react-icons/fa"; // Removed unused FaMapMarkerAlt and FaPhone
 
 export default function Footer() {
@@ -106,6 +108,24 @@ export default function Footer() {
                 className="flex items-center gap-3 text-white hover:text-cyan-400 transition-colors duration-200 text-base"
               >
                 <FaUserTie className="text-lg" /> المطور
+              </Link>
+            </li>
+            {/* New Link: Apply for Certificate */}
+            <li>
+              <Link
+                href="/certificate-request" // Correct path as per your request
+                className="flex items-center gap-3 text-white hover:text-green-400 transition-colors duration-200 text-base"
+              >
+                <FaAward className="text-lg" /> طلب شهادة
+              </Link>
+            </li>
+            {/* New Link: Apply for Test */}
+            <li>
+              <Link
+                href="/apply-test" // Correct path as per your request
+                className="flex items-center gap-3 text-white hover:text-orange-400 transition-colors duration-200 text-base"
+              >
+                <FaClipboardCheck className="text-lg" /> طلب اختبار تأهيل
               </Link>
             </li>
           </ul>

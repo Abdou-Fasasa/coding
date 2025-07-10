@@ -1864,5 +1864,127 @@ export const lessonQuestions: {
     ],
     "correctAnswer": "آه، الصفحات السريعة بتظهر أعلى"
   }
-]
-};
+],
+  "Css-lesson1": [
+    {
+      "question": "CSS هي اختصار لإيه؟",
+      "options": [
+        "Computer Style System",
+        "Cascading Style Sheets",
+        "Creative Styling Solutions",
+        "Central Styling Software"
+      ],
+      "correctAnswer": "Cascading Style Sheets"
+    },
+    {
+      "question": "لو اعتبرنا HTML هو 'هيكل البيت'، فـ CSS بيكون بمثابة إيه؟",
+      "options": [
+        "أساسات البيت",
+        "الكهرباء والسباكة",
+        "الديكور والألوان والستايل",
+        "الفرش والأثاث"
+      ],
+      "correctAnswer": "الديكور والألوان والستايل"
+    },
+    {
+      "question": "أنهي طريقة لكتابة CSS بنعتبرها 'الأفضل دائمًا' و'الاحترافية' حسب شرح الدرس؟",
+      "options": [
+        "Inline CSS",
+        "Internal CSS",
+        "External CSS",
+        "Dynamic CSS"
+      ],
+      "correctAnswer": "External CSS"
+    },
+    {
+      "question": "في طريقة Inline CSS، فين بنكتب التنسيق؟",
+      "options": [
+        "داخل وسم `<style>` في الـ `<head>`",
+        "في ملف خارجي بامتداد `.css`",
+        "`style=\"\"`",
+        "في نهاية ملف الـ HTML قبل إغلاق `<body>`"
+      ],
+      "correctAnswer": "`style=\"\"`"
+    },
+    {
+      "question": "علشان نربط ملف CSS خارجي اسمه `style.css` بصفحة HTML، بنستخدم أي وسم؟",
+      "options": [
+        "`<script src=\"style.css\"></script>`",
+        "`<link rel=\"stylesheet\" href=\"style.css\">`",
+        "`<style src=\"style.css\"></style>`",
+        "`<css src=\"style.css\"></css>`"
+      ],
+      "correctAnswer": "`<link rel=\"stylesheet\" href=\"style.css\">`"
+    },
+    {
+      "question": "ليه الـ Inline CSS مش عملي ومش منظم حسب شرح الدرس؟",
+      "options": [
+        "لأن بيخلّي الصفحة تتحمل أبطأ",
+        "لأن كل عنصر لازم نعيد كتابة التنسيق له وصعب نعدّل عليه لاحقًا",
+        "لأن ما ينفعش نستخدمه إلا مع عدد قليل من العناصر",
+        "لأنه بيتطلب إنترنت عشان يشتغل"
+      ],
+      "correctAnswer": "لأن كل عنصر لازم نعيد كتابة التنسيق له وصعب نعدّل عليه لاحقًا"
+    },
+    {
+      "question": "خاصية `background-color` في CSS بتستخدم لإيه؟",
+      "options": [
+        "تحديد لون الخط",
+        "تحديد لون خلفية الصفحة أو العنصر",
+        "تغيير حجم الخط",
+        "تحديد نوع الخط"
+      ],
+      "correctAnswer": "تحديد لون خلفية الصفحة أو العنصر"
+    },
+    {
+      "question": "إيه الاختصار اللي بنكتبه في VS Code عشان نكتب الهيكل الأساسي لصفحة HTML تلقائيًا؟",
+      "options": [
+        "`!` ثم `Tab`",
+        "`html:5` ثم `Enter`",
+        "`boilerplate` ثم `Tab`",
+        "`doc:html` ثم `Enter`"
+      ],
+      "correctAnswer": "`!` ثم `Tab`"
+    },
+    {
+      "question": "ليه بنحط `margin: 0;` و `padding: 0;` لـ `body` في بداية ملف الـ CSS؟",
+      "options": [
+        "عشان نزود مساحات فارغة للصفحة",
+        "عشان نسرّع تحميل الصفحة",
+        "عشان نلغي الهوامش والفراغات الافتراضية للمتصفح ونبدأ تنسيقاتنا من الصفر",
+        "عشان نغير اتجاه النص في الصفحة"
+      ],
+      "correctAnswer": "عشان نلغي الهوامش والفراغات الافتراضية للمتصفح ونبدأ تنسيقاتنا من الصفر"
+    },
+    {
+      "question": "خاصية `text-align: center;` بتعمل إيه؟",
+      "options": [
+        "بتغير لون النص للمنتصف",
+        "بتغير حجم النص للمنتصف",
+        "بتعمل محاذاة للنص في منتصف العنصر",
+        "بتجعل النص يظهر في وسط الشاشة فقط"
+      ],
+      "correctAnswer": "بتعمل محاذاة للنص في منتصف العنصر"
+    },
+    {
+      "question": "عند استخدام Internal CSS، أين يوضع وسم `<style>` في ملف HTML؟",
+      "options": [
+        "داخل وسم `<body>`",
+        "داخل وسم `<head>`",
+        "بعد وسم `</html>`",
+        "قبل وسم `<!DOCTYPE html>`"
+      ],
+      "correctAnswer": "داخل وسم `<head>`"
+    },
+    {
+      "question": "ماذا تعني قيمة `1.6` في خاصية `line-height: 1.6;`؟",
+      "options": [
+        "حجم الخط سيكون `1.6` بكسل",
+        "المسافة بين الأسطر ستكون `1.6` سم",
+        "المسافة بين الأسطر ستكون `1.6` ضعف حجم الخط",
+        "عدد الأسطر المسموح بها في الفقرة `1.6`"
+      ],
+      "correctAnswer": "المسافة بين الأسطر ستكون `1.6` ضعف حجم الخط"
+    }
+  ],
+ };

@@ -5,11 +5,11 @@ import { useParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign } from "react-icons/fa"; // Added FaDollarSign for subscribe button
+import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign } from "react-icons/fa";
 import Link from "next/link";
 
-// بيانات الدروس (يجب أن تتطابق مع تلك الموجودة في LessonsPage لتسجيل الإكمال)
-// ✅ تم إضافة حقل 'poster' لكل درس لتحديد الصورة المصغرة للفيديو
+// بيانات الدروس
+// كل الدروس هنا ستكون مقفلة افتراضيًا وتتطلب الكود في كل مرة
 const allLessonsData: {
   [key: string]: { title: string; video: string; description: string; poster: string };
 } = {
@@ -18,20 +18,20 @@ const allLessonsData: {
     title: "مقدمة في علوم الحاسوب والبرمجة",
     video: "/videos/Computer-science.mp4",
     description: "انطلق في رحلتك البرمجية بفهم الأساسيات التي تحرك عالم التكنولوجيا. هذا الدرس يضع الأساس لجميع الدورات القادمة.",
-    poster: "/images/Computer-science.jpg", // صورة مصغرة لهذا الفيديو
+    poster: "/images/Computer-science.jpg",
   },
   "Work-environment": {
     title: "تجهيز بيئة العمل",
     video: "/videos/Work-environment.mp4",
     description: "تعلم كيفية إعداد بيئة التطوير المثالية لبناء مشاريعك البرمجية بسهولة وفعالية.",
-    poster: "/images/Work-environment.jpg", // صورة مصغرة لهذا الفيديو
+    poster: "/images/Work-environment.jpg",
   },
   // دروس HTML
   "Html-lesson3": {
     title: "بناء هيكل صفحة الويب (HTML)",
     video: "/videos/html-lesson3.mp4",
     description: "اكتشف أساسيات HTML وكيفية تنظيم المحتوى لإنشاء صفحات الويب المتكاملة.",
-    poster: "/images/html-lessons.jpg", // صورة مصغرة لدروس HTML
+    poster: "/images/html-lessons.jpg",
   },
   "Html-lesson4": {
     title: "عناصر HTML ومكوناتها",
@@ -102,9 +102,9 @@ const allLessonsData: {
   // دروس CSS
   "Css-lesson1": {
     title: "مقدمة في CSS",
-    video: "", // لا يوجد فيديو لهذا الدرس في البيانات الأصلية، لذا سيبقى فارغًا
+    video: "/videos/css-lesson1.mp4",
     description: "ابدأ رحلتك في عالم تصميم الويب وتعلم كيفية إضفاء الجمال والجاذبية على صفحاتك باستخدام CSS.",
-    poster: "/images/css-lessons.jpg", // صورة مصغرة لدروس CSS
+    poster: "/images/css-lessons.jpg",
   },
 };
 
@@ -114,18 +114,16 @@ const orderedLessons = Object.keys(allLessonsData).map(id => ({
   ...allLessonsData[id]
 }));
 
-// ✅ الكود السري لفتح الفيديوهات
-const VIDEO_UNLOCK_CODE = "VIPCODE333"; // الكود السري لفتح الفيديوهات
-// ✅ مفتاح Local Storage لتخزين حالة الفتح لكل درس
-const LOCAL_STORAGE_UNLOCKED_PREFIX = "unlocked_lesson_"; // Prefix for local storage keys
+// الكود السري لفتح الفيديوهات
+const VIDEO_UNLOCK_CODE = "VIPCODE333";
 
 export default function LessonPage() {
   const routerParams = useParams();
   const lessonId = routerParams.id as string;
   const lesson = allLessonsData[lessonId];
-  const videoRef = useRef<HTMLVideoElement>(null); // Ref لعنصر الفيديو
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // ✅ حالة قفل/فتح الفيديو
+  // ✅ حالة قفل/فتح الفيديو - تبدأ دائمًا "مقفلة"
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [inputCode, setInputCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -135,55 +133,13 @@ export default function LessonPage() {
   const prevLesson = currentLessonIndex > 0 ? orderedLessons[currentLessonIndex - 1] : null;
   const nextLesson = currentLessonIndex < orderedLessons.length - 1 ? orderedLessons[currentLessonIndex + 1] : null;
 
-  // دالة لتحديث Local Storage لوضع علامة "مكتمل"
-  const updateCompletedLessons = useCallback((id: string) => {
-    if (typeof window !== 'undefined') {
-      try {
-        const storedCompleted = localStorage.getItem('completedLessons');
-        let completedSet = new Set<string>();
 
-        if (storedCompleted) {
-          completedSet = new Set(JSON.parse(storedCompleted));
-        }
-
-        if (!completedSet.has(id)) {
-          completedSet.add(id);
-          localStorage.setItem('completedLessons', JSON.stringify(Array.from(completedSet)));
-          console.log(`Lesson "${id}" marked as completed in local storage.`);
-        }
-      } catch (e) {
-        console.error("Failed to update completed lessons in local storage", e);
-      }
-    }
-  }, []);
-
-  // ✅ تحميل حالة الفتح من Local Storage عند تحميل المكون
-  useEffect(() => {
-    if (typeof window !== 'undefined' && lessonId) {
-      const unlockedStatus = localStorage.getItem(`${LOCAL_STORAGE_UNLOCKED_PREFIX}${lessonId}`);
-      if (unlockedStatus === "true") {
-        setIsUnlocked(true);
-      } else {
-        setIsUnlocked(false); // Reset if not found or false
-      }
-    }
-  }, [lessonId]);
-
-  // عند تحميل المكون أو تغير lessonId، قم بتحديد الدرس كمكتمل
-  useEffect(() => {
-    // فقط قم بتحديد الدرس كمكتمل إذا كان مفتوحًا بالفعل
-    if (lessonId && lesson && isUnlocked) {
-      updateCompletedLessons(lessonId);
-    }
-  }, [lessonId, lesson, isUnlocked, updateCompletedLessons]); // إضافة isUnlocked كـ dependency
-
-  // منع التحميل من جانب العميل (يتم تطبيقه فقط إذا كان الفيديو مفتوحًا)
+  // تأثير جانبي لحماية الفيديو (يبقى كما هو، يعتمد على isUnlocked الحالية)
   useEffect(() => {
     const videoElement = videoRef.current;
 
     const disableRightClick = (e: MouseEvent) => {
       e.preventDefault();
-      // alert('التحميل أو النسخ غير مسموح به لحماية المحتوى.'); // Removed alert
     };
 
     const disableContextMenu = (e: Event) => {
@@ -192,14 +148,18 @@ export default function LessonPage() {
 
     const disableCopy = (e: ClipboardEvent) => {
       e.preventDefault();
-      // alert('النسخ غير مسموح به لحماية المحتوى.'); // Removed alert
     };
 
     const disableSave = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 's') {
         e.preventDefault();
-        // alert('حفظ الصفحة غير مسموح به لحماية المحتوى.'); // Removed alert
       }
+    };
+
+    const disableDownloadManagers = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.warn("Attempted download blocked.");
     };
 
     if (isUnlocked && videoElement) {
@@ -208,11 +168,20 @@ export default function LessonPage() {
       document.addEventListener('contextmenu', disableRightClick);
       document.addEventListener('copy', disableCopy);
       document.addEventListener('keydown', disableSave);
+      videoElement.addEventListener('emptied', disableDownloadManagers);
+      videoElement.addEventListener('waiting', disableDownloadManagers);
+      videoElement.addEventListener('stalled', disableDownloadManagers);
+      videoElement.addEventListener('suspend', disableDownloadManagers);
+      videoElement.addEventListener('abort', disableDownloadManagers);
     } else {
-      // Remove listeners if video is locked or not available
       if (videoElement) {
-        videoElement.removeAttribute('controlsList'); // Remove nodownload if locked
+        videoElement.removeAttribute('controlsList');
         videoElement.removeEventListener('contextmenu', disableContextMenu);
+        videoElement.removeEventListener('emptied', disableDownloadManagers);
+        videoElement.removeEventListener('waiting', disableDownloadManagers);
+        videoElement.removeEventListener('stalled', disableDownloadManagers);
+        videoElement.removeEventListener('suspend', disableDownloadManagers);
+        videoElement.removeEventListener('abort', disableDownloadManagers);
       }
       document.removeEventListener('contextmenu', disableRightClick);
       document.removeEventListener('copy', disableCopy);
@@ -222,20 +191,24 @@ export default function LessonPage() {
     return () => {
       if (videoElement) {
         videoElement.removeEventListener('contextmenu', disableContextMenu);
+        videoElement.removeEventListener('emptied', disableDownloadManagers);
+        videoElement.removeEventListener('waiting', disableDownloadManagers);
+        videoElement.removeEventListener('stalled', disableDownloadManagers);
+        videoElement.removeEventListener('suspend', disableDownloadManagers);
+        videoElement.removeEventListener('abort', disableDownloadManagers);
       }
       document.removeEventListener('contextmenu', disableRightClick);
       document.removeEventListener('copy', disableCopy);
       document.removeEventListener('keydown', disableSave);
     };
-  }, [isUnlocked]); // Dependency on isUnlocked
+  }, [isUnlocked]);
 
-  // ✅ دالة للتحقق من الكود وفتح الفيديو
+  // دالة للتحقق من الكود وفتح الفيديو
   const handleUnlockVideo = () => {
     if (inputCode === VIDEO_UNLOCK_CODE) {
       setIsUnlocked(true);
-      localStorage.setItem(`${LOCAL_STORAGE_UNLOCKED_PREFIX}${lessonId}`, "true");
       setErrorMessage("");
-      updateCompletedLessons(lessonId); // Mark as completed upon successful unlock
+      // ❌ تم إزالة حفظ حالة الفتح في Local Storage هنا
     } else {
       setErrorMessage("الكود غير صحيح. يرجى المحاولة مرة أخرى.");
     }
@@ -258,6 +231,9 @@ export default function LessonPage() {
       </div>
     );
   }
+
+  // الآن، أي درس (طالما له فيديو) سيتطلب قفلاً ما لم يتم فتحه في نفس الجلسة فقط.
+  const requiresUnlock = !isUnlocked; // يتطلب قفلًا إذا لم يكن مفتوحًا حاليًا في هذه الجلسة
 
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
@@ -288,26 +264,26 @@ export default function LessonPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          className="w-full max-w-4xl bg-[#1e293b] rounded-3xl shadow-2xl overflow-hidden border border-blue-500/30 relative" // إطار أنيق حول الفيديو
+          className="w-full max-w-4xl bg-[#1e293b] rounded-3xl shadow-2xl overflow-hidden border border-blue-500/30 relative"
         >
-          {lesson.video && isUnlocked ? ( // ✅ عرض الفيديو فقط إذا كان مفتوحًا
+          {lesson.video && !requiresUnlock ? (
             <video
-              ref={videoRef} // ربط الـref هنا
+              ref={videoRef}
               src={lesson.video}
               controls
-              controlsList="nodownload" // منع زر التنزيل
-              disablePictureInPicture // منع وضع PiP
-              preload="auto" // لتحسين تجربة التحميل
-              poster={lesson.poster} // إضافة الصورة المصغرة هنا
-              className="w-full h-auto max-h-[70vh] object-contain rounded-2xl" // object-contain للحفاظ على نسبة العرض للارتفاع بالكامل
+              controlsList="nodownload"
+              disablePictureInPicture
+              preload="auto"
+              poster={lesson.poster}
+              className="w-full h-auto max-h-[70vh] object-contain rounded-2xl"
             >
               متصفحك لا يدعم عنصر الفيديو.
             </video>
-          ) : lesson.video && !isUnlocked ? ( // ✅ عرض شاشة القفل إذا كان الفيديو موجودًا ولكنه غير مفتوح
+          ) : lesson.video && requiresUnlock ? (
             <div
               className="relative w-full h-96 flex flex-col items-center justify-center p-8 text-center"
               style={{
-                backgroundImage: `url(${lesson.poster})`, // استخدام الصورة المصغرة كخلفية
+                backgroundImage: `url(${lesson.poster})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
@@ -318,11 +294,11 @@ export default function LessonPage() {
                   هذا الدرس محمي. يرجى إدخال كود الوصول:
                 </p>
                 <input
-                  type="password" // نوع password لإخفاء المدخلات
+                  type="password"
                   value={inputCode}
                   onChange={(e) => {
                     setInputCode(e.target.value);
-                    setErrorMessage(""); // Clear error on new input
+                    setErrorMessage("");
                   }}
                   onKeyPress={(e) => {
                     if (e.key === 'Enter') {
@@ -349,14 +325,13 @@ export default function LessonPage() {
                 </button>
               </div>
             </div>
-          ) : ( // ✅ عرض رسالة "الفيديو غير متوفر" إذا لم يكن هناك مسار فيديو
+          ) : (
             <div className="flex items-center justify-center h-96 text-red-400 font-bold text-center p-8">
               <FaInfoCircle className="inline-block text-5xl mr-4" />
               <p>عذراً، فيديو هذا الدرس غير متوفر حالياً. نعمل على توفيره بأسرع وقت!</p>
             </div>
           )}
 
-          {/* تراكب بصري خفيف للتأكيد على الأمان (يظهر دائمًا) */}
           <div className="absolute top-0 left-0 w-full h-full bg-black/10 flex items-center justify-center pointer-events-none">
             <FaShieldAlt className="text-white/20 text-8xl md:text-9xl animate-pulse" />
           </div>
@@ -415,8 +390,8 @@ export default function LessonPage() {
           </p>
         </motion.div>
 
-        {/* ✅ New Section: Subscribe for Code */}
-        {!isUnlocked && lesson.video && ( // Only show if video exists and is locked
+        {/* قسم "احصل على كود الوصول!" - يظهر فقط إذا كان الدرس مقفلاً وله فيديو */}
+        {requiresUnlock && lesson.video && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

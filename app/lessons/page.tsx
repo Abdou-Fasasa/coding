@@ -133,6 +133,7 @@ const initialCssLessons = [
   },
 ];
 
+
 export default function LessonsPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
