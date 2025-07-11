@@ -13,14 +13,14 @@ import {
   FaSignOutAlt,
   FaFileAlt,
   FaInfoCircle,
-  FaCode, // For generic coding/Front-End
-  FaServer, // For Back-End
-  FaShieldAlt, // For Cyber Security
-  FaWifi, // For Social Media Hacking (might need a better icon)
-  FaGem, // For VIP Premium Track
-} from "react-icons/fa"; // استيراد الأيقونات الجديدة
+  FaCode,
+  FaServer,
+  FaShieldAlt,
+  FaWifi,
+  FaGem,
+} from "react-icons/fa";
 import { useState } from "react";
-import { motion, AnimatePresence, easeIn, easeOut } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
@@ -28,29 +28,44 @@ export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const mobileMenuStates = {
+  // أنيميشن محسّن لقائمة الموبايل
+  const mobileMenuVariants = {
     hidden: {
       opacity: 0,
       y: -50,
-      transition: { duration: 0.2, ease: easeIn },
+      transition: {
+        type: "spring" as const, // <-- Fix applied here
+        stiffness: 300,
+        damping: 30,
+        when: "afterChildren",
+        staggerChildren: 0.05,
+      },
     },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.3, ease: easeOut },
+      transition: {
+        type: "spring" as const, // <-- Fix applied here
+        stiffness: 150,
+        damping: 20,
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+      },
     },
   };
 
-  // تعديل isActiveLink ليتعامل مع روابط الكورسات بشكل أكثر عمومية
+  // أنيميشن لعناصر القائمة داخل قائمة الموبايل
+  const menuItemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  };
+
   const isActiveLink = (href: string) => {
     if (href === "/" && pathname === "/") return true;
-    // إذا كان الرابط هو /lessons ولكن المسار الحالي هو /lessons/frontend مثلاً
     if (href === "/lessons" && pathname.startsWith("/lessons")) return true;
-    // إذا كان الرابط هو رابط كورس محدد، تأكد من مطابقة المسار تماماً
     if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
   };
-
 
   const handleLogout = () => {
     document.cookie = "loggedIn=; path=/; max-age=0";
@@ -86,47 +101,50 @@ export default function Header() {
             <FaHome className="text-xl" /> الصفحة الرئيسية
           </Link>
 
-          {/* دروس Dropdown - Updated for courses */}
+          {/* دروس Dropdown */}
           <div className="relative group">
-            <button
+            <Link
+              href="/lessons"
               className={`flex items-center gap-1 text-white py-1 px-2 rounded-lg transition-colors duration-200 ${
                 isActiveLink("/lessons") ? "bg-white/10 text-purple-400 shadow-inner" : "hover:text-purple-400"
               }`}
+              onClick={() => setMenuOpen(false)}
             >
               <FaGraduationCap className="text-xl" />
               الكورسات
-            </button>
+            </Link>
+
             <div className="absolute top-full mt-2 right-0 w-64 bg-[#1e293b] border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50 overflow-hidden">
               <Link
-                href="/lessons/frontend" // رابط كورس الفرونت إند
+                href="/lessons"
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
                 <FaCode className="text-lg text-blue-400" /> Front-End
               </Link>
               <Link
-                href="/lessons/backend" // رابط كورس الباك إند
+                href="/lessons"
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
                 <FaServer className="text-lg text-green-400" /> Back-End
               </Link>
               <Link
-                href="/lessons/cybersecurity" // رابط كورس الأمن السيبراني
+                href="/lessons"
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
                 <FaShieldAlt className="text-lg text-red-400" /> الأمن السيبراني
               </Link>
               <Link
-                href="/lessons/socialmedia-hacking" // رابط كورس اختراق السوشيال ميديا
-                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
+                href="/lessons"
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-700/50"
                 onClick={() => setMenuOpen(false)}
               >
                 <FaWifi className="text-lg text-yellow-400" /> اختراق السوشيال ميديا
               </Link>
               <Link
-                href="/lessons/vip-premium" // رابط تراك VIP Premium
+                href="/lessons"
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200"
                 onClick={() => setMenuOpen(false)}
               >
@@ -193,7 +211,7 @@ export default function Header() {
           </button>
         </nav>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-white text-3xl focus:outline-none p-2 rounded-md hover:bg-gray-700 transition-colors duration-200"
@@ -210,53 +228,59 @@ export default function Header() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            variants={mobileMenuStates}
-            className="md:hidden bg-[#0f172a] text-white px-6 py-4 space-y-4 text-lg font-medium border-t border-gray-700/50"
+            variants={mobileMenuVariants}
+            className="md:hidden bg-[#0f172a] text-white px-6 py-4 space-y-2 text-lg font-medium border-t border-gray-700/50 overflow-hidden"
           >
-            <Link href="/" className="flex items-center gap-2 hover:text-pink-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaHome /> الصفحة الرئيسية
-            </Link>
+            <motion.div variants={menuItemVariants}>
+              <Link href="/" className="flex items-center gap-3 hover:text-pink-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaHome className="text-xl" /> الصفحة الرئيسية
+              </Link>
+            </motion.div>
 
-            {/* Mobile Courses Links - Each should navigate to its specific path */}
-            <h3 className="text-gray-400 text-sm font-semibold mt-4 mb-2">الكورسات:</h3>
-            <Link href="/lessons/frontend" className="flex items-center gap-2 hover:text-blue-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
-              <FaCode /> Front-End
-            </Link>
-            <Link href="/lessons/backend" className="flex items-center gap-2 hover:text-green-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
-              <FaServer /> Back-End
-            </Link>
-            <Link href="/lessons/cybersecurity" className="flex items-center gap-2 hover:text-red-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
-              <FaShieldAlt /> الأمن السيبراني
-            </Link>
-            <Link href="/lessons/socialmedia-hacking" className="flex items-center gap-2 hover:text-yellow-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
-              <FaWifi /> اختراق السوشيال ميديا
-            </Link>
-            <Link href="/lessons/vip-premium" className="flex items-center gap-2 hover:text-purple-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
-              <FaGem /> تراك VIP Premium
-            </Link>
-            {/* End Mobile Courses Links */}
+            <motion.div variants={menuItemVariants}>
+              <Link href="/lessons" className="flex items-center gap-3 hover:text-purple-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaGraduationCap className="text-xl" /> الكورسات
+              </Link>
+            </motion.div>
 
-            <Link href="/language" className="flex items-center gap-2 hover:text-yellow-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaLaptopCode /> اللغة
-            </Link>
-            <Link href="/developer" className="flex items-center gap-2 hover:text-cyan-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaUserTie /> المطور
-            </Link>
-            <Link href="/faq" className="flex items-center gap-2 hover:text-orange-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaQuestionCircle /> الأسئلة الشائعة
-            </Link>
-            <Link href="/apply-test" className="flex items-center gap-2 hover:text-blue-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaFileAlt /> تقديم لاختبار
-            </Link>
-            <Link href="/subscribe" className="flex items-center gap-2 hover:text-green-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaMoneyBillWave /> الأسعار
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="flex items-center justify-end gap-2 text-red-400 hover:text-red-300 transition-colors duration-200 py-2 w-full"
-            >
-              <FaSignOutAlt className="text-xl" />
-            </button>
+            <motion.div variants={menuItemVariants}>
+              <Link href="/language" className="flex items-center gap-3 hover:text-yellow-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaLaptopCode className="text-xl" /> اللغة
+              </Link>
+            </motion.div>
+
+            <motion.div variants={menuItemVariants}>
+              <Link href="/developer" className="flex items-center gap-3 hover:text-cyan-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaUserTie className="text-xl" /> المطور
+              </Link>
+            </motion.div>
+
+            <motion.div variants={menuItemVariants}>
+              <Link href="/faq" className="flex items-center gap-3 hover:text-orange-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaQuestionCircle className="text-xl" /> الأسئلة الشائعة
+              </Link>
+            </motion.div>
+
+            <motion.div variants={menuItemVariants}>
+              <Link href="/apply-test" className="flex items-center gap-3 hover:text-blue-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaFileAlt className="text-xl" /> تقديم لاختبار
+              </Link>
+            </motion.div>
+
+            <motion.div variants={menuItemVariants}>
+              <Link href="/subscribe" className="flex items-center gap-3 hover:text-green-400 py-2" onClick={() => setMenuOpen(false)}>
+                <FaMoneyBillWave className="text-xl" /> الأسعار
+              </Link>
+            </motion.div>
+
+            <motion.div variants={menuItemVariants}>
+              <button
+                onClick={handleLogout}
+                className="flex items-center justify-end gap-3 text-red-400 hover:text-red-300 transition-colors duration-200 py-2 w-full"
+              >
+                <FaSignOutAlt className="text-xl" /> تسجيل خروج
+              </button>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
