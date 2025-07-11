@@ -12,9 +12,13 @@ import {
   FaMoneyBillWave,
   FaSignOutAlt,
   FaFileAlt,
-  FaInfoCircle, // For "الأسئلة الشائعة" or "معلومات" itself
-  FaCode, // For HTML, CSS, JS lessons
-} from "react-icons/fa";
+  FaInfoCircle,
+  FaCode, // For generic coding/Front-End
+  FaServer, // For Back-End
+  FaShieldAlt, // For Cyber Security
+  FaWifi, // For Social Media Hacking (might need a better icon)
+  FaGem, // For VIP Premium Track
+} from "react-icons/fa"; // استيراد الأيقونات الجديدة
 import { useState } from "react";
 import { motion, AnimatePresence, easeIn, easeOut } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
@@ -37,11 +41,16 @@ export default function Header() {
     },
   };
 
+  // تعديل isActiveLink ليتعامل مع روابط الكورسات بشكل أكثر عمومية
   const isActiveLink = (href: string) => {
     if (href === "/" && pathname === "/") return true;
+    // إذا كان الرابط هو /lessons ولكن المسار الحالي هو /lessons/frontend مثلاً
+    if (href === "/lessons" && pathname.startsWith("/lessons")) return true;
+    // إذا كان الرابط هو رابط كورس محدد، تأكد من مطابقة المسار تماماً
     if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
   };
+
 
   const handleLogout = () => {
     document.cookie = "loggedIn=; path=/; max-age=0";
@@ -77,7 +86,7 @@ export default function Header() {
             <FaHome className="text-xl" /> الصفحة الرئيسية
           </Link>
 
-          {/* دروس Dropdown - Updated for formal look and icons */}
+          {/* دروس Dropdown - Updated for courses */}
           <div className="relative group">
             <button
               className={`flex items-center gap-1 text-white py-1 px-2 rounded-lg transition-colors duration-200 ${
@@ -85,29 +94,43 @@ export default function Header() {
               }`}
             >
               <FaGraduationCap className="text-xl" />
-              الدروس
+              الكورسات
             </button>
-            <div className="absolute top-full mt-2 right-0 w-52 bg-[#1e293b] border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+            <div className="absolute top-full mt-2 right-0 w-64 bg-[#1e293b] border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 z-50 overflow-hidden">
               <Link
-                href="/lessons"
-                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50 last:border-b-0"
+                href="/lessons/frontend" // رابط كورس الفرونت إند
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
-                <FaCode className="text-lg text-blue-400" /> HTML
+                <FaCode className="text-lg text-blue-400" /> Front-End
               </Link>
               <Link
-                href="/lessons"
-                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50 last:border-b-0"
+                href="/lessons/backend" // رابط كورس الباك إند
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
                 onClick={() => setMenuOpen(false)}
               >
-                <FaCode className="text-lg text-green-400" /> CSS
+                <FaServer className="text-lg text-green-400" /> Back-End
               </Link>
               <Link
-                href="/lessons"
+                href="/lessons/cybersecurity" // رابط كورس الأمن السيبراني
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FaShieldAlt className="text-lg text-red-400" /> الأمن السيبراني
+              </Link>
+              <Link
+                href="/lessons/socialmedia-hacking" // رابط كورس اختراق السوشيال ميديا
+                className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200 border-b border-gray-700/50"
+                onClick={() => setMenuOpen(false)}
+              >
+                <FaWifi className="text-lg text-yellow-400" /> اختراق السوشيال ميديا
+              </Link>
+              <Link
+                href="/lessons/vip-premium" // رابط تراك VIP Premium
                 className="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-gray-700 transition-colors duration-200"
                 onClick={() => setMenuOpen(false)}
               >
-                <FaCode className="text-lg text-yellow-400" /> JavaScript
+                <FaGem className="text-lg text-purple-400" /> تراك VIP Premium
               </Link>
             </div>
           </div>
@@ -120,7 +143,7 @@ export default function Header() {
             <FaLaptopCode className="text-xl" /> اللغة
           </Link>
 
-          {/* Dropdown: معلومات - Updated for formal look and icons */}
+          {/* Dropdown: معلومات */}
           <div className="relative group">
             <button
               className="flex items-center gap-1 text-white py-1 px-2 rounded-lg hover:text-blue-400 transition-colors duration-200"
@@ -193,10 +216,26 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2 hover:text-pink-400 py-2" onClick={() => setMenuOpen(false)}>
               <FaHome /> الصفحة الرئيسية
             </Link>
-            {/* Mobile Lessons Links (could be improved with mobile dropdown if needed) */}
-            <Link href="/lessons" className="flex items-center gap-2 hover:text-purple-400 py-2" onClick={() => setMenuOpen(false)}>
-              <FaGraduationCap /> الدروس
+
+            {/* Mobile Courses Links - Each should navigate to its specific path */}
+            <h3 className="text-gray-400 text-sm font-semibold mt-4 mb-2">الكورسات:</h3>
+            <Link href="/lessons/frontend" className="flex items-center gap-2 hover:text-blue-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
+              <FaCode /> Front-End
             </Link>
+            <Link href="/lessons/backend" className="flex items-center gap-2 hover:text-green-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
+              <FaServer /> Back-End
+            </Link>
+            <Link href="/lessons/cybersecurity" className="flex items-center gap-2 hover:text-red-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
+              <FaShieldAlt /> الأمن السيبراني
+            </Link>
+            <Link href="/lessons/socialmedia-hacking" className="flex items-center gap-2 hover:text-yellow-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
+              <FaWifi /> اختراق السوشيال ميديا
+            </Link>
+            <Link href="/lessons/vip-premium" className="flex items-center gap-2 hover:text-purple-400 py-2 ml-4" onClick={() => setMenuOpen(false)}>
+              <FaGem /> تراك VIP Premium
+            </Link>
+            {/* End Mobile Courses Links */}
+
             <Link href="/language" className="flex items-center gap-2 hover:text-yellow-400 py-2" onClick={() => setMenuOpen(false)}>
               <FaLaptopCode /> اللغة
             </Link>
