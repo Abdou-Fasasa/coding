@@ -9,11 +9,9 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FaPlay,
-  FaShareAlt, // We'll remove this from LessonCard, but keep it if needed elsewhere
   FaCheck,
   FaCheckCircle,
   FaFilePdf,
-  FaCode, // General coding icon
   FaHtml5, // HTML icon
   FaCss3Alt, // CSS icon
   FaJsSquare, // JavaScript icon
