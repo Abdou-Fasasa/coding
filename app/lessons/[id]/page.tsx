@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
@@ -8,114 +8,209 @@ import { motion } from "framer-motion";
 import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign } from "react-icons/fa";
 import Link from "next/link";
 
+// تعريف الأكواد السرية لكل كورس
+const COURSE_UNLOCK_CODES: { [key: string]: string | undefined } = {
+  "programming-fundamentals-course": undefined, // هذا الكورس مجاني ومفتوح دائمًا
+  "html-course": "HTMLPRO2025",
+  "css-course": "CSSMASTER2025",
+  "javascript-course": "JSDEV2025",
+  "react-course": "REACTEXPERT2025",
+  "cyber-security-course": "CYBERSECURE2025",
+  "social-media-hacking-course": "SMHACKER2025",
+};
+
 // بيانات الدروس
 // كل الدروس هنا ستكون مقفلة افتراضيًا وتتطلب الكود في كل مرة
 const allLessonsData: {
-  [key: string]: { title: string; video: string; description: string; poster: string };
+  [key: string]: { title: string; video: string; description: string; poster: string; courseId: string };
 } = {
-  // دروس علوم الحاسوب
+  // دروس أساسيات البرمجة (مفتوحة)
+  "prog-fund-1": {
+    title: "1. إيه هي البرمجة وليه بنتعلمها؟",
+    video: "/videos/programming-fundamentals/prog-fund-1.mp4",
+    description: "مقدمة سريعة لعالم البرمجة وأهميتها في حياتنا اليومية.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-2": {
+    title: "2. الأدوات الأساسية للمبرمج",
+    video: "/videos/programming-fundamentals/prog-fund-2.mp4",
+    description: "تعرف على الأدوات اللي هتساعدك تكتب وتشغل الكود بتاعك.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-3": {
+    title: "3. المتغيرات وأنواع البيانات",
+    video: "",
+    description: "كيف يخزن الكمبيوتر المعلومات ويتعامل مع أنواعها المختلفة.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-4": {
+    title: "4. العمليات الحسابية والمنطقية",
+    video: "",
+    description: "نفذ العمليات الأساسية على الأرقام والقيم المنطقية.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-5": {
+    title: "5. جمل اتخاذ القرار (If/Else)",
+    video: "",
+    description: "اجعل برامجك تتخذ قرارات بناءً على شروط معينة.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-6": {
+    title: "6. الحلقات التكرارية (Loops)",
+    video: "",
+    description: "كرر الأوامر بسهولة وكفاءة لتوفير الوقت والجهد.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-7": {
+    title: "7. الدوال (Functions)",
+    video: "",
+    description: "اكتب كود منظم وقابل لإعادة الاستخدام لبرامج أقوى.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-8": {
+    title: "8. التعامل مع القوائم والمصفوفات",
+    video: "",
+    description: "خزن مجموعات من البيانات في مكان واحد واستخدمها بفاعلية.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-9": {
+    title: "9. المدخلات والمخرجات (Input/Output)",
+    video: "",
+    description: "تفاعل مع المستخدمين واستقبل منهم البيانات واعرض النتائج.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+  "prog-fund-10": {
+    title: "10. مشروع بسيط: تطبيق الآلة الحاسبة",
+    video: "",
+    description: "طبق كل اللي اتعلمته في مشروع عملي يبرز مهاراتك الأساسية.",
+    poster: "/images/programming-fundamentals.jpg",
+    courseId: "programming-fundamentals-course",
+  },
+
+  // دروس علوم الحاسوب (تحت كورس HTML لتسهيل المثال)
   "Computer-science": {
     title: "مقدمة في علوم الحاسوب والبرمجة",
     video: "/videos/Computer-science.mp4",
     description: "انطلق في رحلتك البرمجية بفهم الأساسيات التي تحرك عالم التكنولوجيا. هذا الدرس يضع الأساس لجميع الدورات القادمة.",
     poster: "/images/Computer-science.jpg",
+    courseId: "html-course", // يتبع كورس HTML
   },
   "Work-environment": {
     title: "تجهيز بيئة العمل",
     video: "/videos/Work-environment.mp4",
     description: "تعلم كيفية إعداد بيئة التطوير المثالية لبناء مشاريعك البرمجية بسهولة وفعالية.",
     poster: "/images/Work-environment.jpg",
+    courseId: "html-course", // يتبع كورس HTML
   },
   // دروس HTML
   "Html-lesson3": {
     title: "بناء هيكل صفحة الويب (HTML)",
-    video: "/videos/html-lesson3.mp4",
+    video: "/videos/html/html-lesson3.mp4",
     description: "اكتشف أساسيات HTML وكيفية تنظيم المحتوى لإنشاء صفحات الويب المتكاملة.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson4": {
     title: "عناصر HTML ومكوناتها",
-    video: "/videos/html-lesson4.mp4",
+    video: "/videos/html/html-lesson4.mp4",
     description: "تفصيل شامل لأنواع عناصر HTML المختلفة وكيفية استخدامها لبناء صفحات غنية بالمحتوى.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson5": {
     title: "التعامل مع النصوص في HTML",
-    video: "/videos/html-lesson5.mp4",
+    video: "/videos/html/html-lesson5.mp4",
     description: "تعلم كيفية تنسيق وإدارة النصوص في HTML، من العناوين والفقرات إلى التنسيقات الخاصة.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson6": {
     title: "التعامل مع الروابط في HTML",
-    video: "/videos/html-lesson6.mp4",
+    video: "/videos/html/html-lesson6.mp4",
     description: "دليل شامل لإنشاء الروابط في HTML، وكيفية ربط الصفحات والموارد الخارجية بفعالية.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson7": {
     title: "التعامل مع الصور في HTML",
-    video: "/videos/html-lesson7.mp4",
+    video: "/videos/html/html-lesson7.mp4",
     description: "استكشف كيفية إضافة الصور إلى صفحات HTML وتحسينها للعرض على الويب.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson8": {
     title: "التعامل مع القوائم في HTML – Lists",
-    video: "/videos/html-lesson8.mp4",
+    video: "/videos/html/html-lesson8.mp4",
     description: "تعلم تنظيم المحتوى باستخدام القوائم المرتبة وغير المرتبة والقوائم الوصفية في HTML.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson9": {
     title: "الجداول في HTML – Tables",
-    video: "/videos/html-lesson9.mp4",
+    video: "/videos/html/html-lesson9.mp4",
     description: "استخدام الجداول في HTML لعرض البيانات المنظمة بشكل جذاب وواضح.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson10": {
     title: "النماذج في HTML – Forms",
-    video: "/videos/html-lesson10.mp4",
+    video: "/videos/html/html-lesson10.mp4",
     description: "دليل كامل لإنشاء نماذج HTML للتفاعل مع المستخدمين وجمع البيانات.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson11": {
     title: "تنظيم الصفحة في HTML – باستخدام الأقسام والعناصر البنائية",
-    video: "/videos/html-lesson11.mp4",
+    video: "/videos/html/html-lesson11.mp4",
     description: "هيكل صفحات الويب الخاصة بك بشكل احترافي باستخدام الأقسام والعناصر البنائية لتحسين التنظيم وسهولة القراءة.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson12": {
     title: "إدراج عناصر خارجية في HTML – الفيديوهات، الخرائط والمواقع التانية",
-    video: "/videos/html-lesson12.mp4",
+    video: "/videos/html/html-lesson12.mp4",
     description: "أضف محتوى تفاعليًا وغنيًا من مصادر خارجية مثل الفيديوهات والخرائط لتحسين تجربة المستخدم.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson13": {
     title: "أفضل الممارسات في HTML – خليك محترف من أول سطر",
-    video: "/videos/html-lesson13.mp4",
+    video: "/videos/html/html-lesson13.mp4",
     description: "تعلم نصائح وحيل الخبراء لكتابة كود HTML نظيف، فعال، ومتوافق مع معايير الويب.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   "Html-lesson14": {
     title: "مشروع نهائي باستخدام HTML فقط – ختامها مسك",
-    video: "/videos/html-lesson14.mp4",
+    video: "/videos/html/html-lesson14.mp4",
     description: "طبق كل ما تعلمته في HTML لإنشاء مشروع ويب كامل، demonstrating your skills.",
     poster: "/images/html-lessons.jpg",
+    courseId: "html-course",
   },
   // دروس CSS
   "Css-lesson1": {
     title: "مقدمة في CSS",
-    video: "/videos/css-lesson1.mp4",
+    video: "/videos/css/css-lesson1.mp4",
     description: "ابدأ رحلتك في عالم تصميم الويب وتعلم كيفية إضفاء الجمال والجاذبية على صفحاتك باستخدام CSS.",
     poster: "/images/css-lessons.jpg",
+    courseId: "css-course",
   },
 };
 
 // تحويل object الدروس إلى مصفوفة للحصول على ترتيب
-const orderedLessons = Object.keys(allLessonsData).map(id => ({
+const orderedLessons = Object.keys(allLessonsData).map((id) => ({
   id,
-  ...allLessonsData[id]
+  ...allLessonsData[id],
 }));
-
-// الكود السري لفتح الفيديوهات
-const VIDEO_UNLOCK_CODE = "VIPCODE333";
 
 export default function LessonPage() {
   const routerParams = useParams();
@@ -123,18 +218,20 @@ export default function LessonPage() {
   const lesson = allLessonsData[lessonId];
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // ✅ حالة قفل/فتح الفيديو - تبدأ دائمًا "مقفلة"
-  const [isUnlocked, setIsUnlocked] = useState(false);
+  // احصل على كود الفتح الخاص بالكورس الحالي
+  const courseCode = lesson ? COURSE_UNLOCK_CODES[lesson.courseId] : undefined;
+
+  // 🔄 حالة قفل/فتح الفيديو - تبدأ "مقفلة" إذا كان هناك كود للكورس، ومفتوحة إذا لم يكن هناك كود
+  const [isUnlocked, setIsUnlocked] = useState(courseCode === undefined);
   const [inputCode, setInputCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   // تحديد فهرس الدرس الحالي لتحديد الدرس السابق والتالي
-  const currentLessonIndex = orderedLessons.findIndex(l => l.id === lessonId);
+  const currentLessonIndex = orderedLessons.findIndex((l) => l.id === lessonId);
   const prevLesson = currentLessonIndex > 0 ? orderedLessons[currentLessonIndex - 1] : null;
   const nextLesson = currentLessonIndex < orderedLessons.length - 1 ? orderedLessons[currentLessonIndex + 1] : null;
 
-
-  // تأثير جانبي لحماية الفيديو (يبقى كما هو، يعتمد على isUnlocked الحالية)
+  // تأثير جانبي لحماية الفيديو
   useEffect(() => {
     const videoElement = videoRef.current;
 
@@ -151,7 +248,7 @@ export default function LessonPage() {
     };
 
     const disableSave = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
         e.preventDefault();
       }
     };
@@ -163,56 +260,57 @@ export default function LessonPage() {
     };
 
     if (isUnlocked && videoElement) {
-      videoElement.setAttribute('controlsList', 'nodownload');
-      videoElement.addEventListener('contextmenu', disableContextMenu);
-      document.addEventListener('contextmenu', disableRightClick);
-      document.addEventListener('copy', disableCopy);
-      document.addEventListener('keydown', disableSave);
-      videoElement.addEventListener('emptied', disableDownloadManagers);
-      videoElement.addEventListener('waiting', disableDownloadManagers);
-      videoElement.addEventListener('stalled', disableDownloadManagers);
-      videoElement.addEventListener('suspend', disableDownloadManagers);
-      videoElement.addEventListener('abort', disableDownloadManagers);
+      videoElement.setAttribute("controlsList", "nodownload");
+      videoElement.addEventListener("contextmenu", disableContextMenu);
+      document.addEventListener("contextmenu", disableRightClick);
+      document.addEventListener("copy", disableCopy);
+      document.addEventListener("keydown", disableSave);
+      videoElement.addEventListener("emptied", disableDownloadManagers);
+      videoElement.addEventListener("waiting", disableDownloadManagers);
+      videoElement.addEventListener("stalled", disableDownloadManagers);
+      videoElement.addEventListener("suspend", disableDownloadManagers);
+      videoElement.addEventListener("abort", disableDownloadManagers);
     } else {
+      // 🚨 إزالة الـ event listeners عند القفل أو عدم الفتح
       if (videoElement) {
-        videoElement.removeAttribute('controlsList');
-        videoElement.removeEventListener('contextmenu', disableContextMenu);
-        videoElement.removeEventListener('emptied', disableDownloadManagers);
-        videoElement.removeEventListener('waiting', disableDownloadManagers);
-        videoElement.removeEventListener('stalled', disableDownloadManagers);
-        videoElement.removeEventListener('suspend', disableDownloadManagers);
-        videoElement.removeEventListener('abort', disableDownloadManagers);
+        videoElement.removeAttribute("controlsList");
+        videoElement.removeEventListener("contextmenu", disableContextMenu);
+        videoElement.removeEventListener("emptied", disableDownloadManagers);
+        videoElement.removeEventListener("waiting", disableDownloadManagers);
+        videoElement.removeEventListener("stalled", disableDownloadManagers);
+        videoElement.removeEventListener("suspend", disableDownloadManagers);
+        videoElement.removeEventListener("abort", disableDownloadManagers);
       }
-      document.removeEventListener('contextmenu', disableRightClick);
-      document.removeEventListener('copy', disableCopy);
-      document.removeEventListener('keydown', disableSave);
+      document.removeEventListener("contextmenu", disableRightClick);
+      document.removeEventListener("copy", disableCopy);
+      document.removeEventListener("keydown", disableSave);
     }
 
     return () => {
+      // 🧹 Clean up on component unmount
       if (videoElement) {
-        videoElement.removeEventListener('contextmenu', disableContextMenu);
-        videoElement.removeEventListener('emptied', disableDownloadManagers);
-        videoElement.removeEventListener('waiting', disableDownloadManagers);
-        videoElement.removeEventListener('stalled', disableDownloadManagers);
-        videoElement.removeEventListener('suspend', disableDownloadManagers);
-        videoElement.removeEventListener('abort', disableDownloadManagers);
+        videoElement.removeEventListener("contextmenu", disableContextMenu);
+        videoElement.removeEventListener("emptied", disableDownloadManagers);
+        videoElement.removeEventListener("waiting", disableDownloadManagers);
+        videoElement.removeEventListener("stalled", disableDownloadManagers);
+        videoElement.removeEventListener("suspend", disableDownloadManagers);
+        videoElement.removeEventListener("abort", disableDownloadManagers);
       }
-      document.removeEventListener('contextmenu', disableRightClick);
-      document.removeEventListener('copy', disableCopy);
-      document.removeEventListener('keydown', disableSave);
+      document.removeEventListener("contextmenu", disableRightClick);
+      document.removeEventListener("copy", disableCopy);
+      document.removeEventListener("keydown", disableSave);
     };
-  }, [isUnlocked]);
+  }, [isUnlocked]); // يعتمد على isUnlocked
 
   // دالة للتحقق من الكود وفتح الفيديو
-  const handleUnlockVideo = () => {
-    if (inputCode === VIDEO_UNLOCK_CODE) {
+  const handleUnlockVideo = useCallback(() => {
+    if (inputCode === courseCode) {
       setIsUnlocked(true);
       setErrorMessage("");
-      // ❌ تم إزالة حفظ حالة الفتح في Local Storage هنا
     } else {
       setErrorMessage("الكود غير صحيح. يرجى المحاولة مرة أخرى.");
     }
-  };
+  }, [inputCode, courseCode]);
 
   if (!lesson) {
     return (
@@ -233,7 +331,8 @@ export default function LessonPage() {
   }
 
   // الآن، أي درس (طالما له فيديو) سيتطلب قفلاً ما لم يتم فتحه في نفس الجلسة فقط.
-  const requiresUnlock = !isUnlocked; // يتطلب قفلًا إذا لم يكن مفتوحًا حاليًا في هذه الجلسة
+  // إذا لم يكن هناك كود محدد للكورس، فسيتم اعتباره مفتوحًا تلقائيًا
+  const requiresUnlock = courseCode !== undefined && !isUnlocked;
 
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
@@ -284,8 +383,8 @@ export default function LessonPage() {
               className="relative w-full h-96 flex flex-col items-center justify-center p-8 text-center"
               style={{
                 backgroundImage: `url(${lesson.poster})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
               <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center space-y-6 rounded-2xl">
@@ -301,7 +400,7 @@ export default function LessonPage() {
                     setErrorMessage("");
                   }}
                   onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === "Enter") {
                       handleUnlockVideo();
                     }
                   }}
@@ -344,7 +443,7 @@ export default function LessonPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex justify-between w-full max-w-4xl mt-12 gap-4"
+          className="flex justify-between w-full max-w-4xl mx-auto mt-12 gap-4"
         >
           {prevLesson ? (
             <Link
@@ -380,7 +479,7 @@ export default function LessonPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 p-6 bg-[#1e293b] rounded-2xl shadow-lg border border-gray-700 max-w-3xl text-center"
+          className="mt-12 p-6 bg-[#1e293b] rounded-2xl shadow-lg border border-gray-700 max-w-3xl mx-auto text-center"
         >
           <h2 className="text-2xl font-bold text-yellow-300 mb-3 flex items-center justify-center gap-2">
             <FaInfoCircle /> حماية المحتوى

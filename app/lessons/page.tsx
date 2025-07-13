@@ -20,6 +20,7 @@ import {
   FaUnlockAlt, // Social Media Hacking icon
   FaChevronDown,
   FaChevronUp,
+  FaLaptopCode, // Icon for Programming Fundamentals
 } from "react-icons/fa";
 
 // تعريف نوع الدرس (TypeScript)
@@ -27,9 +28,10 @@ type Lesson = {
   id: string;
   title: string;
   description: string;
-  pdfPath: string;
+  pdfPath?: string; // جعلها اختيارية
   imagePath: string;
   isCompleted?: boolean;
+  hasTest?: boolean; // تحديد ما إذا كان الدرس يحتوي على اختبار
 };
 
 // بيانات الدروس لكورس HTML
@@ -232,8 +234,89 @@ const socialMediaHackingLessons: Lesson[] = [
   // },
 ];
 
+// بيانات الدروس لكورس أساسيات البرمجة (جديد)
+const programmingFundamentalsLessons: Lesson[] = [
+  {
+    id: "prog-fund-1",
+    title: "1. إيه هي البرمجة وليه بنتعلمها؟",
+    description: "مقدمة سريعة لعالم البرمجة وأهميتها في حياتنا اليومية.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-2",
+    title: "2. الأدوات الأساسية للمبرمج",
+    description: "تعرف على الأدوات اللي هتساعدك تكتب وتشغل الكود بتاعك.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-3",
+    title: "3. المتغيرات وأنواع البيانات",
+    description: "كيف يخزن الكمبيوتر المعلومات ويتعامل مع أنواعها المختلفة.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-4",
+    title: "4. العمليات الحسابية والمنطقية",
+    description: "نفذ العمليات الأساسية على الأرقام والقيم المنطقية.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-5",
+    title: "5. جمل اتخاذ القرار (If/Else)",
+    description: "اجعل برامجك تتخذ قرارات بناءً على شروط معينة.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-6",
+    title: "6. الحلقات التكرارية (Loops)",
+    description: "كرر الأوامر بسهولة وكفاءة لتوفير الوقت والجهد.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-7",
+    title: "7. الدوال (Functions)",
+    description: "اكتب كود منظم وقابل لإعادة الاستخدام لبرامج أقوى.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-8",
+    title: "8. التعامل مع القوائم والمصفوفات",
+    description: "خزن مجموعات من البيانات في مكان واحد واستخدمها بفاعلية.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-9",
+    title: "9. المدخلات والمخرجات (Input/Output)",
+    description: "تفاعل مع المستخدمين واستقبل منهم البيانات واعرض النتائج.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+  {
+    id: "prog-fund-10",
+    title: "10. مشروع بسيط: تطبيق الآلة الحاسبة",
+    description: "طبق كل اللي اتعلمته في مشروع عملي يبرز مهاراتك الأساسية.",
+    imagePath: "/images/programming-fundamentals.jpg",
+    hasTest: false,
+  },
+];
+
 // هيكل لجميع الكورسات التي سيتم عرضها كأقسام قابلة للطي
 const allCoursesSections = [
+  {
+    id: "programming-fundamentals-course",
+    title: "كورس أساسيات البرمجة 💡 (مجاناً)",
+    icon: <FaLaptopCode className="text-4xl text-emerald-400" />,
+    description: "بوابة دخولك لعالم البرمجة من الصفر: تعلم التفكير البرمجي وأول خطوات كتابة الكود.",
+    lessons: programmingFundamentalsLessons,
+  },
   {
     id: "html-course",
     title: "كورس HTML: بناء هيكل الويب",
@@ -279,11 +362,10 @@ const allCoursesSections = [
   // يمكنك إضافة كورسات أخرى هنا بنفس النمط
 ];
 
-
 export default function CoursesPage() {
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   // فتح كورس HTML تلقائياً عند التحميل، أو يمكن تركه null ليتم إغلاق الكل
-  const [activeCourseSection, setActiveCourseSection] = useState<string | null>("html-course");
+  const [activeCourseSection, setActiveCourseSection] = useState<string | null>("programming-fundamentals-course"); // فتح كورس أساسيات البرمجة تلقائيًا
 
   // Load completion status from Local Storage on component mount
   useEffect(() => {
@@ -487,20 +569,24 @@ function LessonCard({ lesson, onPlay, variants }: LessonCardProps) {
           <FaPlay className="text-sm" /> تشغيل الدرس
         </Link>
 
-        <Link
-          href={`/lessons/${lesson.id}/test`}
-          className="bg-purple-600 hover:bg-purple-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
-        >
-          <FaCheckCircle className="text-sm" /> اختبار الدرس
-        </Link>
+        {lesson.hasTest !== false && ( // إظهار زر الاختبار فقط إذا لم يتم تعيين hasTest كـ false صراحةً
+          <Link
+            href={`/lessons/${lesson.id}/test`}
+            className="bg-purple-600 hover:bg-purple-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
+          >
+            <FaCheckCircle className="text-sm" /> اختبار الدرس
+          </Link>
+        )}
 
-        <a
-          href={lesson.pdfPath}
-          download
-          className="bg-green-600 hover:bg-green-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
-        >
-          <FaFilePdf className="text-sm" /> تحميل ملف الدرس PDF
-        </a>
+        {lesson.pdfPath && ( // إظهار زر الـ PDF فقط إذا كان المسار موجودًا
+          <a
+            href={lesson.pdfPath}
+            download
+            className="bg-green-600 hover:bg-green-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
+          >
+            <FaFilePdf className="text-sm" /> تحميل ملف الدرس PDF
+          </a>
+        )}
 
         {/* تم حذف زر المشاركة بالكامل بناءً على طلبك */}
       </div>
