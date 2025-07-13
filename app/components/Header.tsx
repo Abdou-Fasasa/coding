@@ -13,11 +13,6 @@ import {
   FaSignOutAlt,
   FaFileAlt,
   FaInfoCircle,
-  FaCode,
-  FaServer,
-  FaShieldAlt,
-  FaWifi,
-  FaGem,
 } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
