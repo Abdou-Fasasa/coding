@@ -9,14 +9,17 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FaPlay,
-  FaShareAlt,
+  FaShareAlt, // We'll remove this from LessonCard, but keep it if needed elsewhere
   FaCheck,
   FaCheckCircle,
   FaFilePdf,
-  FaCode, // Icon for Front-End course
-  FaHtml5, // Icon for HTML section
-  FaCss3Alt, // Icon for CSS section
-  FaJsSquare, // Icon for JavaScript section
+  FaCode, // General coding icon
+  FaHtml5, // HTML icon
+  FaCss3Alt, // CSS icon
+  FaJsSquare, // JavaScript icon
+  FaReact, // React icon
+  FaShieldAlt, // Cyber Security icon
+  FaUnlockAlt, // Social Media Hacking icon
   FaChevronDown,
   FaChevronUp,
 } from "react-icons/fa";
@@ -133,7 +136,7 @@ const htmlLessons: Lesson[] = [
   },
 ];
 
-// بيانات الدروس لكورس CSS (الدرس الوحيد حالياً)
+// بيانات الدروس لكورس CSS
 const cssLessons: Lesson[] = [
   {
     id: "Css-lesson1",
@@ -142,27 +145,158 @@ const cssLessons: Lesson[] = [
     pdfPath: "/pdfs/css-lesson1.pdf",
     imagePath: "/images/css-lessons.jpg",
   },
+  // Add more CSS lessons here
 ];
 
-// بيانات الدروس لكورس JavaScript (فارغة حالياً)
-const jsLessons: Lesson[] = [];
+// بيانات الدروس لكورس JavaScript
+const jsLessons: Lesson[] = [
+  // {
+  //   id: "Js-lesson1",
+  //   title: "مقدمة في JavaScript",
+  //   description: "اكتشف قوة JavaScript في إضفاء التفاعل والحياة على صفحات الويب.",
+  //   pdfPath: "/pdfs/js-lesson1.pdf",
+  //   imagePath: "/images/js-lessons.jpg",
+  // },
+];
+
+// بيانات الدروس لكورس React
+const reactLessons: Lesson[] = [
+  // {
+  //   id: "React-lesson1",
+  //   title: "مقدمة في React.js",
+  //   description: "تعلم أساسيات React.js وبناء مكونات الواجهة.",
+  //   pdfPath: "/pdfs/react-lesson1.pdf",
+  //   imagePath: "/images/react-lessons.jpg",
+  // },
+];
+
+// بيانات الدروس لكورس الأمن السيبراني
+const cyberSecurityLessons: Lesson[] = [
+  // {
+  //   id: "CS-lesson1",
+  //   title: "مقدمة في الشبكات وأساسياتها",
+  //   description: "فهم البنية التحتية للشبكات وأهميتها في الأمن السيبراني.",
+  //   pdfPath: "/pdfs/cs-lesson1.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+  // {
+  //   id: "CS-lesson2",
+  //   title: "أنواع الاختراقات وأساليبها",
+  //   description: "تعرف على أبرز التهديدات السيبرانية وكيفية عملها.",
+  //   pdfPath: "/pdfs/cs-lesson2.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+  // {
+  //   id: "CS-lesson3",
+  //   title: "أساليب الحماية المتقدمة",
+  //   description: "تعلم استراتيجيات قوية لحماية الأنظمة والبيانات.",
+  //   pdfPath: "/pdfs/cs-lesson3.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+  // {
+  //   id: "CS-lesson4",
+  //   title: "أدوات اختبار الاختراق (Penetration Testing)",
+  //   description: "اكتشف الأدوات المستخدمة في اختبار الاختراق الأخلاقي.",
+  //   pdfPath: "/pdfs/cs-lesson4.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+  // {
+  //   id: "CS-lesson5",
+  //   title: "مشروع اختراق قانوني (Ethical Hacking)",
+  //   description: "طبق مهاراتك في مشروع عملي محاكي لاختراق نظام.",
+  //   pdfPath: "/pdfs/cs-lesson5.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+  // {
+  //   id: "CS-lesson6",
+  //   title: "تأهيل للعمل في مجال الأمن السيبراني",
+  //   description: "إرشادات وخطوات للدخول إلى سوق العمل في الأمن السيبراني.",
+  //   pdfPath: "/pdfs/cs-lesson6.pdf",
+  //   imagePath: "/images/cyber-security.jpg",
+  // },
+];
+
+// بيانات الدروس لكورس اختراق السوشيال ميديا
+const socialMediaHackingLessons: Lesson[] = [
+  // {
+  //   id: "SMH-lesson1",
+  //   title: "تقنيات جمع المعلومات (OSINT)",
+  //   description: "تعلم كيفية جمع المعلومات علنًا عن الأهداف.",
+  //   pdfPath: "/pdfs/smh-lesson1.pdf",
+  //   imagePath: "/images/social-media-hacking.jpg",
+  // },
+  // {
+  //   id: "SMH-lesson2",
+  //   title: "فهم الثغرات الشائعة",
+  //   description: "اكتشف الثغرات الأمنية المتكررة في منصات التواصل.",
+  //   pdfPath: "/pdfs/smh-lesson2.pdf",
+  //   imagePath: "/images/social-media-hacking.jpg",
+  // },
+];
+
+// هيكل لجميع الكورسات التي سيتم عرضها كأقسام قابلة للطي
+const allCoursesSections = [
+  {
+    id: "html-course",
+    title: "كورس HTML: بناء هيكل الويب",
+    icon: <FaHtml5 className="text-4xl text-orange-500" />,
+    description: "ابدأ رحلتك في بناء صفحات الويب الأساسية.",
+    lessons: htmlLessons,
+  },
+  {
+    id: "css-course",
+    title: "كورس CSS: تنسيق وتصميم الويب",
+    icon: <FaCss3Alt className="text-4xl text-blue-500" />,
+    description: "أضف لمسة جمالية واحترافية لصفحات الويب الخاصة بك.",
+    lessons: cssLessons,
+  },
+  {
+    id: "javascript-course",
+    title: "كورس JavaScript: التفاعل والديناميكية",
+    icon: <FaJsSquare className="text-4xl text-yellow-500" />,
+    description: "اجعل صفحاتك تفاعلية وديناميكية باستخدام قوة JavaScript.",
+    lessons: jsLessons,
+  },
+  {
+    id: "react-course",
+    title: "كورس React: بناء واجهات المستخدم الحديثة",
+    icon: <FaReact className="text-4xl text-cyan-400" />,
+    description: "تعمق في بناء واجهات المستخدم المعقدة باستخدام مكتبة React.js.",
+    lessons: reactLessons,
+  },
+  {
+    id: "cyber-security-course",
+    title: "كورس الأمن السيبراني: احترف حماية الأنظمة والشبكات",
+    icon: <FaShieldAlt className="text-4xl text-purple-400" />,
+    description: "احترف حماية الأنظمة والشبكات من التهديدات السيبرانية.",
+    lessons: cyberSecurityLessons,
+  },
+  {
+    id: "social-media-hacking-course",
+    title: "كورس اختراق السوشيال ميديا (لأغراض أمنية)",
+    icon: <FaUnlockAlt className="text-4xl text-red-400" />,
+    description: "كورس متقدم ضمن الأمن السيبراني لتعلم الجوانب القانونية والأخلاقية لاختراق حسابات التواصل الاجتماعي.",
+    lessons: socialMediaHackingLessons,
+  },
+  // يمكنك إضافة كورسات أخرى هنا بنفس النمط
+];
 
 
-export default function LessonsPage() {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+export default function CoursesPage() {
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
-  const [activeCourse, setActiveCourse] = useState<string | null>('front-end'); // فتح كورس Front-End تلقائياً
+  // فتح كورس HTML تلقائياً عند التحميل، أو يمكن تركه null ليتم إغلاق الكل
+  const [activeCourseSection, setActiveCourseSection] = useState<string | null>("html-course");
 
   // Load completion status from Local Storage on component mount
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedCompleted = localStorage.getItem('completedLessons');
+    if (typeof window !== "undefined") {
+      const storedCompleted = localStorage.getItem("completedLessons");
       if (storedCompleted) {
         try {
           setCompletedLessons(new Set(JSON.parse(storedCompleted)));
         } catch (e) {
           console.error("Failed to parse completed lessons from local storage", e);
-          localStorage.removeItem('completedLessons'); // Clear invalid data
+          localStorage.removeItem("completedLessons"); // Clear invalid data
         }
       }
     }
@@ -170,29 +304,21 @@ export default function LessonsPage() {
 
   // Save completion status to Local Storage on every change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('completedLessons', JSON.stringify(Array.from(completedLessons)));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("completedLessons", JSON.stringify(Array.from(completedLessons)));
     }
   }, [completedLessons]);
 
-  const handleShare = useCallback((lessonId: string) => {
-    const url = `${window.location.origin}/lessons/${lessonId}`;
-    navigator.clipboard.writeText(url).then(() => {
-      setCopiedId(lessonId);
-      setTimeout(() => setCopiedId(null), 2000); // Hide "Copied!" message after 2 seconds
-    });
-  }, []);
-
   const markLessonAsCompleted = useCallback((lessonId: string) => {
-    setCompletedLessons(prev => {
+    setCompletedLessons((prev) => {
       const newSet = new Set(prev);
       newSet.add(lessonId);
       return newSet;
     });
   }, []);
 
-  const toggleCourseSection = useCallback((courseKey: string) => {
-    setActiveCourse(prev => (prev === courseKey ? null : courseKey));
+  const toggleCourseSection = useCallback((sectionId: string) => {
+    setActiveCourseSection((prev) => (prev === sectionId ? null : sectionId));
   }, []);
 
   const lessonGridVariants = {
@@ -238,124 +364,71 @@ export default function LessonsPage() {
           اكتشف مساراتنا التعليمية
         </motion.h1>
 
-        {/* Front-End Course Section */}
-        <section className="w-full py-12 bg-gradient-to-br from-[#1e293b] to-[#0f172a] shadow-2xl border-t border-b border-gray-700/50">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div
-              className="flex items-center justify-between cursor-pointer py-4 px-6 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 shadow-lg border border-gray-700/60"
-              onClick={() => toggleCourseSection('front-end')}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-cyan-300 flex items-center gap-3">
-                <FaCode className="text-4xl text-green-400" /> كورس Front-End: بناء واجهات المستخدم التفاعلية
-              </h2>
+        {/* Dynamic Course Sections */}
+        {allCoursesSections.map((courseSection, index) => (
+          <section
+            key={courseSection.id}
+            className={`w-full py-12 ${index === 0 ? 'border-t' : ''} border-b border-gray-700/50 bg-gradient-to-br from-[#1e293b] to-[#0f172a] shadow-2xl`}
+          >
+            <div className="max-w-6xl mx-auto px-6">
               <motion.div
-                animate={{ rotate: activeCourse === 'front-end' ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+                className="flex items-center justify-between cursor-pointer py-4 px-6 rounded-xl bg-gray-800 hover:bg-gray-700 transition-colors duration-200 shadow-lg border border-gray-700/60"
+                onClick={() => toggleCourseSection(courseSection.id)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                {activeCourse === 'front-end' ? (
-                  <FaChevronUp className="text-3xl text-gray-400" />
-                ) : (
-                  <FaChevronDown className="text-3xl text-gray-400" />
-                )}
-              </motion.div>
-            </motion.div>
-
-            <AnimatePresence initial={false}>
-              {activeCourse === 'front-end' && (
+                <h2 className="text-3xl md:text-4xl font-bold text-cyan-300 flex items-center gap-3">
+                  {courseSection.icon} {courseSection.title}
+                </h2>
                 <motion.div
-                  key="front-end-lessons-collapsible-content"
-                  initial="collapsed"
-                  animate="open"
-                  exit="collapsed"
-                  variants={lessonGridVariants}
-                  className="overflow-hidden bg-[#1e293b] p-6 rounded-2xl shadow-xl border border-gray-700/50"
+                  animate={{ rotate: activeCourseSection === courseSection.id ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto mb-8 mt-4">
-                    تعلم كل ما تحتاجه لتصبح مطور واجهات أمامية محترف. هذا الكورس يغطي HTML, CSS, و JavaScript لبناء تجارب ويب رائعة.
-                  </p>
-
-                  {/* HTML Section */}
-                  <h3 className="text-3xl font-bold text-blue-400 mt-8 mb-6 flex items-center justify-center gap-3">
-                    <FaHtml5 className="text-4xl text-orange-500" /> دروس HTML
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {htmlLessons.map((lesson) => (
-                      <LessonCard
-                        key={lesson.id}
-                        lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
-                        copiedId={copiedId}
-                        onShare={handleShare}
-                        onPlay={() => markLessonAsCompleted(lesson.id)}
-                        variants={lessonCardItemVariants}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Divider */}
-                  <div className="my-10 h-0.5 bg-gray-700/50 w-full max-w-xl mx-auto rounded-full shadow-inner" />
-
-                  {/* CSS Section */}
-                  <h3 className="text-3xl font-bold text-purple-400 mt-8 mb-6 flex items-center justify-center gap-3">
-                    <FaCss3Alt className="text-4xl text-blue-500" /> دروس CSS
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    {cssLessons.map((lesson) => (
-                      <LessonCard
-                        key={lesson.id}
-                        lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
-                        copiedId={copiedId}
-                        onShare={handleShare}
-                        onPlay={() => markLessonAsCompleted(lesson.id)}
-                        variants={lessonCardItemVariants}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Divider */}
-                  {/* نعرض فاصل JavaScript فقط إذا كانت هناك دروس JS أو أردنا إظهار القسم فارغاً */}
-                  {jsLessons.length > 0 && (
-                      <div className="my-10 h-0.5 bg-gray-700/50 w-full max-w-xl mx-auto rounded-full shadow-inner" />
+                  {activeCourseSection === courseSection.id ? (
+                    <FaChevronUp className="text-3xl text-gray-400" />
+                  ) : (
+                    <FaChevronDown className="text-3xl text-gray-400" />
                   )}
-
-
-                  {/* JavaScript Section */}
-                  {/* نعرض قسم JavaScript فقط إذا كانت هناك دروس JS */}
-                  {jsLessons.length > 0 && (
-                      <>
-                        <h3 className="text-3xl font-bold text-yellow-400 mt-8 mb-6 flex items-center justify-center gap-3">
-                          <FaJsSquare className="text-4xl text-yellow-500" /> دروس JavaScript
-                        </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                          {jsLessons.map((lesson) => (
-                            <LessonCard
-                              key={lesson.id}
-                              lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
-                              copiedId={copiedId}
-                              onShare={handleShare}
-                              onPlay={() => markLessonAsCompleted(lesson.id)}
-                              variants={lessonCardItemVariants}
-                            />
-                          ))}
-                        </div>
-                      </>
-                  )}
-                   {jsLessons.length === 0 && (
-                      <p className="text-gray-500 text-xl font-semibold mt-10 p-6 border border-gray-700/40 rounded-xl bg-gray-800/30">
-                        <FaJsSquare className="inline-block text-4xl align-middle text-yellow-500 mr-3" />
-                        دروس JavaScript قادمة قريباً جداً! ابقوا على اطلاع.
-                      </p>
-                  )}
-
-
                 </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </section>
+              </motion.div>
 
+              <AnimatePresence initial={false}>
+                {activeCourseSection === courseSection.id && (
+                  <motion.div
+                    key={`${courseSection.id}-collapsible-content`}
+                    initial="collapsed"
+                    animate="open"
+                    exit="collapsed"
+                    variants={lessonGridVariants}
+                    className="overflow-hidden bg-[#1e293b] p-6 rounded-2xl shadow-xl border border-gray-700/50"
+                  >
+                    <p className="text-gray-400 text-lg text-center max-w-3xl mx-auto mb-8 mt-4">
+                      {courseSection.description}
+                    </p>
+
+                    {courseSection.lessons.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                        {courseSection.lessons.map((lesson) => (
+                          <LessonCard
+                            key={lesson.id}
+                            lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
+                            onPlay={() => markLessonAsCompleted(lesson.id)}
+                            variants={lessonCardItemVariants}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-xl font-semibold mt-10 p-6 border border-gray-700/40 rounded-xl bg-gray-800/30 flex items-center justify-center gap-3">
+                        {courseSection.icon} لم يتم تسجيل محاضرات لهذا الكورس بعد. ابقوا على اطلاع!
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </section>
+        ))}
       </main>
 
       <Footer />
@@ -365,14 +438,12 @@ export default function LessonsPage() {
 
 interface LessonCardProps {
   lesson: Lesson & { isCompleted: boolean };
-  copiedId: string | null;
-  onShare: (lessonId: string) => void;
   onPlay: (lessonId: string) => void;
   variants: Variants;
 }
 
-// مكون بطاقة الدرس (بدون تغيير)
-function LessonCard({ lesson, copiedId, onShare, onPlay, variants }: LessonCardProps) {
+// مكون بطاقة الدرس (بعد التعديلات المطلوبة: حذف زر المشاركة وتصغير الحجم)
+function LessonCard({ lesson, onPlay, variants }: LessonCardProps) {
   return (
     <motion.div
       variants={variants}
@@ -391,7 +462,7 @@ function LessonCard({ lesson, copiedId, onShare, onPlay, variants }: LessonCardP
         </motion.div>
       )}
 
-      <div className="w-full h-48 mb-4 overflow-hidden rounded-xl relative">
+      <div className="w-full h-32 mb-2 overflow-hidden rounded-xl relative">
         <Image
           src={lesson.imagePath}
           alt={`صورة الدرس ${lesson.id}`}
@@ -401,51 +472,39 @@ function LessonCard({ lesson, copiedId, onShare, onPlay, variants }: LessonCardP
         />
       </div>
 
-      <h3 className="text-2xl font-bold text-cyan-300 mb-2 text-center flex-grow">
+      {/* تصغير حجم مربع العنوان ووصف الفيديو */}
+      <h3 className="text-xl font-bold text-cyan-300 mb-1 text-center flex-grow line-clamp-2">
         {lesson.title}
       </h3>
-      <p className="text-gray-400 text-sm mb-4 text-center flex-grow">
+      <p className="text-gray-400 text-xs mb-3 text-center flex-grow line-clamp-3">
         {lesson.description}
       </p>
 
-      <div className="flex flex-col gap-3 mt-auto">
+      <div className="flex flex-col gap-2 mt-auto">
         <Link
           href={`/lessons/${lesson.id}`}
           onClick={() => onPlay(lesson.id)}
-          className="bg-cyan-600 hover:bg-cyan-700 transition rounded-xl py-3 px-4 flex items-center gap-2 justify-center font-semibold text-lg hover:shadow-md active:scale-95"
+          className="bg-cyan-600 hover:bg-cyan-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
         >
-          <FaPlay className="text-base" /> تشغيل الدرس
+          <FaPlay className="text-sm" /> تشغيل الدرس
         </Link>
 
         <Link
           href={`/lessons/${lesson.id}/test`}
-          className="bg-purple-600 hover:bg-purple-700 transition rounded-xl py-3 px-4 flex items-center gap-2 justify-center font-semibold text-lg hover:shadow-md active:scale-95"
+          className="bg-purple-600 hover:bg-purple-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
         >
-          <FaCheckCircle className="text-base" /> اختبار الدرس
+          <FaCheckCircle className="text-sm" /> اختبار الدرس
         </Link>
 
         <a
           href={lesson.pdfPath}
           download
-          className="bg-green-600 hover:bg-green-700 transition rounded-xl py-3 px-4 flex items-center gap-2 justify-center font-semibold text-lg hover:shadow-md active:scale-95"
+          className="bg-green-600 hover:bg-green-700 transition rounded-xl py-2 px-3 flex items-center gap-2 justify-center font-semibold text-base hover:shadow-md active:scale-95"
         >
-          <FaFilePdf className="text-base" /> تحميل ملف الدرس PDF
+          <FaFilePdf className="text-sm" /> تحميل ملف الدرس PDF
         </a>
 
-        <button
-          onClick={() => onShare(lesson.id)}
-          className="bg-gray-700 hover:bg-gray-800 transition rounded-xl py-3 px-4 flex items-center gap-2 justify-center font-semibold text-lg hover:shadow-md active:scale-95"
-        >
-          {copiedId === lesson.id ? (
-            <>
-              <FaCheck className="text-base" /> تم النسخ!
-            </>
-          ) : (
-            <>
-              <FaShareAlt className="text-base" /> مشارmكة
-            </>
-          )}
-        </button>
+        {/* تم حذف زر المشاركة بالكامل بناءً على طلبك */}
       </div>
     </motion.div>
   );

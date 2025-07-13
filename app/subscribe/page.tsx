@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {easeInOut} from "framer-motion";
-import Header from "@/app/components/Header";
-import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header"; // Assuming Header is in "@/app/components/Header"
+import Footer from "@/app/components/Footer"; // Assuming Footer is in "@/app/components/Footer"
 import Link from "next/link";
 import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt } from 'react-icons/fa'; // Added FaCalendarAlt
 
@@ -47,6 +47,9 @@ function CourseCard({
   // Check if there's a discount and a discount percentage text provided
   const hasDiscount = originalPrice && originalPrice !== price && discountPercentage;
 
+  // Determine if the price is a string like "قريباً" or "تواصل معنا"
+  const isSpecialPriceText = price === "قريباً" || price === "تواصل معنا";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -83,15 +86,15 @@ function CourseCard({
       <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
 
       <div className="text-4xl font-bold flex items-baseline gap-2 justify-center">
-        {hasDiscount && (
+        {hasDiscount && !isSpecialPriceText && ( // Only show original price if not special text price
           <span className="text-gray-500 line-through text-2xl mr-2">
             {originalPrice}
           </span>
         )}
-        <span className="text-yellow-300">
+        <span className={isSpecialPriceText ? "text-pink-400" : "text-yellow-300"}>
           {price}
         </span>
-        <span className="text-xl font-semibold text-gray-400">{currency}</span>
+        {!isSpecialPriceText && <span className="text-xl font-semibold text-gray-400">{currency}</span>}
       </div>
 
       <ul className="list-none space-y-2 text-gray-200 text-base text-right w-full px-4">
@@ -117,7 +120,7 @@ function CourseCard({
           ${isVIP ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"}
         `}
       >
-        <FaWhatsapp className="text-xl" /> اشترك الآن
+        <FaWhatsapp className="text-xl" /> {isSpecialPriceText ? "استفسر الآن" : "اشترك الآن"}
       </Link>
     </motion.div>
   );
@@ -193,6 +196,7 @@ export default function SubscribePage() {
 
         {/* Course Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Existing Courses */}
           <CourseCard
             title="تراك الويب المتكامل"
             price="500"
@@ -248,6 +252,81 @@ export default function SubscribePage() {
             installmentAvailable={true}
             discountPercentage="خصم 50%"
           />
+
+          {/* New Language Courses - Added here */}
+          <CourseCard
+            title="كورس HTML الأساسي"
+            price="250"
+            originalPrice="500"
+            currency="جنيه مصري"
+            description="تعلم أساسيات بناء هيكل صفحات الويب والتحكم في المحتوى."
+            features={[
+              "مقدمة في HTML",
+              "العناصر والسمات الأساسية",
+              "التعامل مع النصوص والصور والروابط",
+              "إنشاء القوائم والجداول والنماذج",
+              "مشروع عملي لبناء صفحة ويب"
+            ]}
+            whatsappNumber={whatsappContact}
+            installmentAvailable={true}
+            discountPercentage="خصم 50%"
+          />
+
+          <CourseCard
+            title="كورس CSS الأساسي"
+            price="250"
+            originalPrice="500"
+            currency="جنيه مصري"
+            description="أضف لمسة جمالية وتصميم احترافي لصفحات الويب الخاصة بك."
+            features={[
+              "مقدمة في CSS وكيفية ربطها بـ HTML",
+              "المحددات (Selectors) والخصائص (Properties)",
+              "صناديق النموذج (Box Model) والتخطيط (Layout)",
+              "الاستجابة (Responsive Design) للشاشات المختلفة",
+              "تطبيق تأثيرات الألوان والخطوط والخلفيات"
+            ]}
+            whatsappNumber={whatsappContact}
+            installmentAvailable={true}
+            discountPercentage="خصم 50%"
+          />
+
+          <CourseCard
+            title="كورس JavaScript الأساسي"
+            price="300"
+            originalPrice="600"
+            currency="جنيه مصري"
+            description="اجعل صفحات الويب تفاعلية وديناميكية باستخدام لغة JavaScript."
+            features={[
+              "مقدمة في JavaScript والمتغيرات وأنواع البيانات",
+              "الجمل الشرطية والحلقات (Loops)",
+              "الدوال (Functions) والكائنات (Objects)",
+              "التعامل مع DOM وتغيير محتوى الصفحة",
+              "مشروع تفاعلي بسيط"
+            ]}
+            whatsappNumber={whatsappContact}
+            installmentAvailable={true}
+            discountPercentage="خصم 50%"
+          />
+
+          <CourseCard
+            title="كورس React.js الأساسي"
+            price="400"
+            originalPrice="800"
+            currency="جنيه مصري"
+            description="ابدأ رحلتك في بناء واجهات مستخدم حديثة وتفاعلية باستخدام React.js."
+            features={[
+              "مقدمة في React والمكونات (Components)",
+              "الحالة (State) والخصائص (Props)",
+              "إدارة الأحداث (Event Handling)",
+              "التعامل مع القوائم (Lists) والمفاتيح (Keys)",
+              "مشروع تطبيق React بسيط"
+            ]}
+            whatsappNumber={whatsappContact}
+            installmentAvailable={true}
+            discountPercentage="خصم 50%"
+          />
+          {/* End of New Language Courses */}
+
 
           <CourseCard
             title="كورس الأمن السيبراني"
