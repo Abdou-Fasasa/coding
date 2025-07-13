@@ -6,7 +6,7 @@ import {easeInOut} from "framer-motion";
 import Header from "@/app/components/Header"; // Assuming Header is in "@/app/components/Header"
 import Footer from "@/app/components/Footer"; // Assuming Footer is in "@/app/components/Footer"
 import Link from "next/link";
-import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt } from 'react-icons/fa'; // Added FaCalendarAlt
+import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt, FaPlayCircle, FaStar } from 'react-icons/fa'; // Added FaStar for extra flair
 
 // Component for individual course cards
 type CourseCardProps = {
@@ -20,6 +20,8 @@ type CourseCardProps = {
   installmentAvailable?: boolean;
   whatsappNumber: string; // WhatsApp number for purchase
   discountPercentage?: string; // New prop for discount percentage text
+  isFree?: boolean; // New prop to indicate if the course is free
+  freeCourseLink?: string; // New prop for the direct link to the free course
 };
 
 function CourseCard({
@@ -32,16 +34,23 @@ function CourseCard({
   isVIP = false,
   installmentAvailable = false,
   whatsappNumber,
-  discountPercentage, // Destructure new prop
+  discountPercentage,
+  isFree = false,
+  freeCourseLink = "#",
 }: CourseCardProps) {
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=أرغب في الاشتراك في كورس: ${encodeURIComponent(title)}`;
 
+  // Conditional classes for card and title based on VIP or Free status
   const cardClasses = isVIP
     ? "bg-gradient-to-br from-purple-800 to-indigo-800 border-2 border-yellow-500 shadow-yellow-500/30"
+    : isFree // Special styling for free courses - More vibrant and unique
+    ? "bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 border border-yellow-300 shadow-lg shadow-purple-500/40"
     : "bg-[#1e293b] border border-gray-700/50 shadow-lg";
 
   const titleClasses = isVIP
     ? "text-yellow-300 drop-shadow-lg"
+    : isFree // Special styling for free courses
+    ? "text-white text-4xl drop-shadow-lg" // Larger title for free course
     : "text-cyan-300";
 
   // Check if there's a discount and a discount percentage text provided
@@ -56,16 +65,16 @@ function CourseCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
       viewport={{ once: true, amount: 0.3 }}
-      // Added pt-10 to create space for the badge at the top
-      className={`relative p-6 pt-10 rounded-2xl space-y-6 flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.02] ${cardClasses} overflow-hidden`}
+      // Increased pt-20 to ensure enough space for the badge at the top,
+      // as the badge itself won't have -translate-y-1/2 anymore.
+      className={`relative p-6 pt-20 rounded-2xl space-y-6 flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.02] ${cardClasses} overflow-hidden`}
     >
       {/* Golden Discount Badge (Top Right - Modern Label Style) */}
       {hasDiscount && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }} // Animate from slightly above
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          // Positioned at top-right, with specific rounded corners for a modern label look
           className="absolute top-0 right-0 bg-gradient-to-r from-orange-400 to-yellow-500 text-gray-900 text-base font-bold px-4 py-2 rounded-tr-2xl rounded-bl-lg shadow-xl flex items-center gap-1 z-20 border border-yellow-300"
         >
           <FaGift className="inline-block text-lg ml-1" />
@@ -80,47 +89,73 @@ function CourseCard({
         </div>
       )}
 
+      {/* FREE Badge - Modern & Prominent Style (No -translate-y-1/2 on badge itself) */}
+      {isFree && (
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+          animate={{ scale: 1, opacity: 1, rotate: 0 }}
+          transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.3 }}
+          // Removed -translate-y-1/2 here
+          className={`absolute top-0 left-1/2 -translate-x-1/2 w-48 py-2 bg-gradient-to-r from-cyan-400 to-green-500 text-gray-900 text-lg font-extrabold shadow-xl rounded-full transform rotate-3 z-30
+                     flex items-center justify-center gap-2 border-2 border-white`}
+        >
+          <FaStar className="text-yellow-900 text-xl" />
+          <span>مجاني بالكامل!</span>
+          <FaStar className="text-yellow-900 text-xl" />
+        </motion.div>
+      )}
+
+
+      {/* Removed pt-10 from h3. Title will naturally sit below the badge due to card's increased overall padding. */}
       <h3 className={`text-3xl font-extrabold ${titleClasses}`}>
         {title}
       </h3>
-      <p className="text-gray-300 text-lg leading-relaxed">{description}</p>
+      <p className={`text-lg leading-relaxed ${isFree ? 'text-white/90' : 'text-gray-300'}`}>{description}</p>
 
       <div className="text-4xl font-bold flex items-baseline gap-2 justify-center">
-        {hasDiscount && !isSpecialPriceText && ( // Only show original price if not special text price
+        {hasDiscount && !isSpecialPriceText && !isFree && (
           <span className="text-gray-500 line-through text-2xl mr-2">
             {originalPrice}
           </span>
         )}
-        <span className={isSpecialPriceText ? "text-pink-400" : "text-yellow-300"}>
+        <span className={isSpecialPriceText || isFree ? "text-white text-5xl" : "text-yellow-300"}>
           {price}
         </span>
-        {!isSpecialPriceText && <span className="text-xl font-semibold text-gray-400">{currency}</span>}
+        {!isSpecialPriceText && !isFree && <span className="text-xl font-semibold text-gray-400">{currency}</span>}
       </div>
 
       <ul className="list-none space-y-2 text-gray-200 text-base text-right w-full px-4">
         {features.map((feature, index) => (
           <li key={index} className="flex items-start gap-3">
-            <FaCheckCircle className="text-green-400 mt-1 flex-shrink-0" />
+            <FaCheckCircle className={`${isFree ? "text-yellow-300" : "text-green-400"} mt-1 flex-shrink-0`} />
             <span>{feature}</span>
           </li>
         ))}
       </ul>
 
-      {installmentAvailable && (
+      {installmentAvailable && !isFree && (
         <p className="text-sm text-yellow-400 flex items-center gap-2 mt-4">
           <FaCreditCard /> متاح تقسيط (تواصل معنا للمزيد)
         </p>
       )}
 
       <Link
-        href={whatsappLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`mt-6 w-full py-3 rounded-full text-white font-bold text-lg transition-all shadow-md hover:shadow-xl active:scale-95 flex items-center justify-center gap-2
-          ${isVIP ? "bg-yellow-600 hover:bg-yellow-700" : "bg-blue-600 hover:bg-blue-700"}
+        href={isFree ? freeCourseLink : whatsappLink}
+        target={isFree ? "_self" : "_blank"}
+        rel={isFree ? "" : "noopener noreferrer"}
+        className={`mt-6 w-full py-4 rounded-full text-white font-bold text-xl transition-all shadow-md hover:shadow-xl active:scale-95 flex items-center justify-center gap-2
+          ${isVIP ? "bg-yellow-600 hover:bg-yellow-700" : isFree ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700" : "bg-blue-600 hover:bg-blue-700"}
         `}
       >
-        <FaWhatsapp className="text-xl" /> {isSpecialPriceText ? "استفسر الآن" : "اشترك الآن"}
+        {isFree ? (
+          <>
+            <FaPlayCircle className="text-2xl" /> ابدأ الكورس مجاناً
+          </>
+        ) : (
+          <>
+            <FaWhatsapp className="text-xl" /> {isSpecialPriceText ? "استفسر الآن" : "اشترك الآن"}
+          </>
+        )}
       </Link>
     </motion.div>
   );
@@ -196,7 +231,27 @@ export default function SubscribePage() {
 
         {/* Course Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Existing Courses */}
+          {/* FREE Course - Programming Fundamentals (NOW FIRST AND DISTINGUISHED) */}
+          <CourseCard
+            title="كورس أساسيات البرمجة"
+            price="مجاناً"
+            currency="" // No currency for free courses
+            description="بوابة دخولك لعالم البرمجة من الصفر: تعلم التفكير البرمجي وأول خطوات كتابة الكود."
+            features={[
+              "مقدمة في علوم الحاسب والبرمجة",
+              "تجهيز بيئة العمل",
+              "المتغيرات وأنواع البيانات",
+              "العمليات الحسابية والمنطقية",
+              "جمل اتخاذ القرار والحلقات التكرارية",
+              "الدوال والقوائم والمصفوفات",
+              "مشروع بسيط لربط المفاهيم"
+            ]}
+            whatsappNumber={whatsappContact} // Still pass whatsapp for consistency, though not used by free course button
+            isFree={true} // Mark as free
+            freeCourseLink="/lessons" // **IMPORTANT: Update this to the actual path of your free course lesson page**
+          />
+
+          {/* Existing Courses (order remains the same after the free one) */}
           <CourseCard
             title="تراك الويب المتكامل"
             price="500"
@@ -253,7 +308,6 @@ export default function SubscribePage() {
             discountPercentage="خصم 50%"
           />
 
-          {/* New Language Courses - Added here */}
           <CourseCard
             title="كورس HTML الأساسي"
             price="250"
@@ -325,8 +379,6 @@ export default function SubscribePage() {
             installmentAvailable={true}
             discountPercentage="خصم 50%"
           />
-          {/* End of New Language Courses */}
-
 
           <CourseCard
             title="كورس الأمن السيبراني"
