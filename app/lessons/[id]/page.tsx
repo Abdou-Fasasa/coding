@@ -41,14 +41,14 @@ const allLessonsData: {
   },
   "prog-fund-3": {
     title: "3. المتغيرات وأنواع البيانات",
-    video: "",
+    video: "/videos/programming-fundamentals/prog-fund-3.mp4",
     description: "كيف يخزن الكمبيوتر المعلومات ويتعامل مع أنواعها المختلفة.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
   },
   "prog-fund-4": {
     title: "4. العمليات الحسابية والمنطقية",
-    video: "",
+    video: "/videos/programming-fundamentals/prog-fund-4.mp4",
     description: "نفذ العمليات الأساسية على الأرقام والقيم المنطقية.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
