@@ -55,7 +55,7 @@ const allLessonsData: {
   },
   "prog-fund-5": {
     title: "5. جمل اتخاذ القرار (If/Else)",
-    video: "",
+    video: "/videos/programming-fundamentals/prog-fund-5.mp4",
     description: "اجعل برامجك تتخذ قرارات بناءً على شروط معينة.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
