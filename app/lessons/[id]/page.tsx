@@ -61,7 +61,7 @@ const allLessonsData: {
   },
   "prog-fund-6": {
     title: "6. الحلقات التكرارية (Loops)",
-    video: "", // Placeholder, if video is not available
+    video: "/videos/programming-fundamentals/prog-fund-6.mp4",
     description: "كرر الأوامر بسهولة وكفاءة لتوفير الوقت والجهد.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
