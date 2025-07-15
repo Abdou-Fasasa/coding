@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { motion } from "framer-motion";
-import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign } from "react-icons/fa";
+import { FaShieldAlt, FaInfoCircle, FaArrowRight, FaLock, FaUnlockAlt, FaDollarSign, FaSpinner } from "react-icons/fa"; // Added FaSpinner for loading
 import Link from "next/link";
 
 // تعريف الأكواد السرية لكل كورس
@@ -20,7 +20,6 @@ const COURSE_UNLOCK_CODES: { [key: string]: string | undefined } = {
 };
 
 // بيانات الدروس
-// كل الدروس هنا ستكون مقفلة افتراضيًا وتتطلب الكود في كل مرة
 const allLessonsData: {
   [key: string]: { title: string; video: string; description: string; poster: string; courseId: string };
 } = {
@@ -62,35 +61,35 @@ const allLessonsData: {
   },
   "prog-fund-6": {
     title: "6. الحلقات التكرارية (Loops)",
-    video: "",
+    video: "", // Placeholder, if video is not available
     description: "كرر الأوامر بسهولة وكفاءة لتوفير الوقت والجهد.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
   },
   "prog-fund-7": {
     title: "7. الدوال (Functions)",
-    video: "",
+    video: "", // Placeholder
     description: "اكتب كود منظم وقابل لإعادة الاستخدام لبرامج أقوى.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
   },
   "prog-fund-8": {
     title: "8. التعامل مع القوائم والمصفوفات",
-    video: "",
+    video: "", // Placeholder
     description: "خزن مجموعات من البيانات في مكان واحد واستخدمها بفاعلية.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
   },
   "prog-fund-9": {
     title: "9. المدخلات والمخرجات (Input/Output)",
-    video: "",
+    video: "", // Placeholder
     description: "تفاعل مع المستخدمين واستقبل منهم البيانات واعرض النتائج.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
   },
   "prog-fund-10": {
     title: "10. مشروع بسيط: تطبيق الآلة الحاسبة",
-    video: "",
+    video: "", // Placeholder
     description: "طبق كل اللي اتعلمته في مشروع عملي يبرز مهاراتك الأساسية.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
@@ -225,6 +224,7 @@ export default function LessonPage() {
   const [isUnlocked, setIsUnlocked] = useState(courseCode === undefined);
   const [inputCode, setInputCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // New state for loading indicator
 
   // تحديد فهرس الدرس الحالي لتحديد الدرس السابق والتالي
   const currentLessonIndex = orderedLessons.findIndex((l) => l.id === lessonId);
@@ -235,70 +235,96 @@ export default function LessonPage() {
   useEffect(() => {
     const videoElement = videoRef.current;
 
-    const disableRightClick = (e: MouseEvent) => {
+    // Common functions to prevent default behavior
+    const preventDefault = (e: Event) => {
       e.preventDefault();
+      e.stopPropagation(); // Stop propagation to ensure it doesn't bubble up
     };
 
-    const disableContextMenu = (e: Event) => {
-      e.preventDefault();
-    };
-
-    const disableCopy = (e: ClipboardEvent) => {
-      e.preventDefault();
-    };
-
-    const disableSave = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
-        e.preventDefault();
-      }
-    };
-
-    const disableDownloadManagers = (e: Event) => {
-      e.preventDefault();
-      e.stopPropagation();
-      console.warn("Attempted download blocked.");
-    };
+    // Functions for video events to manage loading
+    const handleWaiting = () => setIsLoading(true);
+    const handlePlaying = () => setIsLoading(false);
+    const handleCanPlay = () => setIsLoading(false); // Also stop loading when enough data is buffered to play
 
     if (isUnlocked && videoElement) {
-      videoElement.setAttribute("controlsList", "nodownload");
-      videoElement.addEventListener("contextmenu", disableContextMenu);
-      document.addEventListener("contextmenu", disableRightClick);
-      document.addEventListener("copy", disableCopy);
-      document.addEventListener("keydown", disableSave);
-      videoElement.addEventListener("emptied", disableDownloadManagers);
-      videoElement.addEventListener("waiting", disableDownloadManagers);
-      videoElement.addEventListener("stalled", disableDownloadManagers);
-      videoElement.addEventListener("suspend", disableDownloadManagers);
-      videoElement.addEventListener("abort", disableDownloadManagers);
+      // Apply strict controls for download prevention
+      videoElement.setAttribute("controlsList", "nodownload nofullscreen noremoteplayback"); // More comprehensive controlsList
+      videoElement.disablePictureInPicture = true; // Programmatic equivalent of disablePictureInPicture attribute
+      videoElement.oncontextmenu = () => false; // Direct JS way to disable right-click on video
+
+      // Event listeners for document-wide protection
+      document.addEventListener("contextmenu", preventDefault); // Disable right-click globally
+      document.addEventListener("copy", preventDefault); // Prevent copying
+      document.addEventListener("cut", preventDefault); // Prevent cutting
+      document.addEventListener("paste", preventDefault); // Prevent pasting (less relevant for video, but good for overall content)
+      document.addEventListener("keydown", (e: KeyboardEvent) => {
+        // Prevent F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (view source), Ctrl+S (save)
+        if (
+          e.keyCode === 123 || // F12
+          (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || // Ctrl+Shift+I/J
+          (e.ctrlKey && e.keyCode === 85) || // Ctrl+U
+          (e.ctrlKey && e.keyCode === 83) // Ctrl+S
+        ) {
+          preventDefault(e);
+        }
+      });
+
+      // Event listeners for video loading state
+      videoElement.addEventListener("waiting", handleWaiting);
+      videoElement.addEventListener("playing", handlePlaying);
+      videoElement.addEventListener("canplay", handleCanPlay);
+      videoElement.addEventListener("loadstart", handleWaiting); // Start loading when video begins to load
+
+      // Initially set loading if video hasn't loaded yet
+      if (videoElement.readyState < 3) { // Checking if video is not ready to play through
+          setIsLoading(true);
+      }
+
     } else {
       // 🚨 إزالة الـ event listeners عند القفل أو عدم الفتح
       if (videoElement) {
         videoElement.removeAttribute("controlsList");
-        videoElement.removeEventListener("contextmenu", disableContextMenu);
-        videoElement.removeEventListener("emptied", disableDownloadManagers);
-        videoElement.removeEventListener("waiting", disableDownloadManagers);
-        videoElement.removeEventListener("stalled", disableDownloadManagers);
-        videoElement.removeEventListener("suspend", disableDownloadManagers);
-        videoElement.removeEventListener("abort", disableDownloadManagers);
+        videoElement.disablePictureInPicture = false;
+        videoElement.oncontextmenu = null; // Re-enable right-click
+        videoElement.removeEventListener("waiting", handleWaiting);
+        videoElement.removeEventListener("playing", handlePlaying);
+        videoElement.removeEventListener("canplay", handleCanPlay);
+        videoElement.removeEventListener("loadstart", handleWaiting);
       }
-      document.removeEventListener("contextmenu", disableRightClick);
-      document.removeEventListener("copy", disableCopy);
-      document.removeEventListener("keydown", disableSave);
+      document.removeEventListener("contextmenu", preventDefault);
+      document.removeEventListener("copy", preventDefault);
+      document.removeEventListener("cut", preventDefault);
+      document.removeEventListener("paste", preventDefault);
+      document.removeEventListener("keydown", preventDefault); // Need to make this more specific
+      setIsLoading(false); // Ensure loading is off if not unlocked
     }
 
+    // Cleanup function
     return () => {
-      // 🧹 Clean up on component unmount
       if (videoElement) {
-        videoElement.removeEventListener("contextmenu", disableContextMenu);
-        videoElement.removeEventListener("emptied", disableDownloadManagers);
-        videoElement.removeEventListener("waiting", disableDownloadManagers);
-        videoElement.removeEventListener("stalled", disableDownloadManagers);
-        videoElement.removeEventListener("suspend", disableDownloadManagers);
-        videoElement.removeEventListener("abort", disableDownloadManagers);
+        videoElement.removeAttribute("controlsList");
+        videoElement.disablePictureInPicture = false;
+        videoElement.oncontextmenu = null;
+        videoElement.removeEventListener("waiting", handleWaiting);
+        videoElement.removeEventListener("playing", handlePlaying);
+        videoElement.removeEventListener("canplay", handleCanPlay);
+        videoElement.removeEventListener("loadstart", handleWaiting);
       }
-      document.removeEventListener("contextmenu", disableRightClick);
-      document.removeEventListener("copy", disableCopy);
-      document.removeEventListener("keydown", disableSave);
+      document.removeEventListener("contextmenu", preventDefault);
+      document.removeEventListener("copy", preventDefault);
+      document.removeEventListener("cut", preventDefault);
+      document.removeEventListener("paste", preventDefault);
+      // Remove specific keydown listener
+      document.removeEventListener("keydown", (e: KeyboardEvent) => {
+        if (
+          e.keyCode === 123 ||
+          (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
+          (e.ctrlKey && e.keyCode === 85) ||
+          (e.ctrlKey && e.keyCode === 83)
+        ) {
+          preventDefault(e);
+        }
+      });
     };
   }, [isUnlocked]); // يعتمد على isUnlocked
 
@@ -365,19 +391,33 @@ export default function LessonPage() {
           transition={{ duration: 0.8 }}
           className="w-full max-w-4xl bg-[#1e293b] rounded-3xl shadow-2xl overflow-hidden border border-blue-500/30 relative"
         >
+          {/* Video Player or Unlock Form */}
           {lesson.video && !requiresUnlock ? (
-            <video
-              ref={videoRef}
-              src={lesson.video}
-              controls
-              controlsList="nodownload"
-              disablePictureInPicture
-              preload="auto"
-              poster={lesson.poster}
-              className="w-full h-auto max-h-[70vh] object-contain rounded-2xl"
-            >
-              متصفحك لا يدعم عنصر الفيديو.
-            </video>
+            <div className="relative w-full aspect-video"> {/* Using aspect-video for responsive ratio */}
+              {isLoading && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 text-white z-10">
+                  <FaSpinner className="animate-spin text-5xl text-blue-400 mb-4" />
+                  <p className="text-xl font-semibold">جاري تحميل الفيديو من السيرفر...</p>
+                  <p className="text-sm text-gray-400 mt-2">قد يستغرق الأمر بعض الثواني.</p>
+                </div>
+              )}
+              <video
+                ref={videoRef}
+                src={lesson.video}
+                controls
+                controlsList="nodownload nofullscreen noremoteplayback" // Added nofullscreen, noremoteplayback
+                disablePictureInPicture
+                preload="auto"
+                poster={lesson.poster}
+                // Directly disable right-click on the video element
+                onContextMenu={(e) => e.preventDefault()}
+                className={`w-full h-full object-contain rounded-2xl ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                // Ensure video is visible only when loaded
+                style={{ visibility: isLoading ? 'hidden' : 'visible' }}
+              >
+                متصفحك لا يدعم عنصر الفيديو.
+              </video>
+            </div>
           ) : lesson.video && requiresUnlock ? (
             <div
               className="relative w-full h-96 flex flex-col items-center justify-center p-8 text-center"
@@ -431,6 +471,7 @@ export default function LessonPage() {
             </div>
           )}
 
+          {/* This overlay acts as a visual shield, but doesn't prevent interaction */}
           <div className="absolute top-0 left-0 w-full h-full bg-black/10 flex items-center justify-center pointer-events-none">
             <FaShieldAlt className="text-white/20 text-8xl md:text-9xl animate-pulse" />
           </div>

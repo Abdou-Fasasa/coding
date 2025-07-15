@@ -9,7 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FaPlay,
-  FaCheck,
+  FaCheck, // This will be removed from LessonCard's JSX
   FaCheckCircle,
   FaFilePdf,
   FaHtml5, // HTML icon
@@ -542,17 +542,6 @@ function LessonCard({ lesson, onPlay, variants }: LessonCardProps) {
         lesson.isCompleted ? 'border-green-500 shadow-green-500/30' : 'border-cyan-500/40'
       } rounded-xl p-3 shadow-lg transition-all duration-300 flex flex-col`}
     >
-      {lesson.isCompleted && (
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="absolute top-2 right-2 bg-green-600 rounded-full p-1.5 text-white shadow-lg z-10"
-        >
-          <FaCheck className="text-base" />
-        </motion.div>
-      )}
-
       <div className="w-full h-28 mb-1 overflow-hidden rounded-lg relative">
         <Image
           src={lesson.imagePath}
