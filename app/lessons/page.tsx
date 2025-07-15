@@ -9,7 +9,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FaPlay,
-  FaCheck, // This will be removed from LessonCard's JSX
   FaCheckCircle,
   FaFilePdf,
   FaHtml5, // HTML icon
