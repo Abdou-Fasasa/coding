@@ -75,7 +75,7 @@ const allLessonsData: {
   },
   "prog-fund-8": {
     title: "8. التعامل مع القوائم والمصفوفات",
-    video: "", // Placeholder
+    video: "/videos/programming-fundamentals/prog-fund-8.mp4",
     description: "خزن مجموعات من البيانات في مكان واحد واستخدمها بفاعلية.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
