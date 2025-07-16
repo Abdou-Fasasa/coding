@@ -68,7 +68,7 @@ const allLessonsData: {
   },
   "prog-fund-7": {
     title: "7. الدوال (Functions)",
-    video: "", // Placeholder
+    video: "/videos/programming-fundamentals/prog-fund-7.mp4",
     description: "اكتب كود منظم وقابل لإعادة الاستخدام لبرامج أقوى.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
