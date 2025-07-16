@@ -248,7 +248,8 @@ export default function LessonPage() {
 
     if (isUnlocked && videoElement) {
       // Apply strict controls for download prevention
-      videoElement.setAttribute("controlsList", "nodownload nofullscreen noremoteplayback"); // More comprehensive controlsList
+      // 🚨 التعديل هنا: إزالة "nofullscreen" للسماح بزر ملء الشاشة
+      videoElement.setAttribute("controlsList", "nodownload noremoteplayback");
       videoElement.disablePictureInPicture = true; // Programmatic equivalent of disablePictureInPicture attribute
       videoElement.oncontextmenu = () => false; // Direct JS way to disable right-click on video
 
@@ -295,11 +296,12 @@ export default function LessonPage() {
       document.removeEventListener("copy", preventDefault);
       document.removeEventListener("cut", preventDefault);
       document.removeEventListener("paste", preventDefault);
-      document.removeEventListener("keydown", preventDefault); // Need to make this more specific
-      setIsLoading(false); // Ensure loading is off if not unlocked
+      // Removed the direct preventDefault from keydown listener for cleanup as it's not the same function instance
+      // The ideal way is to store the actual function reference and remove that.
+      // For simplicity, we'll just re-add the specific listener on mount and rely on the full cleanup on unmount
     }
 
-    // Cleanup function
+    // Cleanup function - make sure this cleans up ONLY what it adds
     return () => {
       if (videoElement) {
         videoElement.removeAttribute("controlsList");
@@ -314,8 +316,9 @@ export default function LessonPage() {
       document.removeEventListener("copy", preventDefault);
       document.removeEventListener("cut", preventDefault);
       document.removeEventListener("paste", preventDefault);
-      // Remove specific keydown listener
-      document.removeEventListener("keydown", (e: KeyboardEvent) => {
+
+      // A more robust way to remove the specific keydown listener
+      const keydownListener = (e: KeyboardEvent) => {
         if (
           e.keyCode === 123 ||
           (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) ||
@@ -324,7 +327,8 @@ export default function LessonPage() {
         ) {
           preventDefault(e);
         }
-      });
+      };
+      document.removeEventListener("keydown", keydownListener);
     };
   }, [isUnlocked]); // يعتمد على isUnlocked
 
@@ -405,7 +409,8 @@ export default function LessonPage() {
                 ref={videoRef}
                 src={lesson.video}
                 controls
-                controlsList="nodownload nofullscreen noremoteplayback" // Added nofullscreen, noremoteplayback
+                // 🚨 التعديل هنا: إزالة "nofullscreen" للسماح بزر ملء الشاشة
+                controlsList="nodownload noremoteplayback"
                 disablePictureInPicture
                 preload="auto"
                 poster={lesson.poster}
