@@ -20,6 +20,7 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaLaptopCode, // Icon for Programming Fundamentals
+  FaArrowLeft, // New icon for back button
 } from "react-icons/fa";
 
 // تعريف نوع الدرس (TypeScript)
@@ -40,14 +41,14 @@ const htmlLessons: Lesson[] = [
     title: "مقدمة في علوم الحاسوب والبرمجة",
     description: "انطلق في رحلتك البرمجية بفهم الأساسيات التي تحرك عالم التكنولوجيا.",
     pdfPath: "/pdfs/Computer-science.pdf",
-    imagePath: "/images/Computer-science.jpg",
+    imagePath: "/images/html-lessons.jpg", // استخدام صورة HTML للكورس
   },
   {
     id: "Work-environment",
     title: "تجهيز بيئة العمل",
     description: "جهز أدواتك وابدأ في بناء مشروعك الأول بكل سهولة ويسر.",
     pdfPath: "/pdfs/Work-environment.pdf",
-    imagePath: "/images/Work-environment.jpg",
+    imagePath: "/images/html-lessons.jpg",
   },
   {
     id: "Html-lesson3",
@@ -307,71 +308,78 @@ const programmingFundamentalsLessons: Lesson[] = [
   },
 ];
 
-// هيكل لجميع الكورسات التي سيتم عرضها كأقسام قابلة للطي
+// هيكل لجميع الكورسات التي سيتم عرضها كأقسام قابلة للطي (الآن كبطاقات)
 const allCoursesSections = [
   {
     id: "programming-fundamentals-course",
-    title: "كورس أساسيات البرمجة 💡 (مجاناً)",
+    title: "أساسيات البرمجة",
     icon: <FaLaptopCode className="text-4xl text-emerald-400" />,
     description: "بوابة دخولك لعالم البرمجة من الصفر: تعلم التفكير البرمجي وأول خطوات كتابة الكود.",
     lessons: programmingFundamentalsLessons,
-    number: 1, // Added number
+    image: "/images/programming-fundamentals.jpg", // صورة للكارد
+    iconColor: "text-emerald-400",
   },
   {
     id: "html-course",
-    title: "كورس HTML: بناء هيكل الويب",
+    title: "HTML",
     icon: <FaHtml5 className="text-4xl text-orange-500" />,
     description: "ابدأ رحلتك في بناء صفحات الويب الأساسية.",
     lessons: htmlLessons,
-    number: 2, // Added number
+    image: "/images/html-lessons.jpg", // صورة للكارد
+    iconColor: "text-orange-500",
   },
   {
     id: "css-course",
-    title: "كورس CSS: تنسيق وتصميم الويب",
+    title: "CSS",
     icon: <FaCss3Alt className="text-4xl text-blue-500" />,
     description: "أضف لمسة جمالية واحترافية لصفحات الويب الخاصة بك.",
     lessons: cssLessons,
-    number: 3, // Added number
+    image: "/images/css-lessons.jpg", // صورة للكارد
+    iconColor: "text-blue-500",
   },
   {
     id: "javascript-course",
-    title: "كورس JavaScript: التفاعل والديناميكية",
+    title: "JavaScript",
     icon: <FaJsSquare className="text-4xl text-yellow-500" />,
     description: "اجعل صفحاتك تفاعلية وديناميكية باستخدام قوة JavaScript.",
     lessons: jsLessons,
-    number: 4, // Added number
+    image: "/images/js-lessons.jpg", // صورة للكارد
+    iconColor: "text-yellow-500",
   },
   {
     id: "react-course",
-    title: "كورس React: بناء واجهات المستخدم الحديثة",
+    title: "React",
     icon: <FaReact className="text-4xl text-cyan-400" />,
     description: "تعمق في بناء واجهات المستخدم المعقدة باستخدام مكتبة React.js.",
     lessons: reactLessons,
-    number: 5, // Added number
+    image: "/images/react-lessons.jpg", // صورة للكارد
+    iconColor: "text-cyan-400",
   },
   {
     id: "cyber-security-course",
-    title: "كورس الأمن السيبراني: احترف حماية الأنظمة والشبكات",
+    title: "الأمن السيبراني",
     icon: <FaShieldAlt className="text-4xl text-purple-400" />,
     description: "احترف حماية الأنظمة والشبكات من التهديدات السيبرانية.",
     lessons: cyberSecurityLessons,
-    number: 6, // Added number
+    image: "/images/cyber-security.jpg", // صورة للكارد
+    iconColor: "text-purple-400",
   },
   {
     id: "social-media-hacking-course",
-    title: "كورس اختراق السوشيال ميديا (لأغراض أمنية)",
+    title: "اختراق السوشيال ميديا",
     icon: <FaUnlockAlt className="text-4xl text-red-400" />,
     description: "كورس متقدم ضمن الأمن السيبراني لتعلم الجوانب القانونية والأخلاقية لاختراق حسابات التواصل الاجتماعي.",
     lessons: socialMediaHackingLessons,
-    number: 7, // Added number
+    image: "/images/social-media-hacking.jpg", // صورة للكارد
+    iconColor: "text-red-400",
   },
   // يمكنك إضافة كورسات أخرى هنا بنفس النمط
 ];
 
 export default function CoursesPage() {
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
-  // فتح كورس أساسيات البرمجة تلقائياً عند التحميل، أو يمكن تركه null ليتم إغلاق الكل
-  const [activeCourseSection, setActiveCourseSection] = useState<string | null>("programming-fundamentals-course"); 
+  // حالة لتحديد الكورس المختار لعرض دروسه
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
 
   // Load completion status from Local Storage on component mount
   useEffect(() => {
@@ -403,37 +411,41 @@ export default function CoursesPage() {
     });
   }, []);
 
-  const toggleCourseSection = useCallback((sectionId: string) => {
-    setActiveCourseSection((prev) => (prev === sectionId ? null : sectionId));
+  // دالة لاختيار الكورس وعرض دروسه
+  const handleCourseSelect = useCallback((courseId: string) => {
+    setSelectedCourseId(courseId);
   }, []);
 
-  const lessonGridVariants = {
-    open: {
+  // دالة للعودة لعرض كل الكورسات
+  const handleBackToCourses = useCallback(() => {
+    setSelectedCourseId(null);
+  }, []);
+
+  const selectedCourse = selectedCourseId
+    ? allCoursesSections.find((course) => course.id === selectedCourseId)
+    : null;
+
+  // Variants for animation
+  const containerVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
       opacity: 1,
-      height: "auto",
-      marginTop: "1.5rem", // Slightly reduced margin
+      scale: 1,
       transition: {
         duration: 0.5,
-        ease: easeInOut,
-        when: "beforeChildren",
-        staggerChildren: 0.08, // Slightly faster stagger
+        staggerChildren: 0.1,
       },
     },
-    collapsed: {
+    exit: {
       opacity: 0,
-      height: 0,
-      marginTop: "0rem",
-      transition: {
-        duration: 0.5,
-        ease: easeInOut,
-        when: "afterChildren",
-      },
+      scale: 0.95,
+      transition: { duration: 0.3 },
     },
   };
 
-  const lessonCardItemVariants = {
-    open: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-    collapsed: { opacity: 0, y: 20, transition: { duration: 0.3 } },
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -450,79 +462,140 @@ export default function CoursesPage() {
           اكتشف مساراتنا التعليمية
         </motion.h1>
 
-        {/* Dynamic Course Sections */}
-        {allCoursesSections.map((courseSection, index) => (
-          <section
-            key={courseSection.id}
-            className={`w-full py-10 ${index === 0 ? 'border-t' : ''} border-b border-gray-700/50 bg-gradient-to-br from-[#1e293b] to-[#0f172a] shadow-2xl`}
-          >
-            <div className="max-w-6xl mx-auto px-6">
-              {/* UPDATED COURSE SECTION HEADER STYLE */}
+        <div className="max-w-7xl mx-auto px-6">
+          <AnimatePresence mode="wait">
+            {selectedCourseId === null ? (
+              // عرض كروت الكورسات
               <motion.div
-                className="flex items-center justify-between cursor-pointer py-4 px-6 rounded-2xl bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 transition-all duration-300 shadow-xl border border-gray-600"
-                onClick={() => toggleCourseSection(courseSection.id)}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                key="course-cards"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-center items-stretch"
               >
-                <h2 className="text-3xl md:text-4xl font-bold text-teal-300 flex items-center gap-3">
-                  <span className="text-gray-400 text-2xl md:text-3xl font-mono mr-2">
-                    {courseSection.number}.
-                  </span>
-                  {courseSection.icon} {courseSection.title}
-                </h2>
-                <motion.div
-                  animate={{ rotate: activeCourseSection === courseSection.id ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {activeCourseSection === courseSection.id ? (
-                    <FaChevronUp className="text-3xl text-gray-300" />
-                  ) : (
-                    <FaChevronDown className="text-3xl text-gray-300" />
-                  )}
-                </motion.div>
+                {allCoursesSections.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                    onSelect={handleCourseSelect}
+                    variants={itemVariants}
+                  />
+                ))}
               </motion.div>
-
-              <AnimatePresence initial={false}>
-                {activeCourseSection === courseSection.id && (
-                  <motion.div
-                    key={`${courseSection.id}-collapsible-content`}
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={lessonGridVariants}
-                    className="overflow-hidden bg-[#1e293b] p-4 rounded-2xl shadow-xl border border-gray-700/50"
+            ) : (
+              // عرض دروس الكورس المختار
+              <motion.div
+                key="course-lessons"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="w-full"
+              >
+                <div className="flex justify-start mb-8">
+                  <motion.button
+                    onClick={handleBackToCourses}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full text-lg font-semibold transition-colors duration-300 shadow-md active:scale-95 text-gray-200"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <p className="text-gray-400 text-base text-center max-w-3xl mx-auto mb-6 mt-3">
-                      {courseSection.description}
-                    </p>
+                    <FaArrowLeft /> العودة إلى الكورسات
+                  </motion.button>
+                </div>
 
-                    {courseSection.lessons.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {courseSection.lessons.map((lesson) => (
-                          <LessonCard
-                            key={lesson.id}
-                            lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
-                            onPlay={() => markLessonAsCompleted(lesson.id)}
-                            variants={lessonCardItemVariants}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-gray-500 text-lg font-semibold mt-8 p-5 border border-gray-700/40 rounded-xl bg-gray-800/30 flex items-center justify-center gap-2">
-                        {courseSection.icon} لم يتم تسجيل محاضرات لهذا الكورس بعد. ابقوا على اطلاع!
-                      </p>
-                    )}
+                <motion.h2
+                  className="text-4xl md:text-5xl font-extrabold text-white mb-12 text-right bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
+                  دروس كورس: {selectedCourse?.title}
+                </motion.h2>
+
+                {selectedCourse && selectedCourse.lessons.length > 0 ? (
+                  <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                    variants={containerVariants} // استخدم نفس الـ variants للـ stagger
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {selectedCourse.lessons.map((lesson, index) => (
+                      <LessonCard
+                        key={lesson.id}
+                        lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
+                        onPlay={() => markLessonAsCompleted(lesson.id)}
+                        variants={itemVariants} // استخدم itemVariants لكل كارد
+                      />
+                    ))}
                   </motion.div>
+                ) : (
+                  <motion.p
+                    className="text-gray-500 text-lg font-semibold mt-8 p-5 border border-gray-700/40 rounded-xl bg-gray-800/30 flex items-center justify-center gap-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                  >
+                    {selectedCourse?.icon} لم يتم تسجيل محاضرات لهذا الكورس بعد. ابقوا على اطلاع!
+                  </motion.p>
                 )}
-              </AnimatePresence>
-            </div>
-          </section>
-        ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </main>
 
       <Footer />
     </div>
+  );
+}
+
+// تعريف نوع الكورس لـ CourseCard
+interface CourseCardProps {
+  course: typeof allCoursesSections[0]; // نوع الكورس من allCoursesSections
+  onSelect: (courseId: string) => void;
+  variants: Variants;
+}
+
+// مكون كارد الكورس (الجديد) - تم تصميمه ليطابق الصورة
+function CourseCard({ course, onSelect, variants }: CourseCardProps) {
+  // للتحكم في تأثير الحدود اللامعة عند الـ hover
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <motion.div
+      variants={variants}
+      className={`relative p-0.5 rounded-xl transition-all duration-300 ${
+        isHovered ? 'bg-gradient-to-br from-purple-500 to-cyan-500 shadow-lg' : ''
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div
+        className="relative bg-white text-gray-900 rounded-xl p-6 flex flex-col items-center justify-center text-center h-full transition-all duration-300 transform hover:scale-[1.01] cursor-pointer"
+        onClick={() => onSelect(course.id)}
+      >
+        {/* أيقونة الكورس */}
+        <div
+          className={`relative z-10 p-4 rounded-full bg-gray-100 mb-4`}
+          style={{ boxShadow: `0 0 0px 5px rgba(0, 30, 129, 0.08), 0 0 15px ${isHovered ? 'rgba(255, 0, 255, 0.75)' : 'transparent'}` }} // تأثير الظل اللامع
+        >
+          {/* الأيقونة داخلها */}
+          <div className={course.iconColor}>
+            {course.icon}
+          </div>
+        </div>
+
+        {/* عنوان الكورس */}
+        <h3 className="text-2xl font-bold mb-2">{course.title}</h3>
+        {/* زر "Click to reveal lessons" */}
+        <button className="mt-4 px-6 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors flex items-center gap-2">
+          Click to reveal lessons <FaArrowLeft className="transform rotate-180 text-xs" /> {/* سهم لليمين */}
+        </button>
+      </div>
+    </motion.div>
   );
 }
 

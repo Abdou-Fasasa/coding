@@ -166,7 +166,7 @@ export default function FAQPage() {
                 <FaWhatsapp className="text-xl" /> واتساب: 01128606959
               </a>
               <a
-                href="mailto:abdelrahmanabdelsalam0@gmail.com"
+                href="mailto:coding.hub@yandex.com"
                 className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors duration-200 text-base sm:text-lg font-medium bg-blue-900/30 px-4 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105"
               >
                 <FaEnvelope className="text-xl" /> الإيميل: info@coding.com

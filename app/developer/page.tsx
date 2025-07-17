@@ -210,7 +210,7 @@ export default function DeveloperPage() {
           <div className="flex flex-col sm:flex-row sm:justify-center flex-wrap gap-4 text-gray-300 text-lg">
             {/* Email Link */}
             <motion.a
-              href="mailto:abdelrahmanabdelsalam@gmail.com"
+              href="mailto:coding.hub@yandex.com"
               className="flex items-center gap-2 hover:text-pink-400 transition transform hover:scale-105 px-4 py-2 rounded-lg bg-black/30 hover:bg-black/50"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

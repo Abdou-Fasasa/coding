@@ -82,7 +82,7 @@ const allLessonsData: {
   },
   "prog-fund-9": {
     title: "9. المدخلات والمخرجات (Input/Output)",
-    video: "", // Placeholder
+    video: "/videos/programming-fundamentals/prog-fund-9.mp4",
     description: "تفاعل مع المستخدمين واستقبل منهم البيانات واعرض النتائج.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",

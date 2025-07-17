@@ -150,10 +150,10 @@ export default function Footer() {
             </li> */}
             <li>
               <a
-                href="mailto:abdelrahmanabdelsalam@gmail.com"
+                href="mailto:coding.hub@yandex.com"
                 className="flex items-center gap-3 hover:text-pink-400 transition-colors duration-200"
               >
-                <FaEnvelope className="text-lg text-pink-400" /> Coding@gmail.com
+                <FaEnvelope className="text-lg text-pink-400" /> info@coding.com
               </a>
             </li>
           </ul>
