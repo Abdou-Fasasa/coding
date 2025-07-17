@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Variants, easeInOut } from "framer-motion";
+import { Variants} from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -17,8 +17,6 @@ import {
   FaReact, // React icon
   FaShieldAlt, // Cyber Security icon
   FaUnlockAlt, // Social Media Hacking icon
-  FaChevronDown,
-  FaChevronUp,
   FaLaptopCode, // Icon for Programming Fundamentals
   FaArrowLeft, // New icon for back button
 } from "react-icons/fa";
@@ -522,7 +520,7 @@ export default function CoursesPage() {
                     initial="hidden"
                     animate="visible"
                   >
-                    {selectedCourse.lessons.map((lesson, index) => (
+                    {selectedCourse.lessons.map((lesson) => (
                       <LessonCard
                         key={lesson.id}
                         lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
