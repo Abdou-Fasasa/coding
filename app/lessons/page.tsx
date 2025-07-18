@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  FaPlay,
   FaCheckCircle,
   FaFilePdf,
   FaHtml5,
@@ -18,7 +17,6 @@ import {
   FaUnlockAlt,
   FaLaptopCode,
   FaArrowLeft,
-  FaLightbulb, // Icon for 'no lessons' message
   FaGraduationCap, // A more general icon for learning
   FaBookOpen, // New icon for 'read lesson' or 'view content'
 } from "react-icons/fa";
