@@ -15,12 +15,12 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname} from "next/navigation";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+ 
 
   const mobileMenuVariants = {
     hidden: {

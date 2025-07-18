@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { easeOut } from "framer-motion";
-import { FaBookOpen, FaStar, FaUserTie, FaUsers, FaPlayCircle } from "react-icons/fa";
+import { FaBookOpen, FaStar, FaUserTie, FaUsers} from "react-icons/fa";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Link from "next/link";
