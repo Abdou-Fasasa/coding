@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Variants} from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Link from "next/link";
@@ -11,35 +10,38 @@ import {
   FaPlay,
   FaCheckCircle,
   FaFilePdf,
-  FaHtml5, // HTML icon
-  FaCss3Alt, // CSS icon
-  FaJsSquare, // JavaScript icon
-  FaReact, // React icon
-  FaShieldAlt, // Cyber Security icon
-  FaUnlockAlt, // Social Media Hacking icon
-  FaLaptopCode, // Icon for Programming Fundamentals
-  FaArrowLeft, // New icon for back button
+  FaHtml5,
+  FaCss3Alt,
+  FaJsSquare,
+  FaReact,
+  FaShieldAlt,
+  FaUnlockAlt,
+  FaLaptopCode,
+  FaArrowLeft,
+  FaLightbulb, // Icon for 'no lessons' message
+  FaGraduationCap, // A more general icon for learning
+  FaBookOpen, // New icon for 'read lesson' or 'view content'
 } from "react-icons/fa";
 
-// تعريف نوع الدرس (TypeScript)
+// Lesson Type Definition (Unchanged)
 type Lesson = {
   id: string;
   title: string;
   description: string;
-  pdfPath?: string; // جعلها اختيارية
+  pdfPath?: string;
   imagePath: string;
   isCompleted?: boolean;
-  hasTest?: boolean; // تحديد ما إذا كان الدرس يحتوي على اختبار
+  hasTest?: boolean;
 };
 
-// بيانات الدروس لكورس HTML
+// --- Lesson Data (Unchanged - assuming this data is final) ---
 const htmlLessons: Lesson[] = [
   {
     id: "Computer-science",
     title: "مقدمة في علوم الحاسوب والبرمجة",
     description: "انطلق في رحلتك البرمجية بفهم الأساسيات التي تحرك عالم التكنولوجيا.",
     pdfPath: "/pdfs/Computer-science.pdf",
-    imagePath: "/images/html-lessons.jpg", // استخدام صورة HTML للكورس
+    imagePath: "/images/html-lessons.jpg",
   },
   {
     id: "Work-environment",
@@ -134,7 +136,6 @@ const htmlLessons: Lesson[] = [
   },
 ];
 
-// بيانات الدروس لكورس CSS
 const cssLessons: Lesson[] = [
   {
     id: "Css-lesson1",
@@ -146,93 +147,11 @@ const cssLessons: Lesson[] = [
   // Add more CSS lessons here
 ];
 
-// بيانات الدروس لكورس JavaScript
-const jsLessons: Lesson[] = [
-  // {
-  //   id: "Js-lesson1",
-  //   title: "مقدمة في JavaScript",
-  //   description: "اكتشف قوة JavaScript في إضفاء التفاعل والحياة على صفحات الويب.",
-  //   pdfPath: "/pdfs/js-lesson1.pdf",
-  //   imagePath: "/images/js-lessons.jpg",
-  // },
-];
+const jsLessons: Lesson[] = [];
+const reactLessons: Lesson[] = [];
+const cyberSecurityLessons: Lesson[] = [];
+const socialMediaHackingLessons: Lesson[] = [];
 
-// بيانات الدروس لكورس React
-const reactLessons: Lesson[] = [
-  // {
-  //   id: "React-lesson1",
-  //   title: "مقدمة في React.js",
-  //   description: "تعلم أساسيات React.js وبناء مكونات الواجهة.",
-  //   pdfPath: "/pdfs/react-lesson1.pdf",
-  //   imagePath: "/images/react-lessons.jpg",
-  // },
-];
-
-// بيانات الدروس لكورس الأمن السيبراني
-const cyberSecurityLessons: Lesson[] = [
-  // {
-  //   id: "CS-lesson1",
-  //   title: "مقدمة في الشبكات وأساسياتها",
-  //   description: "فهم البنية التحتية للشبكات وأهميتها في الأمن السيبراني.",
-  //   pdfPath: "/pdfs/cs-lesson1.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-  // {
-  //   id: "CS-lesson2",
-  //   title: "أنواع الاختراقات وأساليبها",
-  //   description: "تعرف على أبرز التهديدات السيبرانية وكيفية عملها.",
-  //   pdfPath: "/pdfs/cs-lesson2.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-  // {
-  //   id: "CS-lesson3",
-  //   title: "أساليب الحماية المتقدمة",
-  //   description: "تعلم استراتيجيات قوية لحماية الأنظمة والبيانات.",
-  //   pdfPath: "/pdfs/cs-lesson3.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-  // {
-  //   id: "CS-lesson4",
-  //   title: "أدوات اختبار الاختراق (Penetration Testing)",
-  //   description: "اكتشف الأدوات المستخدمة في اختبار الاختراق الأخلاقي.",
-  //   pdfPath: "/pdfs/cs-lesson4.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-  // {
-  //   id: "CS-lesson5",
-  //   title: "مشروع اختراق قانوني (Ethical Hacking)",
-  //   description: "طبق مهاراتك في مشروع عملي محاكي لاختراق نظام.",
-  //   pdfPath: "/pdfs/cs-lesson5.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-  // {
-  //   id: "CS-lesson6",
-  //   title: "تأهيل للعمل في مجال الأمن السيبراني",
-  //   description: "إرشادات وخطوات للدخول إلى سوق العمل في الأمن السيبراني.",
-  //   pdfPath: "/pdfs/cs-lesson6.pdf",
-  //   imagePath: "/images/cyber-security.jpg",
-  // },
-];
-
-// بيانات الدروس لكورس اختراق السوشيال ميديا
-const socialMediaHackingLessons: Lesson[] = [
-  // {
-  //   id: "SMH-lesson1",
-  //   title: "تقنيات جمع المعلومات (OSINT)",
-  //   description: "تعلم كيفية جمع المعلومات علنًا عن الأهداف.",
-  //   pdfPath: "/pdfs/smh-lesson1.pdf",
-  //   imagePath: "/images/social-media-hacking.jpg",
-  // },
-  // {
-  //   id: "SMH-lesson2",
-  //   title: "فهم الثغرات الشائعة",
-  //   description: "اكتشف الثغرات الأمنية المتكررة في منصات التواصل.",
-  //   pdfPath: "/pdfs/smh-lesson2.pdf",
-  //   imagePath: "/images/social-media-hacking.jpg",
-  // },
-];
-
-// بيانات الدروس لكورس أساسيات البرمجة (جديد)
 const programmingFundamentalsLessons: Lesson[] = [
   {
     id: "prog-fund-1",
@@ -306,80 +225,77 @@ const programmingFundamentalsLessons: Lesson[] = [
   },
 ];
 
-// هيكل لجميع الكورسات التي سيتم عرضها كأقسام قابلة للطي (الآن كبطاقات)
+// --- Course Sections Data (Unchanged) ---
 const allCoursesSections = [
   {
     id: "programming-fundamentals-course",
     title: "أساسيات البرمجة",
-    icon: <FaLaptopCode className="text-4xl text-emerald-400" />,
+    icon: <FaLaptopCode className="text-4xl" />,
     description: "بوابة دخولك لعالم البرمجة من الصفر: تعلم التفكير البرمجي وأول خطوات كتابة الكود.",
     lessons: programmingFundamentalsLessons,
-    image: "/images/programming-fundamentals.jpg", // صورة للكارد
+    image: "/images/programming-fundamentals.jpg",
     iconColor: "text-emerald-400",
   },
   {
     id: "html-course",
     title: "HTML",
-    icon: <FaHtml5 className="text-4xl text-orange-500" />,
+    icon: <FaHtml5 className="text-4xl" />,
     description: "ابدأ رحلتك في بناء صفحات الويب الأساسية.",
     lessons: htmlLessons,
-    image: "/images/html-lessons.jpg", // صورة للكارد
+    image: "/images/html-lessons.jpg",
     iconColor: "text-orange-500",
   },
   {
     id: "css-course",
     title: "CSS",
-    icon: <FaCss3Alt className="text-4xl text-blue-500" />,
+    icon: <FaCss3Alt className="text-4xl" />,
     description: "أضف لمسة جمالية واحترافية لصفحات الويب الخاصة بك.",
     lessons: cssLessons,
-    image: "/images/css-lessons.jpg", // صورة للكارد
+    image: "/images/css-lessons.jpg",
     iconColor: "text-blue-500",
   },
   {
     id: "javascript-course",
     title: "JavaScript",
-    icon: <FaJsSquare className="text-4xl text-yellow-500" />,
+    icon: <FaJsSquare className="text-4xl" />,
     description: "اجعل صفحاتك تفاعلية وديناميكية باستخدام قوة JavaScript.",
     lessons: jsLessons,
-    image: "/images/js-lessons.jpg", // صورة للكارد
+    image: "/images/js-lessons.jpg",
     iconColor: "text-yellow-500",
   },
   {
     id: "react-course",
     title: "React",
-    icon: <FaReact className="text-4xl text-cyan-400" />,
+    icon: <FaReact className="text-4xl" />,
     description: "تعمق في بناء واجهات المستخدم المعقدة باستخدام مكتبة React.js.",
     lessons: reactLessons,
-    image: "/images/react-lessons.jpg", // صورة للكارد
+    image: "/images/react-lessons.jpg",
     iconColor: "text-cyan-400",
   },
   {
     id: "cyber-security-course",
     title: "الأمن السيبراني",
-    icon: <FaShieldAlt className="text-4xl text-purple-400" />,
+    icon: <FaShieldAlt className="text-4xl" />,
     description: "احترف حماية الأنظمة والشبكات من التهديدات السيبرانية.",
     lessons: cyberSecurityLessons,
-    image: "/images/cyber-security.jpg", // صورة للكارد
+    image: "/images/cyber-security.jpg",
     iconColor: "text-purple-400",
   },
   {
     id: "social-media-hacking-course",
     title: "اختراق السوشيال ميديا",
-    icon: <FaUnlockAlt className="text-4xl text-red-400" />,
+    icon: <FaUnlockAlt className="text-4xl" />,
     description: "كورس متقدم ضمن الأمن السيبراني لتعلم الجوانب القانونية والأخلاقية لاختراق حسابات التواصل الاجتماعي.",
     lessons: socialMediaHackingLessons,
-    image: "/images/social-media-hacking.jpg", // صورة للكارد
+    image: "/images/social-media-hacking.jpg",
     iconColor: "text-red-400",
   },
-  // يمكنك إضافة كورسات أخرى هنا بنفس النمط
 ];
 
 export default function CoursesPage() {
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
-  // حالة لتحديد الكورس المختار لعرض دروسه
   const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
 
-  // Load completion status from Local Storage on component mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedCompleted = localStorage.getItem("completedLessons");
@@ -388,13 +304,12 @@ export default function CoursesPage() {
           setCompletedLessons(new Set(JSON.parse(storedCompleted)));
         } catch (e) {
           console.error("Failed to parse completed lessons from local storage", e);
-          localStorage.removeItem("completedLessons"); // Clear invalid data
+          localStorage.removeItem("completedLessons");
         }
       }
     }
   }, []);
 
-  // Save completion status to Local Storage on every change
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("completedLessons", JSON.stringify(Array.from(completedLessons)));
@@ -409,12 +324,10 @@ export default function CoursesPage() {
     });
   }, []);
 
-  // دالة لاختيار الكورس وعرض دروسه
   const handleCourseSelect = useCallback((courseId: string) => {
     setSelectedCourseId(courseId);
   }, []);
 
-  // دالة للعودة لعرض كل الكورسات
   const handleBackToCourses = useCallback(() => {
     setSelectedCourseId(null);
   }, []);
@@ -425,52 +338,63 @@ export default function CoursesPage() {
 
   // Variants for animation
   const containerVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.95 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
-      scale: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.6,
+        ease: "easeOut",
         staggerChildren: 0.1,
       },
     },
     exit: {
       opacity: 0,
-      scale: 0.95,
-      transition: { duration: 0.3 },
+      y: -20,
+      transition: { duration: 0.4, ease: "easeIn" },
     },
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 50, scale: 0.8 },
+    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between">
+    // Outer container with a deep, subtle gradient and background noise effect
+    <div className="bg-gradient-to-br from-gray-950 via-slate-900 to-gray-950 text-white min-h-screen flex flex-col justify-between font-['Cairo',_sans-serif] relative overflow-hidden">
+      {/* Background radial gradient for depth */}
+      <div className="absolute inset-0 z-0 opacity-20" style={{
+          background: 'radial-gradient(circle at 10% 20%, #4a00e050, transparent 40%), radial-gradient(circle at 90% 80%, #00c6ff50, transparent 40%)'
+      }}></div>
+      {/* Subtle noise pattern */}
+      <div className="absolute inset-0 z-0 opacity-[0.03]" style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'10\' height=\'10\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.1\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E")',
+          backgroundSize: '10px 10px'
+      }}></div>
+
       <Header />
 
-      <main className="pt-32 pb-20 text-center space-y-12 relative overflow-hidden" dir="rtl">
+      <main className="pt-32 pb-20 text-center space-y-12 relative z-10 px-4 md:px-8 lg:px-12" dir="rtl">
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-purple-400 mb-12"
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-500 mb-16 leading-tight drop-shadow-2xl"
         >
-          اكتشف مساراتنا التعليمية
+          اكتشف رحلتك التعليمية القادمة
         </motion.h1>
 
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-8xl mx-auto">
           <AnimatePresence mode="wait">
             {selectedCourseId === null ? (
-              // عرض كروت الكورسات
               <motion.div
                 key="course-cards"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-center items-stretch"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-center items-stretch"
               >
                 {allCoursesSections.map((course) => (
                   <CourseCard
@@ -482,7 +406,6 @@ export default function CoursesPage() {
                 ))}
               </motion.div>
             ) : (
-              // عرض دروس الكورس المختار
               <motion.div
                 key="course-lessons"
                 variants={containerVariants}
@@ -491,32 +414,32 @@ export default function CoursesPage() {
                 exit="exit"
                 className="w-full"
               >
-                <div className="flex justify-start mb-8">
+                <div className="flex justify-start mb-10">
                   <motion.button
                     onClick={handleBackToCourses}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full text-lg font-semibold transition-colors duration-300 shadow-md active:scale-95 text-gray-200"
-                    initial={{ opacity: 0, x: -20 }}
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-800 hover:to-indigo-900 rounded-full text-xl font-semibold transition-all duration-300 shadow-xl active:scale-95 text-white transform hover:-translate-x-2 focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-80"
+                    initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.5 }}
                   >
-                    <FaArrowLeft /> العودة إلى الكورسات
+                    <FaArrowLeft className="text-xl" /> العودة إلى الكورسات
                   </motion.button>
                 </div>
 
                 <motion.h2
-                  className="text-4xl md:text-5xl font-extrabold text-white mb-12 text-right bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400"
-                  initial={{ opacity: 0, y: 20 }}
+                  className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-16 text-right bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-500 drop-shadow-xl leading-tight"
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
+                  transition={{ delay: 0.3, duration: 0.7 }}
                 >
                   دروس كورس: {selectedCourse?.title}
                 </motion.h2>
 
                 {selectedCourse && selectedCourse.lessons.length > 0 ? (
                   <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-                    variants={containerVariants} // استخدم نفس الـ variants للـ stagger
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                    variants={containerVariants}
                     initial="hidden"
                     animate="visible"
                   >
@@ -525,19 +448,23 @@ export default function CoursesPage() {
                         key={lesson.id}
                         lesson={{ ...lesson, isCompleted: completedLessons.has(lesson.id) }}
                         onPlay={() => markLessonAsCompleted(lesson.id)}
-                        variants={itemVariants} // استخدم itemVariants لكل كارد
+                        variants={itemVariants}
                       />
                     ))}
                   </motion.div>
                 ) : (
-                  <motion.p
-                    className="text-gray-500 text-lg font-semibold mt-8 p-5 border border-gray-700/40 rounded-xl bg-gray-800/30 flex items-center justify-center gap-2"
-                    initial={{ opacity: 0, y: 20 }}
+                  <motion.div
+                    className="text-gray-400 text-2xl font-semibold mt-12 p-10 border border-gray-700/60 rounded-3xl bg-gray-800/40 flex flex-col items-center justify-center gap-6 shadow-2xl backdrop-blur-md"
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.5 }}
+                    transition={{ delay: 0.4, duration: 0.7 }}
                   >
-                    {selectedCourse?.icon} لم يتم تسجيل محاضرات لهذا الكورس بعد. ابقوا على اطلاع!
-                  </motion.p>
+                    <FaGraduationCap className="text-6xl text-purple-400 mb-4 animate-pulse" />
+                    <span className="leading-relaxed text-center">
+                      نحن نعمل بجد لإعداد محتوى هذا الكورس الشيق. <br />
+                      يرجى التحقق مرة أخرى قريبًا للحصول على أحدث الدروس المتاحة!
+                    </span>
+                  </motion.div>
                 )}
               </motion.div>
             )}
@@ -550,47 +477,60 @@ export default function CoursesPage() {
   );
 }
 
-// تعريف نوع الكورس لـ CourseCard
+// CourseCard Type Definition
 interface CourseCardProps {
-  course: typeof allCoursesSections[0]; // نوع الكورس من allCoursesSections
+  course: typeof allCoursesSections[0];
   onSelect: (courseId: string) => void;
   variants: Variants;
 }
 
-// مكون كارد الكورس (الجديد) - تم تصميمه ليطابق الصورة
+// Course Card Component: Floating & Interactive (Unchanged from previous iteration as focus is on lessons)
 function CourseCard({ course, onSelect, variants }: CourseCardProps) {
-  // للتحكم في تأثير الحدود اللامعة عند الـ hover
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
       variants={variants}
-      className={`relative p-0.5 rounded-xl transition-all duration-300 ${
-        isHovered ? 'bg-gradient-to-br from-purple-500 to-cyan-500 shadow-lg' : ''
-      }`}
+      className={`relative p-1.5 rounded-3xl transition-all duration-500 overflow-hidden group 
+                  ${isHovered ? 'bg-gradient-to-br from-purple-600 via-pink-600 to-cyan-600 shadow-glow' : 'bg-transparent'}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => onSelect(course.id)}
+      whileHover={{ y: -8 }} // Slight lift effect on hover for floating feel
+      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+      style={{ willChange: 'transform' }} // Optimize for animation
     >
       <div
-        className="relative bg-white text-gray-900 rounded-xl p-6 flex flex-col items-center justify-center text-center h-full transition-all duration-300 transform hover:scale-[1.01] cursor-pointer"
-        onClick={() => onSelect(course.id)}
+        className="relative bg-gradient-to-br from-slate-900 to-gray-900 text-white rounded-3xl p-8 flex flex-col items-center justify-between text-center h-full transition-all duration-300 transform group-hover:scale-[1.01] shadow-2xl border border-gray-700/60"
       >
-        {/* أيقونة الكورس */}
-        <div
-          className={`relative z-10 p-4 rounded-full bg-gray-100 mb-4`}
-          style={{ boxShadow: `0 0 0px 5px rgba(0, 30, 129, 0.08), 0 0 15px ${isHovered ? 'rgba(255, 0, 255, 0.75)' : 'transparent'}` }} // تأثير الظل اللامع
+        {/* Decorative elements for the floating feel */}
+        <div className="absolute -top-4 -left-4 w-24 h-24 bg-purple-500 rounded-full opacity-10 blur-xl"></div>
+        <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-cyan-500 rounded-full opacity-10 blur-xl"></div>
+
+        {/* Course Icon with enhanced styling */}
+        <motion.div
+          className={`relative z-10 p-6 rounded-full bg-gradient-to-br from-gray-800 to-gray-700 mb-7 transition-all duration-300 ${
+            isHovered ? 'shadow-lg shadow-white/20' : 'shadow-md shadow-black/30'
+          }`}
+          whileHover={{ scale: 1.15, rotate: 10 }}
+          transition={{ type: "spring", stiffness: 400, damping: 12 }}
         >
-          {/* الأيقونة داخلها */}
-          <div className={course.iconColor}>
+          <div className={`${course.iconColor} transition-colors duration-300 group-hover:text-white text-5xl`}>
             {course.icon}
           </div>
-        </div>
+        </motion.div>
 
-        {/* عنوان الكورس */}
-        <h3 className="text-2xl font-bold mb-2">{course.title}</h3>
-        {/* زر "Click to reveal lessons" */}
-        <button className="mt-4 px-6 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors flex items-center gap-2">
-          Click to reveal lessons <FaArrowLeft className="transform rotate-180 text-xs" /> {/* سهم لليمين */}
+        {/* Course Title */}
+        <h3 className="text-3xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-blue-300 leading-tight">
+          {course.title}
+        </h3>
+        {/* Course Description */}
+        <p className="text-gray-400 text-base mb-6 leading-relaxed line-clamp-3">
+          {course.description}
+        </p>
+        {/* Call to action button */}
+        <button className="mt-auto px-9 py-4 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-full text-lg font-semibold hover:from-sky-600 hover:to-indigo-700 transition-all duration-300 flex items-center gap-3 shadow-lg hover:shadow-xl active:scale-95 transform hover:-translate-y-1">
+          استكشف المحتوى <FaArrowLeft className="transform rotate-180 text-lg" />
         </button>
       </div>
     </motion.div>
@@ -603,47 +543,73 @@ interface LessonCardProps {
   variants: Variants;
 }
 
-// مكون بطاقة الدرس (محتفظة بالحجم المدمج والأنيق)
+// NEW & IMPROVED Lesson Card Component
 function LessonCard({ lesson, onPlay, variants }: LessonCardProps) {
   return (
     <motion.div
       variants={variants}
-      className={`relative bg-[#1e293b] border ${
-        lesson.isCompleted ? 'border-green-500 shadow-green-500/30' : 'border-cyan-500/40'
-      } rounded-xl p-3 shadow-lg transition-all duration-300 flex flex-col`}
+      className={`relative bg-gradient-to-br from-slate-800 to-gray-900 border ${
+        lesson.isCompleted ? 'border-green-600 shadow-green-700/40' : 'border-slate-700/70'
+      } rounded-2xl p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-blue-500 transform hover:-translate-y-2 hover:shadow-blue-600/30 group overflow-hidden`}
     >
-      <div className="w-full h-28 mb-1 overflow-hidden rounded-lg relative">
-        <Image
-          src={lesson.imagePath}
-          alt={`صورة الدرس ${lesson.id}`}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-lg"
-        />
+      {/* Background swirl/pattern on hover */}
+      <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500" style={{
+          backgroundImage: 'radial-gradient(circle at 10% 20%, rgba(59,130,246,0.1), transparent 70%), radial-gradient(circle at 90% 80%, rgba(147,51,234,0.1), transparent 70%)',
+          backgroundSize: '200% 200%',
+          backgroundPosition: 'center',
+          animation: 'swirl 15s linear infinite' // Needs a CSS keyframe
+      }}></div>
+
+      {/* Completed Badge */}
+      {lesson.isCompleted && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+          className="absolute top-4 right-4 bg-green-700 text-white text-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 z-10 shadow-lg font-semibold"
+        >
+          <FaCheckCircle className="text-base" /> مكتمل
+        </motion.div>
+      )}
+
+      <div className="relative z-10 flex flex-col items-center text-center flex-grow">
+        {/* Lesson Image */}
+        <div className="w-full h-40 mb-4 overflow-hidden rounded-xl relative shadow-lg border border-gray-700/50">
+          <Image
+            src={lesson.imagePath}
+            alt={`صورة الدرس ${lesson.id}`}
+            layout="fill"
+            objectFit="cover"
+            className="rounded-xl transition-transform duration-300 group-hover:scale-105"
+          />
+        </div>
+
+        {/* Lesson Title */}
+        <h3 className="text-2xl font-bold text-teal-300 mb-2 leading-snug line-clamp-2">
+          {lesson.title}
+        </h3>
+        {/* Lesson Description */}
+        <p className="text-gray-400 text-sm mb-5 leading-relaxed line-clamp-3 flex-grow">
+          {lesson.description}
+        </p>
       </div>
 
-      <h3 className="text-lg font-bold text-cyan-300 mb-0.5 text-center flex-grow line-clamp-2">
-        {lesson.title}
-      </h3>
-      <p className="text-gray-400 text-xs mb-2 text-center flex-grow line-clamp-3">
-        {lesson.description}
-      </p>
-
-      <div className="flex flex-col gap-1.5 mt-auto">
+      {/* Action Buttons */}
+      <div className="relative z-10 flex flex-col gap-3 mt-auto pt-4 border-t border-slate-700/60">
         <Link
           href={`/lessons/${lesson.id}`}
           onClick={() => onPlay(lesson.id)}
-          className="bg-cyan-600 hover:bg-cyan-700 transition rounded-lg py-1.5 px-2.5 flex items-center gap-1.5 justify-center font-semibold text-sm hover:shadow-md active:scale-95"
+          className="bg-gradient-to-r from-blue-600 to-sky-700 hover:from-blue-700 hover:to-sky-800 transition rounded-lg py-3 px-3 flex items-center gap-2 justify-center font-semibold text-base text-white hover:shadow-xl active:scale-95 transform hover:scale-[1.01]"
         >
-          <FaPlay className="text-xs" /> تشغيل الدرس
+          <FaBookOpen className="text-sm" /> ابدأ الدرس
         </Link>
 
         {lesson.hasTest !== false && (
           <Link
             href={`/lessons/${lesson.id}/test`}
-            className="bg-purple-600 hover:bg-purple-700 transition rounded-lg py-1.5 px-2.5 flex items-center gap-1.5 justify-center font-semibold text-sm hover:shadow-md active:scale-95"
+            className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 transition rounded-lg py-3 px-3 flex items-center gap-2 justify-center font-semibold text-base text-white hover:shadow-xl active:scale-95 transform hover:scale-[1.01]"
           >
-            <FaCheckCircle className="text-xs" /> اختبار الدرس
+            <FaCheckCircle className="text-sm" /> اختبار الدرس
           </Link>
         )}
 
@@ -651,9 +617,9 @@ function LessonCard({ lesson, onPlay, variants }: LessonCardProps) {
           <a
             href={lesson.pdfPath}
             download
-            className="bg-green-600 hover:bg-green-700 transition rounded-lg py-1.5 px-2.5 flex items-center gap-1.5 justify-center font-semibold text-sm hover:shadow-md active:scale-95"
+            className="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 transition rounded-lg py-3 px-3 flex items-center gap-2 justify-center font-semibold text-base text-white hover:shadow-xl active:scale-95 transform hover:scale-[1.01]"
           >
-            <FaFilePdf className="text-xs" /> تحميل ملف الدرس PDF
+            <FaFilePdf className="text-sm" /> تحميل ملف PDF
           </a>
         )}
       </div>

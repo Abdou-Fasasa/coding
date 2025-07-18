@@ -1,152 +1,116 @@
+/* ✅ globals.css – corporate style */
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), sans-serif;
+  scroll-behavior: smooth;
 }
 
+/* Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-@keyframes moveBg {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 100px 100px;
-  }
-}
-@keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* globals.css */
-
-/* ... (بقية الـ CSS الخاص بك) ... */
-
-/* Keyframes for star-fade (if not already present) */
-@keyframes star-fade {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-/* Glow on Hover effect for buttons (if not already present) */
-.glow-on-hover {
-    position: relative;
-    z-index: 0;
-    overflow: hidden;
-}
-
-.glow-on-hover:before {
-    content: '';
-    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    background-size: 400%;
-    z-index: -1;
-    filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
-    animation: glowing 20s linear infinite;
-    opacity: 0;
-    transition: opacity .3s ease-in-out;
-    border-radius: 12px; /* Adjust as needed for the button's border-radius */
-}
-
-.glow-on-hover:active:after {
-    background: transparent;
-}
-
-.glow-on-hover:hover:before {
-    opacity: 1;
-}
-
-.glow-on-hover:after {
-    z-index: -1;
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #101828; /* لون خلفية الزر الأساسي عند عدم التحويم (اجعله أغمق قليلاً من لون الخلفية العام) */
-    left: 0;
-    top: 0;
-    border-radius: 12px; /* Adjust as needed to match button's border-radius */
-}
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
 }
 
-/* Custom styles for the select dropdown */
+/* Glow button effect */
+.glow-on-hover {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+}
+.glow-on-hover:before {
+  content: '';
+  background: linear-gradient(45deg, #1d4ed8, #6366f1, #1d4ed8);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 12px;
+}
+.glow-on-hover:hover:before {
+  opacity: 1;
+}
+.glow-on-hover:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f9fafb;
+  left: 0;
+  top: 0;
+  border-radius: 12px;
+}
+
+/* Custom select styles */
 .custom-select {
-  /* Hide default arrow in some browsers */
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  /* Add padding for custom arrow */
-  padding-left: 1.5rem; /* For RTL */
-  padding-right: 1.5rem; /* For LTR */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
-.custom-select::-ms-expand {
-  display: none; /* Hide default arrow in IE/Edge */
-}
-/* Set custom arrow color */
-.custom-select + div { /* This targets the div with the FaChevronDown icon */
-    right: auto; /* Reset for LTR */
-    left: 1rem; /* Adjust as needed for spacing */
+.custom-select + div {
+  right: auto;
+  left: 1rem;
 }
 
-/* For RTL specific adjustment (if you need it more precise than just general appearance:none) */
 html[dir="rtl"] .custom-select {
-    padding-right: 1.5rem; /* Adjust for RTL padding */
-    padding-left: 1.5rem; /* This moves the text a bit to the right to clear the icon */
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+html[dir="rtl"] .custom-select + div {
+  left: auto;
+  right: 1rem;
+}
+@layer components {
+  .shadow-glow {
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.5), /* Purple glow */
+                0 0 30px rgba(255, 0, 255, 0.3), /* Pink glow */
+                0 0 45px rgba(0, 255, 255, 0.2); /* Cyan glow */
+  }
+}
+/* Add this to your global CSS file (e.g., globals.css) */
+@keyframes swirl {
+  from { background-position: 0% 0%; }
+  to { background-position: 200% 200%; }
 }
 
-html[dir="rtl"] .custom-select + div { /* This targets the div with the FaChevronDown icon */
-    left: auto; /* Reset for LTR */
-    right: 1rem; /* Position for RTL */
+/* Also, ensure shadow-glow from previous iteration is there if you removed it */
+@layer components {
+  .shadow-glow {
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.5), /* Purple glow */
+                0 0 30px rgba(255, 0, 255, 0.3), /* Pink glow */
+                0 0 45px rgba(0, 255, 255, 0.2); /* Cyan glow */
+  }
 }

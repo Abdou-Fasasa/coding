@@ -1,5 +1,5 @@
+// ✅ tailwind.config.ts بعد تعديل الألوان لتصميم رسمي
 /** @type {import('tailwindcss').Config} */
-// Tailwind CSS configuration file for a Next.js project with custom colors and background images.  
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -9,9 +9,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#0f172a",
-        secondary: "#1e293b",
-        accent: "#ec4899",
+        primary: "#1d4ed8", // أزرق رسمي
+        secondary: "#f1f5f9", // رمادي فاتح
+        accent: "#6366f1", // بنفسجي فاتح
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
