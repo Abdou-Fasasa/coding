@@ -15,7 +15,7 @@
     "axios": "^1.10.0",
     "firebase": "^11.10.0",
     "firebase-admin": "^11.11.1",
-    "framer-motion": "^12.23.0",
+    "framer-motion": "^12.23.6",
     "next": "15.3.3",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",

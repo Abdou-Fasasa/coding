@@ -170,16 +170,8 @@ export default function Header() {
                   : "hover:bg-green-800/50 hover:text-green-300 transform hover:scale-105"
               }`}
           >
-            <FaMoneyBillWave className="text-xl" /> <span className="mr-1">الأسعار</span>
+            <FaMoneyBillWave className="text-xl" /> <span className="mr-1">الاشتراك</span>
           </Link>
-
-          <button
-            onClick={handleLogout}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-red-600 hover:bg-red-700 text-white text-xl shadow-md transition-all duration-200 hover:scale-110 active:scale-95"
-            title="تسجيل خروج"
-          >
-            <FaSignOutAlt />
-          </button>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -264,18 +256,10 @@ export default function Header() {
                 className="flex items-center gap-3 hover:text-green-400 py-2"
                 onClick={() => setMenuOpen(false)}
               >
-                <FaMoneyBillWave className="text-xl" /> الأسعار
+                <FaMoneyBillWave className="text-xl" /> الاشتراك
               </Link>
             </motion.div>
 
-            <motion.div variants={menuItemVariants}>
-              <button
-                onClick={handleLogout}
-                className="flex items-center justify-end gap-3 text-red-400 hover:text-red-300 transition-colors duration-200 py-2 w-full"
-              >
-                <FaSignOutAlt className="text-xl" /> تسجيل خروج
-              </button>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

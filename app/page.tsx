@@ -143,7 +143,7 @@ export default function HomePage() {
           >
             <FaUsers className="text-5xl text-purple-400 mb-4 mx-auto" />
             <h4 className="text-2xl font-bold text-white mb-3">
-              تواصل مع براء
+              تواصل مع خبراء
             </h4>
             <p className="text-gray-300">
               احصل على المساعدة والإرشاد في أي وقت لتطوير مهاراتك البرمجية.
@@ -169,64 +169,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* --- */}
-
-      {/* ✅ قسم إحصائيات المنصة (بالأرقام الفعلية الافتراضية) */}
-      <section className="py-20 px-6 bg-[#1e293b] text-center" dir="rtl"> {/* Added dir="rtl" */}
-        <motion.h3
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true, amount: 0.5 }}
-          className="text-4xl font-extrabold text-white mb-12 bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-400"
-        >
-          أرقام تتحدث عن نجاحنا
-        </motion.h3>
-
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* إحصائية المستخدمين */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, amount: 0.5 }}
-            className="bg-[#0f172a] p-8 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center justify-center"
-          >
-            <FaUsers className="text-6xl text-cyan-400 mb-4" />
-            <span className="text-5xl font-extrabold text-white">{totalUsers}</span>
-            <p className="text-gray-300 text-xl mt-2">متعلم نشط</p>
-          </motion.div>
-
-          {/* إحصائية الكورسات */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true, amount: 0.5 }}
-            className="bg-[#0f172a] p-8 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center justify-center"
-          >
-            <FaBookOpen className="text-6xl text-pink-400 mb-4" />
-            <span className="text-5xl font-extrabold text-white">{totalCourses}</span>
-            <p className="text-gray-300 text-xl mt-2">دورة تدريبية</p>
-          </motion.div>
-
-          {/* إحصائية الفيديوهات/الدروس */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true, amount: 0.5 }}
-            className="bg-[#0f172a] p-8 rounded-2xl shadow-xl border border-gray-700 flex flex-col items-center justify-center"
-          >
-            <FaPlayCircle className="text-6xl text-purple-400 mb-4" />
-            <span className="text-5xl font-extrabold text-white">{totalVideos}</span>
-            <p className="text-gray-300 text-xl mt-2">درس وفيديو تعليمي</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* --- */}
 
       {/* ✅ إضافة Call to Action النهائية */}
       <section className="text-center py-16 px-6 bg-gradient-to-r from-[#1e293b] via-[#0f172a] to-[#1e293b]" dir="rtl"> {/* Added dir="rtl" */}
