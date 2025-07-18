@@ -10,7 +10,6 @@ import {
   FaTimes,
   FaQuestionCircle,
   FaMoneyBillWave,
-  FaSignOutAlt,
   FaFileAlt,
   FaInfoCircle,
 } from "react-icons/fa";
@@ -58,12 +57,6 @@ export default function Header() {
     if (href === "/lessons" && pathname.startsWith("/lessons")) return true;
     if (href !== "/" && pathname.startsWith(href)) return true;
     return false;
-  };
-
-  const handleLogout = () => {
-    document.cookie = "loggedIn=; path=/; max-age=0";
-    router.push("/login");
-    setMenuOpen(false);
   };
 
   return (

@@ -9,11 +9,6 @@ import Footer from "./components/Footer";
 import Link from "next/link";
 
 export default function HomePage() {
-  // هنا يمكنك تعريف الأرقام الحقيقية لمنصتك
-  const totalUsers = "2526+"; // مثال: عدد المستخدمين الفعلي
-  const totalCourses = "8+"; // مثال: عدد الدورات الفعلية
-  const totalVideos = "138+"; // مثال: عدد الفيديوهات/الدروس الفعلية
-
   return (
     <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
       {/* ✅ الهيدر */}
