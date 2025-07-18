@@ -89,7 +89,7 @@ export default function Header() {
                   : "hover:bg-blue-800/50 hover:text-blue-300 transform hover:scale-105"
               }`}
           >
-            <FaHome className="text-xl" /> <span className="mr-1">الصفحة الرئيسية</span>
+            <FaHome className="text-xl" /> <span className="mr-1">الرئيسية</span>
           </Link>
 
           {/* الكورسات - Now a direct link */}
@@ -193,7 +193,7 @@ export default function Header() {
                 className="flex items-center gap-3 hover:text-pink-400 py-2"
                 onClick={() => setMenuOpen(false)}
               >
-                <FaHome className="text-xl" /> الصفحة الرئيسية
+                <FaHome className="text-xl" />الرئيسية
               </Link>
             </motion.div>
 
