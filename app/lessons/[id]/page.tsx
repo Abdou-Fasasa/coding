@@ -89,7 +89,7 @@ const allLessonsData: {
   },
   "prog-fund-10": {
     title: "10. مشروع بسيط: تطبيق الآلة الحاسبة",
-    video: "", // Placeholder
+    video: "/videos/programming-fundamentals/prog-fund-10.mp4",
     description: "طبق كل اللي اتعلمته في مشروع عملي يبرز مهاراتك الأساسية.",
     poster: "/images/programming-fundamentals.jpg",
     courseId: "programming-fundamentals-course",
