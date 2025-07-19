@@ -88,9 +88,7 @@ export default function LanguagePage() {
             title="أساسيات البرمجة"
             icon={FaCode}
             color="green" // Using green for "free" and "in progress"
-            completed={false}
-            inProgress={true}
-            isFree={true} // New prop for free course
+            completed={true}
             description="انطلق في عالم البرمجة من الصفر! تعلم المفاهيم الأساسية والأدوات اللازمة لبناء أولى برامجك."
             href="/lessons/prog-fund-1" // Link to the first lesson of programming fundamentals
           />
@@ -121,10 +119,10 @@ export default function LanguagePage() {
             title="JavaScript"
             icon={FaJs}
             color="amber"
-            completed={false}
-            comingSoon={true} // Marked as coming soon
+            completed={false} // Not completed
+            inProgress={true} // Marked as in progress
             description="نخلي الموقع يتفاعل! نبرمج الزراير، النماذج، الرسائل، وكل اللي بيحصل لما المستخدم يتفاعل."
-            href="#" // No active link yet
+            href="/lessons/Js-lesson1" // No active link yet
           />
 
           {/* Placeholder for Future Languages (e.g., Python, etc.) */}

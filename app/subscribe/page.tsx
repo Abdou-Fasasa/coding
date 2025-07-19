@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import {easeInOut} from "framer-motion";
+import { easeInOut } from "framer-motion";
 import Header from "@/app/components/Header"; // Assuming Header is in "@/app/components/Header"
 import Footer from "@/app/components/Footer"; // Assuming Footer is in "@/app/components/Footer"
 import Link from "next/link";
-import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt, FaPlayCircle, FaStar } from 'react-icons/fa'; // Added FaStar for extra flair
+import { FaCrown, FaCheckCircle, FaWhatsapp, FaCreditCard, FaGift, FaCalendarAlt, FaPlayCircle, FaStar } from 'react-icons/fa';
 
 // Component for individual course cards
 type CourseCardProps = {
@@ -42,21 +42,21 @@ function CourseCard({
 
     // Conditional classes for card and title based on VIP or Free status
     const cardClasses = isVIP
-        ? "bg-gradient-to-br from-purple-800 to-indigo-800 border-2 border-yellow-500 shadow-yellow-500/30"
-        : isFree // Special styling for free courses - More vibrant and unique
-        ? "bg-gradient-to-br from-purple-600 via-pink-500 to-red-500 border border-yellow-300 shadow-lg shadow-purple-500/40"
-        : "bg-[#1e293b] border border-gray-700/50 shadow-lg";
+        ? "bg-gradient-to-br from-purple-900/20 to-indigo-900/20 border-2 border-yellow-500/50 shadow-lg shadow-purple-500/20"
+        : isFree
+            ? "bg-gradient-to-br from-blue-700/20 via-cyan-600/20 to-green-600/20 border border-yellow-300/50 shadow-lg shadow-blue-500/20"
+            : "bg-white/5 border border-gray-700/30 shadow-lg shadow-gray-900/20";
+
+    // Adding backdrop-blur-lg to all cards for the glass effect
+    const baseCardClasses = "relative p-6 pt-20 rounded-2xl space-y-6 flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.02] overflow-hidden backdrop-blur-lg";
 
     const titleClasses = isVIP
         ? "text-yellow-300 drop-shadow-lg"
-        : isFree // Special styling for free courses
-        ? "text-white text-4xl drop-shadow-lg" // Larger title for free course
-        : "text-cyan-300";
+        : isFree
+            ? "text-white text-4xl drop-shadow-lg"
+            : "text-cyan-300";
 
-    // Check if there's a discount and a discount percentage text provided
     const hasDiscount = originalPrice && originalPrice !== price && discountPercentage;
-
-    // Determine if the price is a string like "قريباً" or "تواصل معنا"
     const isSpecialPriceText = price === "قريباً" || price === "تواصل معنا";
 
     return (
@@ -65,11 +65,9 @@ function CourseCard({
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
             viewport={{ once: true, amount: 0.3 }}
-            // Increased pt-20 to ensure enough space for the badge at the top,
-            // as the badge itself won't have -translate-y-1/2 anymore.
-            className={`relative p-6 pt-20 rounded-2xl space-y-6 flex flex-col items-center text-center transform transition-all duration-300 hover:scale-[1.02] ${cardClasses} overflow-hidden`}
+            className={`${baseCardClasses} ${cardClasses}`}
         >
-            {/* Golden Discount Badge (Top Right - Modern Label Style) */}
+            {/* Golden Discount Badge */}
             {hasDiscount && (
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
@@ -82,20 +80,19 @@ function CourseCard({
                 </motion.div>
             )}
 
-            {/* VIP Premium Badge (Top Right - Positioned below discount if present) */}
+            {/* VIP Premium Badge */}
             {isVIP && (
                 <div className={`absolute ${hasDiscount ? 'top-10' : 'top-0'} right-0 bg-yellow-500 text-gray-900 text-xs font-bold py-1 px-3 rounded-tr-2xl rounded-bl-lg flex items-center gap-1 z-10`}>
                     <FaCrown className="text-sm" /> VIP Premium
                 </div>
             )}
 
-            {/* FREE Badge - Modern & Prominent Style (No -translate-y-1/2 on badge itself) */}
+            {/* FREE Badge */}
             {isFree && (
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
                     animate={{ scale: 1, opacity: 1, rotate: 0 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20, delay: 0.3 }}
-                    // Removed -translate-y-1/2 here
                     className={`absolute top-0 left-1/2 -translate-x-1/2 w-48 py-2 bg-gradient-to-r from-cyan-400 to-green-500 text-gray-900 text-lg font-extrabold shadow-xl rounded-full transform rotate-3 z-30
                                 flex items-center justify-center gap-2 border-2 border-white`}
                 >
@@ -105,8 +102,6 @@ function CourseCard({
                 </motion.div>
             )}
 
-
-            {/* Removed pt-10 from h3. Title will naturally sit below the badge due to card's increased overall padding. */}
             <h3 className={`text-3xl font-extrabold ${titleClasses}`}>
                 {title}
             </h3>
@@ -144,7 +139,9 @@ function CourseCard({
                 target={isFree ? "_self" : "_blank"}
                 rel={isFree ? "" : "noopener noreferrer"}
                 className={`mt-6 w-full py-4 rounded-full text-white font-bold text-xl transition-all shadow-md hover:shadow-xl active:scale-95 flex items-center justify-center gap-2
-                    ${isVIP ? "bg-yellow-600 hover:bg-yellow-700" : isFree ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700" : "bg-blue-600 hover:bg-blue-700"}
+                    ${isVIP ? "bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700"
+                        : isFree ? "bg-gradient-to-r from-teal-500 to-green-600 hover:from-teal-600 hover:to-green-700"
+                            : "bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800"}
                 `}
             >
                 {isFree ? (
@@ -176,7 +173,7 @@ export default function SubscribePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white flex flex-col justify-between relative overflow-hidden">
-            {/* Background Animated Blobs */}
+            {/* Background Animated Blobs - Retained for dynamic background */}
             <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 0.1 }}
@@ -208,7 +205,7 @@ export default function SubscribePage() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="bg-[#1e293b]/70 backdrop-blur-sm shadow-xl rounded-2xl p-4 sm:p-6 border border-yellow-500/30 text-center flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6"
+                    className="bg-white/5 backdrop-blur-lg shadow-xl rounded-2xl p-4 sm:p-6 border border-yellow-500/30 text-center flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6"
                 >
                     <div className="flex items-center gap-2 text-yellow-400 text-xl sm:text-2xl font-bold">
                         <FaGift className="text-3xl sm:text-4xl" />
@@ -224,7 +221,7 @@ export default function SubscribePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-lg sm:text-xl text-center text-gray-300 max-w-3xl mx-auto leading-relaxed p-4 bg-[#1e293b]/50 rounded-xl border border-gray-700/50 shadow-lg"
+                    className="text-lg sm:text-xl text-center text-gray-300 max-w-3xl mx-auto leading-relaxed p-4 bg-white/5 rounded-xl border border-gray-700/30 shadow-lg backdrop-blur-lg"
                 >
                     اختر الخطة التي تناسبك وابدأ رحلتك في عالم البرمجة! نقدم لك أفضل الدورات بأسعار تنافسية وخيارات دفع مرنة.
                 </motion.p>
@@ -235,7 +232,7 @@ export default function SubscribePage() {
                     <CourseCard
                         title="كورس أساسيات البرمجة"
                         price="مجاناً"
-                        currency="" // No currency for free courses
+                        currency=""
                         description="بوابة دخولك لعالم البرمجة من الصفر: تعلم التفكير البرمجي وأول خطوات كتابة الكود."
                         features={[
                             "مقدمة في علوم الحاسب والبرمجة",
@@ -246,8 +243,8 @@ export default function SubscribePage() {
                             "الدوال والقوائم والمصفوفات",
                             "مشروع بسيط لربط المفاهيم"
                         ]}
-                        whatsappNumber={whatsappContact} // Still pass whatsapp for consistency, though not used by free course button
-                        isFree={true} // Mark as free
+                        whatsappNumber={whatsappContact}
+                        isFree={true}
                         freeCourseLink="/lessons" // **IMPORTANT: Update this to the actual path of your free course lesson page**
                     />
 
@@ -379,41 +376,6 @@ export default function SubscribePage() {
                         installmentAvailable={true}
                         discountPercentage="خصم 50%"
                     />
-
-                    <CourseCard
-                        title="كورس الأمن السيبراني"
-                        price="1200"
-                        originalPrice="2400"
-                        currency="جنيه مصري"
-                        description="احترف حماية الأنظمة والشبكات من التهديدات السيبرانية."
-                        features={[
-                            "مقدمة في الشبكات وأساسياتها",
-                            "أنواع الاختراقات وأساليبها",
-                            "أساليب الحماية المتقدمة",
-                            "أدوات اختبار الاختراق (Penetration Testing)",
-                            "مشروع اختراق قانوني (Ethical Hacking)",
-                            "تأهيل للعمل في مجال الأمن السيبراني"
-                        ]}
-                        whatsappNumber={whatsappContact}
-                        installmentAvailable={true}
-                        discountPercentage="خصم 50%"
-                    />
-
-                    <CourseCard
-                        title="كورس اختراق السوشيال ميديا"
-                        price="قريباً"
-                        currency=""
-                        description="كورس متقدم ضمن الأمن السيبراني لتعلم الجوانب القانونية والأخلاقية لاختراق حسابات التواصل الاجتماعي."
-                        features={[
-                            "تقنيات جمع المعلومات (OSINT)",
-                            "فهم الثغرات الشائعة",
-                            "أساليب الحماية المتقدمة للحسابات",
-                            "مشروع عملي في بيئة آمنة",
-                            "جزء من تراك الحماية السيبرانية"
-                        ]}
-                        whatsappNumber={whatsappContact}
-                    />
-
                     <CourseCard
                         title="تراك VIP Premium"
                         price="تواصل معنا"
@@ -437,7 +399,7 @@ export default function SubscribePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, delay: 0.8 }}
-                    className="text-center text-sm sm:text-base text-gray-400 mt-10 p-4 bg-[#1e293b]/50 rounded-xl border border-gray-700/50 shadow-inner"
+                    className="text-center text-sm sm:text-base text-gray-400 mt-10 p-4 bg-white/5 rounded-xl border border-gray-700/30 shadow-inner backdrop-blur-lg"
                 >
                     <p className="text-lg font-semibold text-white mb-2">
                         للاستفسار عن أي كورس أو خيارات التقسيط، تواصل معنا عبر واتساب:
