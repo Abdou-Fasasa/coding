@@ -168,6 +168,67 @@ export const jsLessons: Lesson[] = [
     id: "Js-lesson19",
     title: "19. The (Window) Object",
   },
+  {
+    id: "Js-lesson20",
+    title: "20. What is the DOM?",
+  },
+  {
+    id: "Js-lesson21",
+    title: "21. The (Document) Objects",
+  },
+  {
+    id: "Js-lesson22",
+    title: "22. DOM Selector for Single Elements",
+  },
+  {
+    id: "Js-lesson23",
+    title: "23. DOM Selector for Multiple Elements",
+  },
+  {
+    id: "Js-lesson24",
+    title: "24. DOM Traversing",
+  },
+  {
+    id: "Js-lesson25",
+    title: "25. Creating DOM Elements",
+  },
+  {
+    id: "Js-lesson26",
+    title: "26. Replacing and Removing DOM Elements",
+  },
+  {
+    id: "Js-lesson27",
+    title: "27. The (Event) Object and the Event Listeners",
+  },
+  {
+    id: "Js-lesson28",
+    title: "28. Mouse Events",
+  },
+  {
+    id: "Js-lesson29",
+    title: "29. Keyboard Events",
+  },
+  {
+    id: "Js-lesson30",
+    title: "30. Event Bubbling and Event Delegation",
+  },
+  {
+    id: "Js-lesson31",
+    title: "31. Local Storage and Session Storage",
+  },
+  {
+    id: "Js-lesson32",
+    title: "32. Adding Projects",
+  },
+  {
+    id: "Js-lesson33",
+    title: "33. Deleting and Filtering Projects",
+  },
+  {
+    id: "Js-lesson34",
+    title: "34. Persist to Local Storage",
+  },
+
 ];
 
 export const reactLessons: Lesson[] = []; // Placeholder for React lessons
@@ -443,6 +504,81 @@ export const allLessonsData: {
   "Js-lesson19": {
     title: "19. The (Window) Object",
     video: "/videos/js/js-lesson19.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson20": {
+    title: "20. What is the DOM?",
+    video: "/videos/js/js-lesson20.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson21": {
+    title: "21. The (Document) Objects",
+    video: "/videos/js/js-lesson21.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson22": {
+    title: "22. DOM Selector for Single Elements",
+    video: "/videos/js/js-lesson22.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson23": {
+    title: "23. DOM Selector for Multiple Elements",
+    video: "/videos/js/js-lesson23.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson24": {
+    title: "24. DOM Traversing",
+    video: "/videos/js/js-lesson24.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson25": {
+    title: "25. Creating DOM Elements",
+    video: "/videos/js/js-lesson25.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson26": {
+    title: "26. Replacing and Removing DOM Elements",
+    video: "/videos/js/js-lesson26.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson27": {
+    title: "27. The (Event) Object and the Event Listeners",
+    video: "/videos/js/js-lesson27.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson28": {
+    title: "28. Mouse Events",
+    video: "/videos/js/js-lesson28.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson29": {
+    title: "29. Keyboard Events",
+    video: "/videos/js/js-lesson29.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson30": {
+    title: "30. Event Bubbling and Event Delegation",
+    video: "/videos/js/js-lesson30.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson31": {
+    title: "31. Local Storage and Session Storage",
+    video: "/videos/js/js-lesson31.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson32": {
+    title: "32. Adding Projects",
+    video: "/videos/js/js-lesson32.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson33": {
+    title: "33. Deleting and Filtering Projects",
+    video: "/videos/js/js-lesson33.mp4",
+    courseId: "javascript-course",
+  },
+  "Js-lesson34": {
+    title: "34. Persist to Local Storage",
+    video: "/videos/js/js-lesson34.mp4",
     courseId: "javascript-course",
   },
 };
